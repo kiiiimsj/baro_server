@@ -1,0 +1,39 @@
+package com.wantchu.wantchu_server2.favorite.controller;
+
+import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
+import com.wantchu.wantchu_server2.vo.FavoriteVo;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@RequiredArgsConstructor
+@Component
+@RestController
+public class FavoriteApiController {
+
+    private final FavoriteService favoriteService;
+
+    @GetMapping("/FavoriteList.do")
+    public void findFavInfoByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = favoriteService.findFavInfoByPhone(phone);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PostMapping("/FavoriteSave.do")
+    public void saveFavorite(@RequestBody @NotNull FavoriteVo favoriteVo, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = favoriteService.saveFavorite(favoriteVo);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/FavoriteDelete.do")
+    public void deleteFavorite(@RequestBody @NotNull FavoriteVo favoriteVo, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = favoriteService.deleteFavorite(favoriteVo);
+        WriteToServer.send(response, jsonObject);
+    }
+}

@@ -1,0 +1,76 @@
+package com.wantchu.wantchu_server2.owner.controller;
+
+import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.owner.dto.*;
+import com.wantchu.wantchu_server2.owner.service.OwnerService;
+import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+
+@RequiredArgsConstructor
+@Component
+@RestController
+public class OwnerApiController {
+
+    private final OwnerService ownerService;
+
+    @PostMapping("/OwnerLogin.do")
+    public void login(@RequestBody @NotNull OwnerLoginRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.login(requestDto.getPhone(), requestDto.getPass());
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/OwnerPassUpdate.do")
+    public void updatePassword(@RequestBody @NotNull OwnerPassUpdateRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.updatePassword(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/OwnerEmailUpdate.do")
+    public void updateEmail(@RequestBody @NotNull OwnerEmailUpdateRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.updateEmail(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PostMapping("/OwnerRegister.do")
+    public void register(@RequestBody @NotNull OwnerRegisterRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.register(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/OwnerSetStore.do")
+    public void setOwnerStore(@RequestBody @NotNull OwnerStoreSetRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.setOwnerStore(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/OwnerUpdates.do")
+    public void ownerUpdates(@RequestBody @NotNull String updateRequest, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObjectForResponse = ownerService.ownerUpdates(updateRequest);
+        WriteToServer.send(response, jsonObjectForResponse);
+    }
+
+    @PostMapping("/OwnerFindPriceBetweenDate.do")
+    public void findPriceBetweenDate(@RequestBody OwnerPriceBetweenDateRequestDto requestDto, HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.findPriceBetweenDate(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PutMapping("/OwnerSetStoreStatus.do")
+    public void setStoreOpenOrClosed(@RequestBody OwnerStoreStatusUpdateRequestDto requestDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = ownerService.setStoreOpenOrClosed(requestDto.getIs_open(), requestDto.getStore_id());
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PostMapping("/OwnerSendMessage.do")
+    public void sendMessageToCustomer(@RequestBody OwnerMessageRequestDto requestDto, HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.sendMessageToCustomer(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+}
