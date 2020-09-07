@@ -43,6 +43,7 @@ public class SQL {
         public static final String REGISTER = "INSERT INTO owners VALUES(?,?,?,?,null)";
         public static final String CHECK_STORE_ID = "SELECT store_name FROM stores WHERE store_id=?";
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
+        public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
     }
 
     public static class Extra {

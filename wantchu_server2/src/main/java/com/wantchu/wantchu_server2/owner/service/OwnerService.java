@@ -7,10 +7,7 @@ import com.wantchu.wantchu_server2.dao.OwnerDao;
 import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.member.exception.MemberPhoneNotFoundException;
 import com.wantchu.wantchu_server2.owner.dto.*;
-import com.wantchu.wantchu_server2.owner.exception.OwnerEmailInUseException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerLoginException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerPassUpdateException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerPhoneInUseException;
+import com.wantchu.wantchu_server2.owner.exception.*;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
@@ -335,6 +332,14 @@ public class OwnerService {
         } catch(IOException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }
+        return jsonObject;
+    }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setStatusToCustomer(String receipt_id){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStatusFirst(receipt_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "정상 처리 되었습니다.");
         return jsonObject;
     }
 }
