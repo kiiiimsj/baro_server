@@ -415,4 +415,12 @@ public class OwnerDao {
             return list.get(0);
         }
     }
+
+    public void setStatusFirst(String receipt_id){
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STATUS_FIRST);
+            preparedStatement.setString(1, receipt_id);
+            return preparedStatement;
+        });
+    }
 }

@@ -73,4 +73,9 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.sendMessageToCustomer(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PutMapping("/OwnerSetOrderStatus.do")
+    public void setOrderStatus(@RequestBody OwnerSetStatusRequestDto requestDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id());
+        WriteToServer.send(response, jsonObject);
+    }
 }
