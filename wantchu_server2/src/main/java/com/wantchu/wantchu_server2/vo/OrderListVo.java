@@ -17,6 +17,7 @@ public class OrderListVo {
     private String store_name;
     private LocalDateTime order_date;
     private int total_count;
+    private String order_state;
 
     public OrderListVo(String receipt_id, String store_name, LocalDateTime order_date) {
         this.receipt_id = receipt_id;
@@ -30,6 +31,7 @@ public class OrderListVo {
         map.put("store_name", store_name);
         map.put("order_date", DateConverter.convertDateWithTime(order_date));
         map.put("total_count", total_count);
+        map.put("order_state",order_state);
         return map;
     }
 }
