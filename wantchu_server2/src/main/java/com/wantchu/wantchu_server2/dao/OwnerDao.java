@@ -5,6 +5,7 @@ import com.wantchu.wantchu_server2.member.exception.MemberPhoneNotFoundException
 import com.wantchu.wantchu_server2.owner.dto.*;
 import com.wantchu.wantchu_server2.owner.exception.OwnerLoginException;
 import com.wantchu.wantchu_server2.owner.exception.OwnerPassUpdateException;
+import com.wantchu.wantchu_server2.owner.exception.StatisticsNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -430,16 +431,28 @@ public class OwnerDao {
            return preparedStatement;
         });
     }
-//    public List<Integer> setStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
-//        List<Integer> list = jdbcTemplate.query(
-//                SQL.Owner.FIND_STORE_STATISTICS,
-//                (resultSet, i) -> resultSet.getInt("price")
-//                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
-//        if(list.size() == 0){
-//            throw new StatisticsNotFoundException();
-//        }
-//        else{
-//            return list;
-//        }
-//    }
+    public List<Integer> setStatisticsDefault(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException {
+        List<Integer> list = jdbcTemplate.query(
+                SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
+                (resultSet, i) -> resultSet.getInt("price")
+                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+        if(list.size() == 0){
+            throw new StatisticsNotFoundException();
+        }
+        else{
+            return list;
+        }
+    }
+    public List<Integer> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+        List<Integer> list = jdbcTemplate.query(
+                SQL.Owner.FIND_STORE_STATISTICS_EXTRA,
+                (resultSet, i) -> resultSet.getInt("price")
+                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+        if(list.size() == 0){
+            throw new StatisticsNotFoundException();
+        }
+        else{
+            return list;
+        }
+    }
 }
