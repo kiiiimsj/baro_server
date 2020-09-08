@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -434,7 +435,7 @@ public class OwnerDao {
     public List<Integer> setStatisticsDefault(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException {
         List<Integer> list = jdbcTemplate.query(
                 SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
-                (resultSet, i) -> resultSet.getInt("price")
+                (resultSet, i) -> resultSet.getInt("default_total_price")
                 ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
         if(list.size() == 0){
             throw new StatisticsNotFoundException();
@@ -442,11 +443,24 @@ public class OwnerDao {
         else{
             return list;
         }
+//        HashMap<String,Integer> list = jdbcTemplate.query(
+//                SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
+//                (resultSet, i) -> {
+//                    int default_price = resultSet.getInt("default_total_price");
+//                    String dategroup = resultSet.getString("dategroup");
+//                }
+//                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+//        if(list.size() == 0){
+//            throw new StatisticsNotFoundException();
+//        }
+//        else{
+//            return list;
+//        }
     }
     public List<Integer> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
         List<Integer> list = jdbcTemplate.query(
                 SQL.Owner.FIND_STORE_STATISTICS_EXTRA,
-                (resultSet, i) -> resultSet.getInt("price")
+                (resultSet, i) -> resultSet.getInt("extra_total_price")
                 ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
         if(list.size() == 0){
             throw new StatisticsNotFoundException();
