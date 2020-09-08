@@ -2,6 +2,7 @@ package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
+import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
@@ -244,5 +245,18 @@ public class OrderDao {
            preparedStatement.setString(1, receipt_id);
            return preparedStatement;
         });
+    }
+
+    public List<String> findReceiptIdsOfDoneOrders(OrderCompleteBetweenDateReqeustDto reqeustDto) throws OrderNotFoundException{
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS,
+                (resultSet, i) -> resultSet.getString("receipt_id")
+                ,reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date(), reqeustDto.getStart());
+        if(list.size() == 0){
+            throw new OrderNotFoundException();
+        }
+        else{
+            return list;
+        }
     }
 }

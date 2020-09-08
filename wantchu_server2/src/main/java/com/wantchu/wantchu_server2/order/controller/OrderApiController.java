@@ -1,6 +1,8 @@
 package com.wantchu.wantchu_server2.order.controller;
 
+import com.google.firebase.auth.internal.HttpErrorResponse;
 import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderStateUpdateRequestDto;
 import com.wantchu.wantchu_server2.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -68,6 +70,12 @@ public class OrderApiController {
         int start = Integer.parseInt(request.getParameter("start"));
         int end = Integer.parseInt(request.getParameter("end"));
         org.json.simple.JSONObject jsonObject = orderService.findAllOrdersByStoreId(store_id, start, end);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @PostMapping("/OrderCompleteListByDate.do")
+    public void findDoneOrdersByDate(@RequestBody OrderCompleteBetweenDateReqeustDto reqeustDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = orderService.findDoneOrdersByDate(reqeustDto);
         WriteToServer.send(response, jsonObject);
     }
 }
