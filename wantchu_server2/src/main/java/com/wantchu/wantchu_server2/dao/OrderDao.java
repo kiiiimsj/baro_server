@@ -263,6 +263,7 @@ public class OrderDao {
                     orderListVo.setStore_name(resultSet.getString("store_name"));
                     orderListVo.setOrder_date(resultSet.getTimestamp("order_date").toLocalDateTime());
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
+                    orderListVo.setOrder_state(resultSet.getString("order_state"));
                     return orderListVo;
                 }
                 , phone);
