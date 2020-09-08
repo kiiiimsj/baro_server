@@ -45,6 +45,8 @@ public class SQL {
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
         public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
         public static final String UPDATE_STATUS_COMPLETE="UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
+        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT CONCAT(YEAR(order_date),MONTH(order_date),DAY(order_date)) AS dategroup ,IFNULL(sum(menu_defaultprice*order_count),0) FROM orders WHERE store_id=? GROUP BY dategroup AND order_date BETWEEN ? AND ?;";
+        public static final String FIND_STORE_STATISTICS_EXTRA="select CONCAT(YEAR(order_date),MONTH(order_date),DAY(order_date)) AS dategroup ,IFNULL(sum(extra_price*extra_count*order_count),0) FROM extraorders natural join orders WHERE store_id=? GROUP BY dategroup AND order_date BETWEEN ? AND ?;";
     }
 
     public static class Extra {
@@ -96,7 +98,7 @@ public class SQL {
     public static class ExtraOrder {
         public static final String INSERT_EXTRA_ORDER = "INSERT INTO extraorders VALUES(default, ?, ?, ?, ?, ?)";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(extra_price*extra_count*order_count), 0) from extraorders natural join orders where receipt_id=?";
-        public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(extra_price*extra_count*order_count),0) from extraorders natural join orders where store_id=? AND order_date between ? AND ?";
+        public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(extra_price*extra_count*order_count), 0) from extraorders natural join orders where store_id=? AND order_date between ? AND ?";
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders NATURAL JOIN extras WHERE order_id=?";
     }
 
