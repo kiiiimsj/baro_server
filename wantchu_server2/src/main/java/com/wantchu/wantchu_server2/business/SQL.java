@@ -81,12 +81,13 @@ public class SQL {
     public static class Order {
         public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?)";
         public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT FROM orders NATURAL JOIN stores WHERE phone =? GROUP BY receipt_id;";
+        public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT FROM orders NATURAL JOIN stores WHERE (phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT')) GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(menu_defaultprice*order_count),0) from orders where store_id=? AND order_date between ? AND ?";
         public static final String FIND_ORDER_IDS_BY_RECEIPT_ID = "SELECT order_id FROM orders WHERE receipt_id=?";
         public static final String FIND_ORDER_DETAIL_BY_ORDER_ID = "SELECT order_count, menu_name, menu_defaultprice, order_state FROM orders WHERE order_id=?";
         public static final String FIND_ORDER_COUNT_BY_PHONE = "select count(distinct receipt_id) from orders where phone=?";
-        public static final String FIND_RECEIPT_IDS_OF_PREPARING_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND order_state='PREPARING' ";
+        public static final String FIND_RECEIPT_IDS_OF_PREPARING_ORDERS = "SELECT DISTINCT receipt_id,order_state FROM orders WHERE store_id=? AND (order_state='ACCEPT' OR order_state='PREPARING')";
         public static final String FIND_RECEIPT_IDS_OF_ALL_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? limit ?, ?";
         public static final String FIND_PREPARING_ORDER_INFO_BY_RECEIPT_ID = "select phone, sum(order_count) as CNT, order_date from orders where receipt_id=?;";
         public static final String FIND_ALL_ORDER_INFO_BY_RECEIPT_ID = "SELECT phone, sum(order_count) as CNT, order_date, order_state from orders where receipt_id=?";

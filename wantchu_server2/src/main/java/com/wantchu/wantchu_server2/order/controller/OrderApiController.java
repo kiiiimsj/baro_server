@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -71,6 +72,18 @@ public class OrderApiController {
         int end = Integer.parseInt(request.getParameter("end"));
         org.json.simple.JSONObject jsonObject = orderService.findAllOrdersByStoreId(store_id, start, end);
         WriteToServer.send(response, jsonObject);
+    }
+    @GetMapping("/OrderListDoneOrCancelForOwner.do")
+    public void findOrderListDoneOrCancel(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
+        String receipt_id = request.getParameter("receipt_id");
+        org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
+        WriteToServer.send(response,jsonObject);
+    }
+    @GetMapping("/OrderProgressing.do")
+    public void showOrderProgrogressing(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
+        String _phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = orderService.orderFindPrepareOrAcceptByPhone(_phone);
+        WriteToServer.send(response,jsonObject);
     }
 
     @PostMapping("/OrderCompleteListByDate.do")
