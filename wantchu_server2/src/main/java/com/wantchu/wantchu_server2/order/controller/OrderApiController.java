@@ -82,7 +82,8 @@ public class OrderApiController {
     @GetMapping("/OrderProgressing.do")
     public void showOrderProgrogressing(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         String _phone = request.getParameter("phone");
-        org.json.simple.JSONObject jsonObject = orderService.orderFindPrepareOrDoneByPhone(_phone);
+        org.json.simple.JSONObject jsonObject = orderService.orderFindPrepareOrAcceptByPhone(_phone);
+        WriteToServer.send(response,jsonObject);
     }
 
     @PostMapping("/OrderCompleteListByDate.do")

@@ -240,10 +240,10 @@ public class OrderService {
         return jsonObject;
     }
 
-    public org.json.simple.JSONObject orderFindPrepareOrDoneByPhone(String phone) {
+    public org.json.simple.JSONObject orderFindPrepareOrAcceptByPhone(String phone) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<OrderListVo> list = orderDao.findAbstractOrderInfo(phone);
+            List<OrderListVo> list = orderDao.findOrderPrepareOrAcceptByPhone(phone);
             jsonObject.put("result", true);
             jsonObject.put("message", "전화번호로 주문 정보 가져오기 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();

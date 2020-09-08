@@ -254,18 +254,23 @@ public class OrderDao {
     }
 
 
-    public void findOrderPrepareOrDoneByPhone(String phone) {
-        List<CouponHistoryVo> list = jdbcTemplate.query(
-                SQL.CouponHistory.FIND_PRICE_INFO_BY_RECEIPT_ID,
+    public List<OrderListVo> findOrderPrepareOrAcceptByPhone(String phone) throws  OrderNotFoundByPhoneException{
+        List<OrderListVo> list = jdbcTemplate.query(
+                SQL.Order.FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT,
                 (resultSet, i) -> {
-                    CouponHistoryVo historyVo = new CouponHistoryVo();
-                    historyVo.setTotal_price(resultSet.getInt("total_price"));
-                    historyVo.setDiscount_price(resultSet.getInt("discount_price"));
-                    return historyVo;
+                    OrderListVo orderListVo = new OrderListVo();
+                    orderListVo.setReceipt_id(resultSet.getString("receipt_id"));
+                    orderListVo.setStore_name(resultSet.getString("store_name"));
+                    orderListVo.setOrder_date(resultSet.getTimestamp("order_date").toLocalDateTime());
+                    orderListVo.setTotal_count(resultSet.getInt("CNT"));
+                    return orderListVo;
                 }
                 , phone);
-
-
+        if(list.size() == 0) {
+            throw new OrderNotFoundByPhoneException();
+        } else {
+            return list;
+        }
     }
     public List<String> findReceiptIdsOfDoneOrders(OrderCompleteBetweenDateReqeustDto reqeustDto) throws OrderNotFoundException {
         List<String> list = jdbcTemplate.query(
