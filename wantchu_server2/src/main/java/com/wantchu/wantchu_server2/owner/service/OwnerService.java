@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -356,24 +357,38 @@ public class OwnerService {
     public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<Integer> defaultPriceList = ownerDao.setStatisticsDefault(requestDto);
-            List<Integer> extraPriceList = ownerDao.setStatisticsExtra(requestDto);
-            Iterator<Integer> defaultPriceIterator = defaultPriceList.iterator();
-            Iterator<Integer> extraPriceIterator = extraPriceList.iterator();
+            List<PriceByDayVo> defaultPriceList = ownerDao.setStatisticsDefault(requestDto);
+            List<PriceByDayVo> extraPriceList = ownerDao.setStatisticsExtra(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "통계내역 가져오기 성공");
+            Iterator<PriceByDayVo> defaultPriceIterator = defaultPriceList.iterator();
+            Iterator<PriceByDayVo> extraPriceIterator = extraPriceList.iterator();
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
-            while(defaultPriceIterator.hasNext() || extraPriceIterator.hasNext()){
-                int defaultPrice = defaultPriceIterator.next();
-                int extraPrice = extraPriceIterator.next();
-                int totalPrice = defaultPrice + extraPrice;
+            String date = null;
+            int defaultPrice = 0;
+            int extraPrice = 0;
+            int totalPrice = 0;
+            while(defaultPriceIterator.hasNext()){
+                if(defaultPriceIterator.next().getDate() == null){
+                    date = "0";
+                    defaultPrice = 0;
+                    extraPrice = 0;
+                    totalPrice = 0;
+                }
+                else{
+                    date = defaultPriceIterator.next().getDate();
+                    defaultPrice = defaultPriceIterator.next().getPrice();
+                    extraPrice = extraPriceIterator.next().getPrice();
+                    totalPrice = defaultPrice + extraPrice;
+                }
                 org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+                objectOfOrder.put("date", date);
                 objectOfOrder.put("price", totalPrice);
                 arrayOfOrders.add(objectOfOrder);
             }
             jsonObject.put("statistics", arrayOfOrders);
         }
-        catch (Exception e){
+        catch (StatisticsNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;

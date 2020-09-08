@@ -432,10 +432,15 @@ public class OwnerDao {
            return preparedStatement;
         });
     }
-    public List<Integer> setStatisticsDefault(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException {
-        List<Integer> list = jdbcTemplate.query(
+    public List<PriceByDayVo> setStatisticsDefault(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException {
+        List<PriceByDayVo> list = jdbcTemplate.query(
                 SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
-                (resultSet, i) -> resultSet.getInt("default_total_price")
+                (resultSet, i) -> {
+                    PriceByDayVo priceByDayVo = new PriceByDayVo();
+                    priceByDayVo.setDate(resultSet.getString("DATE(order_date)"));
+                    priceByDayVo.setPrice(resultSet.getInt("default_total_price"));
+                    return priceByDayVo;
+                }
                 ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
         if(list.size() == 0){
             throw new StatisticsNotFoundException();
@@ -443,24 +448,16 @@ public class OwnerDao {
         else{
             return list;
         }
-//        HashMap<String,Integer> list = jdbcTemplate.query(
-//                SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
-//                (resultSet, i) -> {
-//                    int default_price = resultSet.getInt("default_total_price");
-//                    String dategroup = resultSet.getString("dategroup");
-//                }
-//                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
-//        if(list.size() == 0){
-//            throw new StatisticsNotFoundException();
-//        }
-//        else{
-//            return list;
-//        }
     }
-    public List<Integer> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
-        List<Integer> list = jdbcTemplate.query(
+    public List<PriceByDayVo> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+        List<PriceByDayVo> list = jdbcTemplate.query(
                 SQL.Owner.FIND_STORE_STATISTICS_EXTRA,
-                (resultSet, i) -> resultSet.getInt("extra_total_price")
+                (resultSet, i) -> {
+                    PriceByDayVo priceByDayVo = new PriceByDayVo();
+                    priceByDayVo.setDate(resultSet.getString("DATE(order_date)"));
+                    priceByDayVo.setPrice(resultSet.getInt("extra_total_price"));
+                    return priceByDayVo;
+                }
                 ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
         if(list.size() == 0){
             throw new StatisticsNotFoundException();
