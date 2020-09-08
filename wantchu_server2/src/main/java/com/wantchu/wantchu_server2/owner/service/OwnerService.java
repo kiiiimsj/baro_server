@@ -7,10 +7,7 @@ import com.wantchu.wantchu_server2.dao.OwnerDao;
 import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.member.exception.MemberPhoneNotFoundException;
 import com.wantchu.wantchu_server2.owner.dto.*;
-import com.wantchu.wantchu_server2.owner.exception.OwnerEmailInUseException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerLoginException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerPassUpdateException;
-import com.wantchu.wantchu_server2.owner.exception.OwnerPhoneInUseException;
+import com.wantchu.wantchu_server2.owner.exception.*;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -337,4 +336,42 @@ public class OwnerService {
         }
         return jsonObject;
     }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setStatusToCustomer(String receipt_id){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStatusFirst(receipt_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "정상 처리 되었습니다.");
+        return jsonObject;
+    }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setStatusCompleteToCustomer(String receipt_id){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStatusComplete(receipt_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "정상 처리 되었습니다.");
+        return jsonObject;
+    }
+//    @SuppressWarnings("unchecked")
+//    public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
+//        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+//        try{
+//            List<Integer> priceList = ownerDao.setStatistics(requestDto);
+//            Iterator<Integer> priceIterator = priceList.iterator();
+//            jsonObject.put("result", true);
+//            jsonObject.put("message", "통계내역 가져오기 성공");
+//            org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
+//            while(priceIterator.hasNext()){
+//                int price = priceIterator.next();
+//                org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+//                objectOfOrder.put("price", price);
+//                arrayOfOrders.add(objectOfOrder);
+//            }
+//            jsonObject.put("statistics", arrayOfOrders);
+//        }
+//        catch (Exception e){
+//            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+//        }
+//        return jsonObject;
+//    }
 }

@@ -415,4 +415,31 @@ public class OwnerDao {
             return list.get(0);
         }
     }
+
+    public void setStatusFirst(String receipt_id){
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STATUS_FIRST);
+            preparedStatement.setString(1, receipt_id);
+            return preparedStatement;
+        });
+    }
+    public void setStatusComplete(String receipt_id){
+        jdbcTemplate.update(connection -> {
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STATUS_COMPLETE);
+           preparedStatement.setString(1, receipt_id);
+           return preparedStatement;
+        });
+    }
+//    public List<Integer> setStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+//        List<Integer> list = jdbcTemplate.query(
+//                SQL.Owner.FIND_STORE_STATISTICS,
+//                (resultSet, i) -> resultSet.getInt("price")
+//                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+//        if(list.size() == 0){
+//            throw new StatisticsNotFoundException();
+//        }
+//        else{
+//            return list;
+//        }
+//    }
 }

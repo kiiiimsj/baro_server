@@ -73,4 +73,19 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.sendMessageToCustomer(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PutMapping("/OwnerSetOrderStatus.do")
+    public void setOrderStatus(@RequestBody OwnerSetStatusRequestDto requestDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id());
+        WriteToServer.send(response, jsonObject);
+    }
+    @PutMapping("/OwnerSetOrderStatusComplete.do")
+    public void setOrderStatusComplete(@RequestBody OwnerSetStatusCompleteRequestDto requestDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id());
+        WriteToServer.send(response, jsonObject);
+    }
+//    @PostMapping("/OwnerSetstatistics.do")
+//    public void setStatistics(@RequestBody OwnerSetStatisticsRequestDto requestDto, HttpServletResponse response){
+//        org.json.simple.JSONObject jsonObject = ownerService.setStatistics(requestDto);
+//        WriteToServer.send(response, jsonObject);
+//    }
 }

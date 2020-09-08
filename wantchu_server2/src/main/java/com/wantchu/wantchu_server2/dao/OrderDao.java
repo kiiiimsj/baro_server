@@ -3,6 +3,7 @@ package com.wantchu.wantchu_server2.dao;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
+import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
@@ -252,6 +253,7 @@ public class OrderDao {
         });
     }
 
+
     public void findOrderPrepareOrDoneByPhone(String phone) {
         List<CouponHistoryVo> list = jdbcTemplate.query(
                 SQL.CouponHistory.FIND_PRICE_INFO_BY_RECEIPT_ID,
@@ -262,6 +264,7 @@ public class OrderDao {
                     return historyVo;
                 }
                 , phone);
+
 
     }
 }
