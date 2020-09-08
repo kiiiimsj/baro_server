@@ -430,4 +430,16 @@ public class OwnerDao {
            return preparedStatement;
         });
     }
+//    public List<Integer> setStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+//        List<Integer> list = jdbcTemplate.query(
+//                SQL.Owner.FIND_STORE_STATISTICS,
+//                (resultSet, i) -> resultSet.getInt("price")
+//                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+//        if(list.size() == 0){
+//            throw new StatisticsNotFoundException();
+//        }
+//        else{
+//            return list;
+//        }
+//    }
 }
