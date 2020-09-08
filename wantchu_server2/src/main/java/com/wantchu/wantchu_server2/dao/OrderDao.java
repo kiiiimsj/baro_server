@@ -1,5 +1,6 @@
 package com.wantchu.wantchu_server2.dao;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
@@ -7,6 +8,7 @@ import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -154,12 +156,16 @@ public class OrderDao {
         return result;
     }
 
-    public List<String> findReceiptIdsOfPreparingOrders(int store_id) throws OrderNoPreparingException {
-        List<String> list = jdbcTemplate.query(
+    public List<OrderVo> findReceiptIdsOfPreparingOrders(int store_id) throws OrderNoPreparingException {
+        List<OrderVo> list = jdbcTemplate.query(
                 SQL.Order.FIND_RECEIPT_IDS_OF_PREPARING_ORDERS,
                 (resultSet, i) -> {
+                    OrderVo orderVo = new OrderVo();
                     String receipt_id = resultSet.getString("receipt_id");
-                    return receipt_id;
+                    String order_state = resultSet.getString("order_state");
+                    orderVo.setOrder_state(order_state);
+                    orderVo.setReceipt_id(receipt_id);
+                    return orderVo;
                 }
                 , store_id);
         if(list.size() == 0) {
@@ -244,5 +250,18 @@ public class OrderDao {
            preparedStatement.setString(1, receipt_id);
            return preparedStatement;
         });
+    }
+
+    public void findOrderPrepareOrDoneByPhone(String phone) {
+        List<CouponHistoryVo> list = jdbcTemplate.query(
+                SQL.CouponHistory.FIND_PRICE_INFO_BY_RECEIPT_ID,
+                (resultSet, i) -> {
+                    CouponHistoryVo historyVo = new CouponHistoryVo();
+                    historyVo.setTotal_price(resultSet.getInt("total_price"));
+                    historyVo.setDiscount_price(resultSet.getInt("discount_price"));
+                    return historyVo;
+                }
+                , phone);
+
     }
 }
