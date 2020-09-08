@@ -157,14 +157,17 @@ public class OrderService {
     public org.json.simple.JSONObject findPreparingOrdersByStoreId(int store_id) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<String> receiptIdList = orderDao.findReceiptIdsOfPreparingOrders(store_id);
-            Iterator<String> receiptIdIterator = receiptIdList.iterator();
+            List<OrderVo> receiptIdList = orderDao.findReceiptIdsOfPreparingOrders(store_id);
+            Iterator<OrderVo> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
             jsonObject.put("message", "처리 해야할 주문 요청 존재");
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
             while(receiptIdIterator.hasNext()) {
-                String receipt_id = receiptIdIterator.next();
+                OrderVo orderVo2 = receiptIdIterator.next();
+                String receipt_id = orderVo2.getReceipt_id();
+                String orderState = orderVo2.getOrder_state();
                 org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+                objectOfOrder.put("order_state",orderState);
                 objectOfOrder.put("receipt_id", receipt_id);
                 OrderVo orderVo = orderDao.findPreparingOrderInfoByReceiptId(receipt_id);
                 objectOfOrder.put("phone", orderVo.getPhone());
@@ -234,6 +237,28 @@ public class OrderService {
         orderDao.setOrderStateAsDone(receipt_id);
         jsonObject.put("result", true);
         jsonObject.put("message", "제조 완료 상태로 변경 완료");
+        return jsonObject;
+    }
+
+    public org.json.simple.JSONObject orderFindPrepareOrDoneByPhone(String phone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<OrderListVo> list = orderDao.findAbstractOrderInfo(phone);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "전화번호로 주문 정보 가져오기 성공");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for (OrderListVo info : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(info.convertMap());
+                int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
+                int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
+                jTemp.put("total_price", extraSum + orderSum);
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("order", jsonArray);
+        } catch (OrderNotFoundByPhoneException e) {
+            e.printStackTrace();
+        }
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
