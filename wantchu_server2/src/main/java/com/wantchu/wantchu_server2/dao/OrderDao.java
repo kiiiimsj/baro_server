@@ -267,4 +267,15 @@ public class OrderDao {
 
 
     }
+    public List<String> findReceiptIdsOfDoneOrders(OrderCompleteBetweenDateReqeustDto reqeustDto) throws OrderNotFoundException {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS,
+                (resultSet, i) -> resultSet.getString("receipt_id")
+                , reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date(), reqeustDto.getStart());
+        if (list.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return list;
+        }
+    }
 }
