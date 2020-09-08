@@ -83,4 +83,9 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id());
         WriteToServer.send(response, jsonObject);
     }
+//    @PostMapping("/OwnerSetstatistics.do")
+//    public void setStatistics(@RequestBody OwnerSetStatisticsRequestDto requestDto, HttpServletResponse response){
+//        org.json.simple.JSONObject jsonObject = ownerService.setStatistics(requestDto);
+//        WriteToServer.send(response, jsonObject);
+//    }
 }

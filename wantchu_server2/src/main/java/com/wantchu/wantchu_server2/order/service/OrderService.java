@@ -236,6 +236,7 @@ public class OrderService {
         jsonObject.put("message", "제조 완료 상태로 변경 완료");
         return jsonObject;
     }
+    @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findDoneOrdersByDate(OrderCompleteBetweenDateReqeustDto reqeustDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
