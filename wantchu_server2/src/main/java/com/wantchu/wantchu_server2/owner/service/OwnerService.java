@@ -342,4 +342,12 @@ public class OwnerService {
         jsonObject.put("message", "정상 처리 되었습니다.");
         return jsonObject;
     }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setStatusCompleteToCustomer(String receipt_id){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStatusComplete(receipt_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "정상 처리 되었습니다.");
+        return jsonObject;
+    }
 }

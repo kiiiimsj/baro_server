@@ -423,4 +423,11 @@ public class OwnerDao {
             return preparedStatement;
         });
     }
+    public void setStatusComplete(String receipt_id){
+        jdbcTemplate.update(connection -> {
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STATUS_COMPLETE);
+           preparedStatement.setString(1, receipt_id);
+           return preparedStatement;
+        });
+    }
 }
