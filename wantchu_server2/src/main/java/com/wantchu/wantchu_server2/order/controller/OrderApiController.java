@@ -65,14 +65,14 @@ public class OrderApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @GetMapping("/OrderFindAllByStoreId.do")
-    public void findAllOrdersByStoreId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        int store_id = Integer.parseInt(request.getParameter("store_id"));
-        int start = Integer.parseInt(request.getParameter("start"));
-        int end = Integer.parseInt(request.getParameter("end"));
-        org.json.simple.JSONObject jsonObject = orderService.findAllOrdersByStoreId(store_id, start, end);
-        WriteToServer.send(response, jsonObject);
-    }
+//    @GetMapping("/OrderFindAllByStoreId.do")
+//    public void findAllOrdersByStoreId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+//        int store_id = Integer.parseInt(request.getParameter("store_id"));
+//        int start = Integer.parseInt(request.getParameter("start"));
+//        int end = Integer.parseInt(request.getParameter("end"));
+//        org.json.simple.JSONObject jsonObject = orderService.findAllOrdersByStoreId(store_id, start, end);
+//        WriteToServer.send(response, jsonObject);
+//    }
     @GetMapping("/OrderListDoneOrCancelForOwner.do")
     public void findOrderListDoneOrCancel(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         String receipt_id = request.getParameter("receipt_id");

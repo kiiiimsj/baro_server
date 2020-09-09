@@ -176,20 +176,20 @@ public class OrderDao {
         }
     }
 
-    public List<String> findReceiptIdsOfAllOrders(int store_id, int start, int end) throws OrderNotFoundException {
-        List<String> list = jdbcTemplate.query(
-                SQL.Order.FIND_RECEIPT_IDS_OF_ALL_ORDERS,
-                (resultSet, i) -> {
-                    String receipt_id = resultSet.getString("receipt_id");
-                    return receipt_id;
-                }
-        , store_id, start, end);
-        if(list.size() == 0) {
-            throw new OrderNotFoundException();
-        } else {
-            return list;
-        }
-    }
+//    public List<String> findReceiptIdsOfAllOrders(int store_id, int start, int end) throws OrderNotFoundException {
+//        List<String> list = jdbcTemplate.query(
+//                SQL.Order.FIND_RECEIPT_IDS_OF_ALL_ORDERS,
+//                (resultSet, i) -> {
+//                    String receipt_id = resultSet.getString("receipt_id");
+//                    return receipt_id;
+//                }
+//        , store_id, start, end);
+//        if(list.size() == 0) {
+//            throw new OrderNotFoundException();
+//        } else {
+//            return list;
+//        }
+//    }
 
     public OrderVo findPreparingOrderInfoByReceiptId(String receipt_id) {
         List<OrderVo> list = jdbcTemplate.query(
