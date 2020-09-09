@@ -357,34 +357,27 @@ public class OwnerService {
     public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<PriceByDayVo> defaultPriceList = ownerDao.setStatisticsDefault(requestDto);
-            List<PriceByDayVo> extraPriceList = ownerDao.setStatisticsExtra(requestDto);
+            List<PriceByDayVo> defaultPriceList = ownerDao.setStatistics(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "통계내역 가져오기 성공");
-            Iterator<PriceByDayVo> defaultPriceIterator = defaultPriceList.iterator();
-            Iterator<PriceByDayVo> extraPriceIterator = extraPriceList.iterator();
+
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
-            String date = null;
-            int defaultPrice = 0;
-            int extraPrice = 0;
-            int totalPrice = 0;
-            while(defaultPriceIterator.hasNext()){
-                if(defaultPriceIterator.next().getDate() == null){
-                    date = "0";
-                    defaultPrice = 0;
-                    extraPrice = 0;
-                    totalPrice = 0;
-                }
-                else{
-                    date = defaultPriceIterator.next().getDate();
-                    defaultPrice = defaultPriceIterator.next().getPrice();
-                    extraPrice = extraPriceIterator.next().getPrice();
-                    totalPrice = defaultPrice + extraPrice;
-                }
+
+            for(int i = 0; i< defaultPriceList.size();i++){
+                String date = defaultPriceList.get(i).getDate();
+
+                int defaultPrice = defaultPriceList.get(i).getDefaultPrice();
+                int extraPrice = defaultPriceList.get(i).getExtraPrice();
+                int totalPrice = defaultPrice + extraPrice;
+                System.out.println(date);
+                System.out.println(defaultPrice+"");
+                System.out.println(extraPrice+"");
+                System.out.println(totalPrice+"");
                 org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
                 objectOfOrder.put("date", date);
                 objectOfOrder.put("price", totalPrice);
                 arrayOfOrders.add(objectOfOrder);
+
             }
             jsonObject.put("statistics", arrayOfOrders);
         }

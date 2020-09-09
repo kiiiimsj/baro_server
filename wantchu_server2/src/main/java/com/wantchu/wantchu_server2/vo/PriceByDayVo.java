@@ -12,17 +12,20 @@ import java.util.HashMap;
 public class PriceByDayVo {
 
     private String date;
-    private int price;
+    private int defaultPrice;
+    private int extraPrice;
 
-    public PriceByDayVo(String date, int price) {
+    public PriceByDayVo(String date, int defaultPrice, int extraPrice) {
         this.date = date;
-        this.price = price;
+        this.defaultPrice = defaultPrice;
+        this.extraPrice = extraPrice;
     }
 
     public HashMap<String, Object> convertMap(){
         HashMap<String, Object> map = new HashMap<>();
         map.put("date", date);
-        map.put("price", price);
+        map.put("default_price", defaultPrice);
+        map.put("extra_price", extraPrice);
         return map;
     }
 }
