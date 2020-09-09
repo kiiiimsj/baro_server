@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -352,26 +353,37 @@ public class OwnerService {
         jsonObject.put("message", "정상 처리 되었습니다.");
         return jsonObject;
     }
-//    @SuppressWarnings("unchecked")
-//    public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
-//        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-//        try{
-//            List<Integer> priceList = ownerDao.setStatistics(requestDto);
-//            Iterator<Integer> priceIterator = priceList.iterator();
-//            jsonObject.put("result", true);
-//            jsonObject.put("message", "통계내역 가져오기 성공");
-//            org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
-//            while(priceIterator.hasNext()){
-//                int price = priceIterator.next();
-//                org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
-//                objectOfOrder.put("price", price);
-//                arrayOfOrders.add(objectOfOrder);
-//            }
-//            jsonObject.put("statistics", arrayOfOrders);
-//        }
-//        catch (Exception e){
-//            jsonObject = ObjectMaker.getJSONObjectWithException(e);
-//        }
-//        return jsonObject;
-//    }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            List<PriceByDayVo> defaultPriceList = ownerDao.setStatistics(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "통계내역 가져오기 성공");
+
+            org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
+
+            for(int i = 0; i< defaultPriceList.size();i++){
+                String date = defaultPriceList.get(i).getDate();
+
+                int defaultPrice = defaultPriceList.get(i).getDefaultPrice();
+                int extraPrice = defaultPriceList.get(i).getExtraPrice();
+                int totalPrice = defaultPrice + extraPrice;
+                System.out.println(date);
+                System.out.println(defaultPrice+"");
+                System.out.println(extraPrice+"");
+                System.out.println(totalPrice+"");
+                org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+                objectOfOrder.put("date", date);
+                objectOfOrder.put("price", totalPrice);
+                arrayOfOrders.add(objectOfOrder);
+
+            }
+            jsonObject.put("statistics", arrayOfOrders);
+        }
+        catch (StatisticsNotFoundException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }

@@ -45,6 +45,18 @@ public class SQL {
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
         public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
         public static final String UPDATE_STATUS_COMPLETE="UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
+        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(sum(menu_defaultprice*order_count),0) AS default_total_price\n" +
+                "FROM orders\n" +
+                "where store_id=? and order_date BETWEEN ? AND ?\n" +
+                "GROUP BY DATE(order_date)) AS A\n" +
+                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,ifnull(SUM(extra_price*extra_count),0) AS extra_total_price\n" +
+                "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id \n" +
+                "where store_id=? and order_date BETWEEN ? AND ? \n" +
+                "GROUP BY DATE(order_date)) AS B \n" +
+                "ON A.dater1=B.dater2\n";
+
+
+        //public static final String FIND_STORE_STATISTICS_EXTRA="SELECT DATE(order_date),IFNULL(SUM(extra_price),0) as extra_total_price FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id where store_id=? and order_date BETWEEN ? AND ? GROUP BY DATE(order_date)";
     }
 
     public static class Extra {
@@ -91,13 +103,13 @@ public class SQL {
         public static final String FIND_ALL_ORDER_INFO_BY_RECEIPT_ID = "SELECT phone, sum(order_count) as CNT, order_date, order_state from orders where receipt_id=?";
         public static final String UPDATE_ORDER_AS_CANCEL = "UPDATE orders SET order_state='CANCEL' WHERE receipt_id=?";
         public static final String UPDATE_ORDER_AS_DONE = "UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
-        public static final String FIND_RECEIPT_IDS_OF_DONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND order_date between ? AND ? AND (order_state='DONE' OR order_state='CANCEL') limit ?,20";
+        public static final String FIND_RECEIPT_IDS_OF_DONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND order_date between ? AND ? AND (order_state='DONE' OR order_state='CANCEL') ORDER BY order_date DESC limit ?,20";
     }
 
     public static class ExtraOrder {
         public static final String INSERT_EXTRA_ORDER = "INSERT INTO extraorders VALUES(default, ?, ?, ?, ?, ?)";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(extra_price*extra_count*order_count), 0) from extraorders natural join orders where receipt_id=?";
-        public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(extra_price*extra_count*order_count),0) from extraorders natural join orders where store_id=? AND order_date between ? AND ?";
+        public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(extra_price*extra_count*order_count), 0) from extraorders natural join orders where store_id=? AND order_date between ? AND ?";
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders NATURAL JOIN extras WHERE order_id=?";
     }
 

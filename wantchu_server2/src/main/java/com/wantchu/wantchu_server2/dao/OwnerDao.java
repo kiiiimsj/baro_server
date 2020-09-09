@@ -5,6 +5,7 @@ import com.wantchu.wantchu_server2.member.exception.MemberPhoneNotFoundException
 import com.wantchu.wantchu_server2.owner.dto.*;
 import com.wantchu.wantchu_server2.owner.exception.OwnerLoginException;
 import com.wantchu.wantchu_server2.owner.exception.OwnerPassUpdateException;
+import com.wantchu.wantchu_server2.owner.exception.StatisticsNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -430,10 +432,33 @@ public class OwnerDao {
            return preparedStatement;
         });
     }
-//    public List<Integer> setStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
-//        List<Integer> list = jdbcTemplate.query(
-//                SQL.Owner.FIND_STORE_STATISTICS,
-//                (resultSet, i) -> resultSet.getInt("price")
+    public List<PriceByDayVo> setStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException {
+        List<PriceByDayVo> list = jdbcTemplate.query(
+                SQL.Owner.FIND_STORE_STATISTICS_DEFAULT,
+                (resultSet, i) -> {
+                    PriceByDayVo priceByDayVo = new PriceByDayVo();
+                    priceByDayVo.setDate(resultSet.getString("dater1"));
+                    priceByDayVo.setDefaultPrice(resultSet.getInt("default_total_price"));
+                    priceByDayVo.setExtraPrice(resultSet.getInt("extra_total_price"));
+                    return priceByDayVo;
+                }
+                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date(),requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
+        if(list.size() == 0){
+            throw new StatisticsNotFoundException();
+        }
+        else{
+            return list;
+        }
+    }
+//    public List<PriceByDayVo> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+//        List<PriceByDayVo> list = jdbcTemplate.query(
+//                SQL.Owner.FIND_STORE_STATISTICS_EXTRA,
+//                (resultSet, i) -> {
+//                    PriceByDayVo priceByDayVo = new PriceByDayVo();
+//                    priceByDayVo.setDate(resultSet.getString("DATE(order_date)"));
+//                    priceByDayVo.setPrice(resultSet.getInt("extra_total_price"));
+//                    return priceByDayVo;
+//                }
 //                ,requestDto.getStore_id(),requestDto.getStart_date(), requestDto.getEnd_date());
 //        if(list.size() == 0){
 //            throw new StatisticsNotFoundException();
