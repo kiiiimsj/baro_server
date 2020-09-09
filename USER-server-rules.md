@@ -1766,3 +1766,50 @@
   * (1) 서버에 고유id값 등록 (ex. 점주라면 가게id값) : `connect:::가게id값`
   * (2) 특정 가게id에 메시지 보내기 : `message:::가게id값:::보낼메시지`
   * __connect, message는 고정으로 보내야 하는 것임__
+
+ex) 안드로이드 예제
+`USER`
+uri = new URI("ws://15.165.22.64:8080/websocket");
+webSocketClient.send("connect:::" + phone);
+webSocketClient.send("message:::" + store_id + ":::" + message);
+
+`OWNER`
+uri = new URI("ws://15.165.22.64:8080/websocket");
+webSocketClient.send("connect:::" + store_id);
+
+아래 예제와 같은 json방식으로 message를 웹소켓으로 보내주면된다.
+```json
+{
+    "coupon_id":-1,
+    "discount_price":-1,
+    "each_count":1,
+    "order_date":"2020/09/09 10:31:21",
+    "orders":
+    [
+        {
+            "extras":
+            [
+                {
+                    "extra_count":1,
+                    "extra_id":1,
+                    "extra_name":"HOT",
+                    "extra_price":0
+                },
+                {
+                    "extra_count":1,
+                    "extra_id":66,
+                    "extra_name":"기본 크기",
+                    "extra_price":0
+                }
+            ],
+            "menu_defaultprice":1500,
+            "menu_id":4,
+            "menu_name":"아메리카노",
+            "order_count":1
+        }
+    ],
+    "phone":"01093756927","receipt_id":"5f58aef2878a5600247386b5",
+    "store_id":1,
+    "total_price":1500
+}
+```
