@@ -20,7 +20,7 @@ public class FcmUtil {
             InputStream inputStream = new ClassPathResource("/fcm/adminSDK.json").getInputStream();
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(inputStream))
-                    .setDatabaseUrl("https://wantchu-458d8.firebaseio.com")
+                    .setDatabaseUrl("https://baro-69065.firebaseio.com")
                     .build();
 
             if(FirebaseApp.getApps().isEmpty()) {
