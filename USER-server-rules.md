@@ -20,7 +20,7 @@
 <h1>회원 관련 API</h1>
 
 * 회원의 로그인 처리
-  * URL : http://15.165.22.64:8080/MemberLogin.do
+  * URL : http://54.180.56.44:8080/MemberLogin.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -46,7 +46,7 @@
 ```
 
 * 회원 전화번호 중복 체크
-  * URL : http://15.165.22.64:8080/MemberPhoneCheck.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/MemberPhoneCheck.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=중복체크할전화번호` 형식으로 전달__
   * 응답 형식
@@ -58,7 +58,7 @@
 ```
 
 * 회원 등록 처리
-  * URL : http://15.165.22.64:8080/MemberRegister.do
+  * URL : http://54.180.56.44:8080/MemberRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -85,7 +85,7 @@
 ```
 
 * 회원 비밀번호 변경 처리
-  * URL : http://15.165.22.64:8080/MemberPassUpdate.do
+  * URL : http://54.180.56.44:8080/MemberPassUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -100,7 +100,7 @@
 ```
 
 * 회원 이메일 변경 처리
-  * URL : http://15.165.22.64:8080/MemberEmailUpdate.do
+  * URL : http://54.180.56.44:8080/MemberEmailUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -119,7 +119,7 @@
 <h1>공지 관련 API</h1>
 
 * 모든 공지 읽어오기
-  * URL : http://15.165.22.64:8080/NoticeFindAll.do
+  * URL : http://54.180.56.44:8080/NoticeFindAll.do
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음__
   * 응답 형식
@@ -165,7 +165,7 @@
 ```
 
 * 특정 공지 읽어오기
-  * URL : http://15.165.22.64:8080/NoticeFindById.do?notice_id=id값
+  * URL : http://54.180.56.44:8080/NoticeFindById.do?notice_id=id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `notice_id=id값` 형태로 전달
   * 응답 형식
@@ -189,7 +189,7 @@
 ```
 
 * 공지사항 등록 처리
-  * URL : http://15.165.22.64:8080/NoticeSave.do
+  * URL : http://54.180.56.44:8080/NoticeSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -206,7 +206,7 @@
 ```
 
 * 공지사항 notice_code 별로 가져오기
-  * URL : http://15.165.22.64:8080/NoticeFindByCode.do?notice_code=공지코드
+  * URL : http:54.180.56.44:8080/NoticeFindByCode.do?notice_code=공지코드
   * HTTP Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 보내는 `notice_code`는 반드시 `EVENT`, `ALERT`, `NOTICE` 중 하나__
   * 응답 형식
@@ -244,7 +244,7 @@
 <h1>가게 종류 관련 API</h1>
 
 * 가게 종류 목록 가져오기
-  * URL : http://15.165.22.64:8080/TypeFindAll.do
+  * URL : http://54.180.56.44:8080/TypeFindAll.do
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
   * 응답 형식
@@ -288,7 +288,7 @@
 <h1>가게 관련 API</h1>
 
 * 특정 가게의 정보 가져오기
-  * URL : http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
+  * URL : http://54.180.56.44:8080/StoreFindById.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 전송__
   * 응답 형식
@@ -319,7 +319,7 @@
 ```
 
 * 특정 이름의 가게 id만 가져오기
-  * URL : http://15.165.22.64:8080/StoreFindIdByStoreName.do?store_name=가게명
+  * URL : http://54.180.56.44:8080/StoreFindIdByStoreName.do?store_name=가게명
   * Http Method : GET
   * 제공해야 하는 형식 : __없음, 파라미터로 `store_name=가게명` 전송, 만약 가게명에 공백이 있을 경우 `%20`을 공백 자리에 넣어준다.__   
     예시 : 가게명이 `TEST CAFE2` 인 경우의 파라미터 : `store_name=TEST%20CAFE2`
@@ -339,8 +339,119 @@
 }
 ```
 
+* 특정 종류의 가게 정보 리스트 가져오기
+  * URL : http://54.180.56.44:8080/StoreFindByType.do?type_code=가게type코드
+  * HTTP Method : GET
+  * 제공해야 하는 형식 : __없음, 파라미터로 `type_code=타입코드` 전송__
+  * 응답 형식
+```json
+// 해당 type_code를 가진 가게 정보들이 존재할 때 (URL : http://localhost:8080/StoreFindByType.do?type_code=CAFE)
+{
+    "result": true,
+    "store": [
+        {
+            "store_id": 1,
+            "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
+            "store_latitude": 37.4952,
+            "is_open": "Y",
+            "store_longitude": 126.9565,
+            "store_name": "test cafe",
+            "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 3,
+            "store_info": "CAFE2 의 정보 입니다.",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 0.1,
+            "store_name": "TEST CAFE2",
+            "store_location": "테스트시 테스트동",
+            "store_image": "test_cafe2.png"
+        },
+        {
+            "store_id": 4,
+            "store_info": "CAFE3 의 정보 입니다.",
+            "store_latitude": 0.2,
+            "is_open": "N",
+            "store_longitude": 0.2,
+            "store_name": "TEST CAFE3",
+            "store_location": "테스트시 테스트2동",
+            "store_image": "test_cafe3.png"
+        },
+        {
+            "store_id": 5,
+            "store_info": "CAFE4 의 정보 입니다.",
+            "store_latitude": 0.3,
+            "is_open": "N",
+            "store_longitude": 0.3,
+            "store_name": "TEST CAFE4",
+            "store_location": "테스트시 테스트3동",
+            "store_image": "test_cafe4.png"
+        },
+        {
+            "store_id": 20,
+            "store_info": "가게정보",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 1.1,
+            "store_name": "테스트 카페5",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 21,
+            "store_info": "가게정보",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 1.1,
+            "store_name": "테스트 카페6",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 22,
+            "store_info": "가게정보",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 1.1,
+            "store_name": "테스트 카페7",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 23,
+            "store_info": "가게정보",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 1.1,
+            "store_name": "테스트 카페8",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 24,
+            "store_info": "가게정보",
+            "store_latitude": 0.1,
+            "is_open": "N",
+            "store_longitude": 1.1,
+            "store_name": "테스트 카페9",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        }
+    ],
+    "message": "type_code별로 가게 정보 가져오기 성공"
+}
+
+// 해당 type_code가 존재하지 않는 경우
+{
+    "result": false,
+    "message": "해당 type_code를 가진 가게 정보가 존재하지 않습니다."
+}
+```
+
 * 가게명 검색 API
-  * URL : http://15.165.22.64:8080/StoreSearch.do?keyword=검색어
+  * URL : http://54.180.56.44:8080/StoreSearch.do?keyword=검색어
   * HTTP Method : GET
   * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어` 지정__
   * 응답 형식
@@ -417,7 +528,7 @@
 ```
 
 * type_code로 가게 정보 가져오기
-  * URL : http://15.165.22.64:8080/StoreInfoFindByType.do?type_code=타입코드값
+  * URL : http://54.180.56.44:8080/StoreInfoFindByType.do?type_code=타입코드값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `type_code=?` 형식으로 전송__
   * 응답 형식
@@ -478,7 +589,7 @@
 ```
 
 * 모든 가게의 위치 정보와 이름 가져오기
-  * URL : http://15.165.22.64:8080/StoreAllLocation.do
+  * URL : http://54.180.56.44:8080/StoreAllLocation.do
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음__
   * 응답 결과
@@ -520,7 +631,7 @@
 <h1>카테고리 관련 API</h1>
 
 * store_id별로 카테고리 가져오기
-  * URL : http://15.165.22.64:8080/CategoryFindByStoreId.do?store_id=가게id값
+  * URL : http://54.180.56.44:8080/CategoryFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 형식으로 전송__
   * 응답 형식
@@ -560,10 +671,8 @@
 }
 ```
 
-<hr/>
-
 * 결제하기 클릭 직전, 마지막으로 해당 매장의 영업 유무 확인하기
-  * URL : http://15.165.22.64:8080/StoreCheckIsOpen.do?store_id=가게id값
+  * URL : http://54.180.56.44:8080/StoreCheckIsOpen.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -585,7 +694,7 @@
 <h1>메뉴 관련 API</h1>
 
 * 가게의 모든 메뉴 목록 가져오기
-  * URL : http://15.165.22.64:8080/MenuFindByStoreId.do?store_id=가게id값
+  * URL : http://54.180.56.44:8080/MenuFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -606,6 +715,54 @@
         {
             "store_id": 1,
             "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카푸치노",
+            "menu_name": "카푸치노",
+            "menu_defaultprice": 2000,
+            "menu_id": 5
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카페라떼",
+            "menu_name": "카페라떼",
+            "menu_defaultprice": 2000,
+            "menu_id": 6
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 헤이즐넛라때",
+            "menu_name": "헤이즐넛라떼",
+            "menu_defaultprice": 2300,
+            "menu_id": 7
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카라멜라떼",
+            "menu_name": "카라멜라떼",
+            "menu_defaultprice": 2300,
+            "menu_id": 8
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카페모카",
+            "menu_name": "카페모카",
+            "menu_defaultprice": 2700,
+            "menu_id": 9
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 화이트모카",
+            "menu_name": "화이트모카",
+            "menu_defaultprice": 2700,
+            "menu_id": 10
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
             "menu_info": "좋은 원두를 사용한 민트카페모카",
             "menu_name": "민트카페모카",
             "menu_defaultprice": 2700,
@@ -618,6 +775,94 @@
             "menu_name": "카라멜마끼아또",
             "menu_defaultprice": 3000,
             "menu_id": 12
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 에스프레소",
+            "menu_name": "에스프레소",
+            "menu_defaultprice": 1500,
+            "menu_id": 13
+        },
+        {
+            "store_id": 1,
+            "category_id": 2,
+            "menu_info": "좋은 레몬을 사용한 레몬에이드",
+            "menu_name": "레몬에이드",
+            "menu_defaultprice": 2800,
+            "menu_id": 14
+        },
+        {
+            "store_id": 1,
+            "category_id": 2,
+            "menu_info": "좋은 자몽을 사용한 자몽에이드",
+            "menu_name": "자몽에이드",
+            "menu_defaultprice": 2900,
+            "menu_id": 15
+        },
+        {
+            "store_id": 1,
+            "category_id": 2,
+            "menu_info": "좋은 체리를 사용한 체리에이드",
+            "menu_name": "체리에이드",
+            "menu_defaultprice": 3000,
+            "menu_id": 16
+        },
+        {
+            "store_id": 1,
+            "category_id": 2,
+            "menu_info": "좋은 오렌지를 사용한 오렌지에이드",
+            "menu_name": "오렌지에이드",
+            "menu_defaultprice": 3100,
+            "menu_id": 17
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 피치우롱티",
+            "menu_name": "피치우롱티",
+            "menu_defaultprice": 3000,
+            "menu_id": 18
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 캐모마일자몽티",
+            "menu_name": "캐모마일 자몽티",
+            "menu_defaultprice": 3000,
+            "menu_id": 19
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 녹차라떼",
+            "menu_name": "녹차라떼",
+            "menu_defaultprice": 2700,
+            "menu_id": 20
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 오곡라떼",
+            "menu_name": "오곡라떼",
+            "menu_defaultprice": 2700,
+            "menu_id": 21
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 고구마라떼",
+            "menu_name": "고구마라떼",
+            "menu_defaultprice": 2700,
+            "menu_id": 22
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 초콜렛라떼",
+            "menu_name": "초콜렛라떼",
+            "menu_defaultprice": 2700,
+            "menu_id": 23
         },
         {
             "store_id": 1,
@@ -650,6 +895,78 @@
             "menu_name": "페퍼민트",
             "menu_defaultprice": 2300,
             "menu_id": 27
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 캐모마일",
+            "menu_name": "캐모마일",
+            "menu_defaultprice": 2300,
+            "menu_id": 28
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 복숭아아이스티",
+            "menu_name": "복숭아아이스티",
+            "menu_defaultprice": 2500,
+            "menu_id": 29
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 레몬아이스티",
+            "menu_name": "레몬아이스티",
+            "menu_defaultprice": 2500,
+            "menu_id": 30
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 자몽차",
+            "menu_name": "자몽차",
+            "menu_defaultprice": 2500,
+            "menu_id": 31
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 레몬차",
+            "menu_name": "레몬차",
+            "menu_defaultprice": 2500,
+            "menu_id": 32
+        },
+        {
+            "store_id": 1,
+            "category_id": 3,
+            "menu_info": "이건 유자차",
+            "menu_name": "유자차",
+            "menu_defaultprice": 2500,
+            "menu_id": 33
+        },
+        {
+            "store_id": 1,
+            "category_id": 4,
+            "menu_info": "맛있는 쿠키",
+            "menu_name": "쿠키",
+            "menu_defaultprice": 1000,
+            "menu_id": 34
+        },
+        {
+            "store_id": 1,
+            "category_id": 4,
+            "menu_info": "맛있는 샌드위치",
+            "menu_name": "샌드위치",
+            "menu_defaultprice": 2000,
+            "menu_id": 35
+        },
+        {
+            "store_id": 1,
+            "category_id": 4,
+            "menu_info": "맛있는 케이크",
+            "menu_name": "케이크",
+            "menu_defaultprice": 3000,
+            "menu_id": 36
         }
     ]
 }
@@ -660,12 +977,113 @@
     "message": "해당 store_id를 가진 메뉴 정보가 없습니다."
 }
 ```
+
+* store_id와 category_id로 메뉴 정보 가져오기
+  * URL : http://54.180.56.44:8080/MenuFindByStoreAndCategoryId.do?store_id=가게id값&category_id=카테고리id값
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __없음, `store_id=가게id값` 와 `category_id=카테고리id값` 의 총 2개 파라미터 전달__
+  * 응답 형식
+```json
+// store_id와 category_id로 메뉴 정보 가져오기 성공 시
+{
+    "result": true,
+    "message": "store_id와 category_id로 메뉴 가져오기 성공",
+    "menu": [
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 아메키라노",
+            "menu_name": "아메리카노",
+            "menu_defaultprice": 1500,
+            "menu_id": 4
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카푸치노",
+            "menu_name": "카푸치노",
+            "menu_defaultprice": 2000,
+            "menu_id": 5
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카페라떼",
+            "menu_name": "카페라떼",
+            "menu_defaultprice": 2000,
+            "menu_id": 6
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 헤이즐넛라때",
+            "menu_name": "헤이즐넛라떼",
+            "menu_defaultprice": 2300,
+            "menu_id": 7
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카라멜라떼",
+            "menu_name": "카라멜라떼",
+            "menu_defaultprice": 2300,
+            "menu_id": 8
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카페모카",
+            "menu_name": "카페모카",
+            "menu_defaultprice": 2700,
+            "menu_id": 9
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 화이트모카",
+            "menu_name": "화이트모카",
+            "menu_defaultprice": 2700,
+            "menu_id": 10
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 민트카페모카",
+            "menu_name": "민트카페모카",
+            "menu_defaultprice": 2700,
+            "menu_id": 11
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 카라멜마끼아또",
+            "menu_name": "카라멜마끼아또",
+            "menu_defaultprice": 3000,
+            "menu_id": 12
+        },
+        {
+            "store_id": 1,
+            "category_id": 1,
+            "menu_info": "좋은 원두를 사용한 에스프레소",
+            "menu_name": "에스프레소",
+            "menu_defaultprice": 1500,
+            "menu_id": 13
+        }
+    ]
+}
+
+// store_id 또는 category_id가 잘못되었을 경우
+{
+    "result": false,
+    "message": "해당 store_id와 category_id를 가진 메뉴 정보가 존재하지 않습니다."
+}
+```
 <hr/>
 
 <h1>Extra 관련 API</h1>
 
 * menu_id 별로 extra 목록 가져오기
-  * URL : http://15.165.22.64:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
+  * URL : http://54.180.56.44:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `menu_id=메뉴id값` 전송__
   * 응답 형식
@@ -730,9 +1148,9 @@
 <h1>사진 관련 API</h1>
 
 * 이벤트 사진 가져오기
-  * URL(1, 이벤트 사진 가져오기) : http://15.165.22.64:8080/ImageEvent.do?image_name=이미지명
-  * URL(2, 가게 사진 가져오기) : http://15.165.22.64:8080/ImageStore.do?image_name=이미지명
-  * URL(3, 가게 타입 사진 가져오기) : http://15.165.22.64:8080/ImageType.do?image_name=이미지명
+  * URL(1, 이벤트 사진 가져오기) : http://54.180.56.44:8080/ImageEvent.do?image_name=이미지명
+  * URL(2, 가게 사진 가져오기) : http://54.180.56.44:8080/ImageStore.do?image_name=이미지명
+  * URL(3, 가게 타입 사진 가져오기) : http://54.180.56.44:8080/ImageType.do?image_name=이미지명
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터에 `image_name=이미지명`으로 전달
   * 응답 형식 : JSON이 아닌 byte[] 배열, slack에 올린 `MainActivity.java` 참고
@@ -740,7 +1158,7 @@
 <h1>주문 관련 API</h1>
 
 * 주문 내역 저장 처리
-  * URL : http://15.165.22.64:8080/OrderInsert.do
+  * URL : http://54.180.56.44:8080/OrderInsert.do
   * Http Method : POST
   * 제공해야 하는 JSON형식
     * __`discount_price`와 `coupon_id`는 사용자가 쿠폰을 사용하지 않으면 둘 다 `-1`로 넣어주시면 됩니다__. 
@@ -859,7 +1277,7 @@
 ```
 
 * 주문 내역 리스트 가져오기
-  * URL : http://15.165.22.64:8080/OrderListFindByPhone.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/OrderListFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
   * 응답 형식
@@ -886,7 +1304,7 @@
 ```
 
 * 주문 상세 정보 가져오기
-  * URL : http://15.165.22.64:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
+  * URL : http://54.180.56.44:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=?`형식으로 전달__
   * 응답 형식
@@ -937,8 +1355,8 @@
 }
 ```
 
-* 주문 횟수 가져오기(아직은 사용안하지만 나중에 이벤트용으로 쓸듯)
-  * URL : http://15.165.22.64:8080/OrderTotalCountByPhone.do?phone=?
+* 주문 횟수 가져오기
+  * URL : http://54.180.56.44:8080/OrderTotalCountByPhone.do?phone=?
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
   * 응답 형식
@@ -949,54 +1367,12 @@
 }
 ```
 
-* 주문한 물품들의 진행 현황 보기(ACCEPT or PREPARING)
-```
-CF.
-ACCEPT -> 회원이 주문을 한 접수중의 상태
-PREPARING -> 업주가 회원을 주문을 받아 시간설정을 하고 제조중인 상태
-DONE -> 완료의 상태
-CANCEL -> 결제취소의 상태
-```
-* URL :  http://15.165.22.64:8080/OrderProgressing.do?phone=전화번호
-* Http Method : GET
-* 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
-* 응답형식
-```json
-//성공시
-{
- "result": true,
-    "message": "전화번호로 주문 정보 가져오기 성공",
-    "order": [
-        {
-            "order_date": "2020년 8월 26일 14시 29분 8초",
-            "receipt_id": "5f45f31b2fa5c200249c41a2",
-            "store_name": "test cafe",
-            "total_price": 1500,
-            "order_state": "PREPARING",
-            "total_count": 1
-        },
-        {
-            "order_date": "2020년 9월 7일 8시 2분 8초",
-            "receipt_id": "5f55e8f7878a56003972e87b",
-            "store_name": "test cafe",
-            "total_price": 1500,
-            "order_state": "ACCEPT",
-            "total_count": 1
-        }
-    ]
-}
-//실패시
-
-```
-
-
-
 <hr/>
 
 <h1>즐겨찾기 관련 API</h1>
 
 * 즐겨찾기 정보 가져오기
-  * URL : http://15.165.22.64:8080/FavoriteList.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/FavoriteList.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`로 전달__
   * 응답 형식
@@ -1037,7 +1413,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 즐겨찾기 등록 처리
-  * URL : http://15.165.22.64:8080/FavoriteSave.do
+  * URL : http://54.180.56.44:8080/FavoriteSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -1061,7 +1437,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 즐겨찾기 삭제 처리
-  * URL : http://15.165.22.64:8080/FavoriteDelete.do
+  * URL : http://54.180.56.44:8080/FavoriteDelete.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -1090,7 +1466,7 @@ CANCEL -> 결제취소의 상태
 <h1>쿠폰 관련 API</h1>
 
 * 쿠폰 리스트 가져오기
-  * URL : http://15.165.22.64:8080/CouponFindByPhone.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/CouponFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 응답 형식
@@ -1107,11 +1483,11 @@ CANCEL -> 결제취소의 상태
     "coupon": [
         {
             "coupon_title": "1000원 할인권",
-            "coupon_condition": 1000,
+            "coupon_condition": 0,
             "coupon_id": 1,
             "coupon_content": "모든 가게에서 1000원 할인 가능!",
             "coupon_enddate": "2020년 9월 21일 17시 25분 30초",
-            "coupon_discount": 1000,
+            "coupon_discount": "1000",
             "coupon_type": "DISCOUNT"
         },
         {
@@ -1120,7 +1496,7 @@ CANCEL -> 결제취소의 상태
             "coupon_id": 2,
             "coupon_content": "모든 가게에서 10% 할인 가능!",
             "coupon_enddate": "2020년 9월 21일 17시 25분 50초",
-            "coupon_discount": 10,
+            "coupon_discount": "10",
             "coupon_type": "SALE"
         },
         {
@@ -1129,16 +1505,7 @@ CANCEL -> 결제취소의 상태
             "coupon_id": 3,
             "coupon_content": "모든 가게에서 5000원 할인 가능!",
             "coupon_enddate": "2020년 9월 21일 17시 26분 11초",
-            "coupon_discount": 5000,
-            "coupon_type": "DISCOUNT"
-        },
-        {
-            "coupon_title": "5000원 할인권",
-            "coupon_condition": 9000,
-            "coupon_id": 3,
-            "coupon_content": "모든 가게에서 5000원 할인 가능!",
-            "coupon_enddate": "2020년 9월 21일 17시 26분 11초",
-            "coupon_discount": 5000,
+            "coupon_discount": "5000",
             "coupon_type": "DISCOUNT"
         }
     ],
@@ -1153,7 +1520,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 장바구니에서 결제 전에 사용 가능한 쿠폰 목록 가져오기
-  * URL : http://15.165.22.64:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
+  * URL : http://54.180.56.44:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`와 `price=전체금액` 의 총 2개 전달__
   * 응답 형식
@@ -1191,7 +1558,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 쿠폰 개수 가져오기
-  * URL : http://15.165.22.64:8080/CouponCountByPhone.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/CouponCountByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 주의 사항 : 응답 형식에서 `result`는 무조건 `true`가 온다. 쿠폰이 없는 경우에는 `coupon_count`값이 `0`이 온다.
@@ -1213,7 +1580,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 쿠폰 사용 내역 가져오기
-  * URL : http://15.165.22.64:8080/CouponHistoryByPhone.do?phone=전화번호
+  * URL : http://54.180.56.44:8080/CouponHistoryByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달
   * 응답 형식
@@ -1242,7 +1609,7 @@ CANCEL -> 결제취소의 상태
 <h1>결제 관련 API</h1>
 
 * User Token 발급받는 API
-  * URL : http://15.165.22.64:8080/BillingGetUserToken.do
+  * URL : http://54.180.56.44:8080/BillingGetUserToken.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
     __`user_id`는 사용자 고유값이나, 우리의 경우 전화번호로 사용자 고유값을 사용하므로 `user_id`와 `phone`이 동일하다__
@@ -1263,7 +1630,7 @@ CANCEL -> 결제취소의 상태
 <h1>1:1 문의 내역 관련 API</h1>
 
 * 문의 내역 리스트 가져오기
-  * URL : http://15.165.22.64:8080/InquiryListFindByEmail.do?email=이메일
+  * URL : http://54.180.56.44:8080/InquiryListFindByEmail.do?email=이메일
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `email=사용자이메일` 전달__
   * 응답 형식
@@ -1314,7 +1681,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 문의 내역 상세 정보 가져오기
-  * URL : http://15.165.22.64:8080/InquiryFindById.do?inquiry_id=문의내역id값
+  * URL : http://54.180.56.44:8080/InquiryFindById.do?inquiry_id=문의내역id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `inquiry_id=문의내역id값` 전달__
   * 응답 형식
@@ -1339,7 +1706,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 1:1 문의 등록 하기
-  * URL : http://15.165.22.64:8080/InquirySave.do
+  * URL : http://54.180.56.44:8080/InquirySave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
     __주의 : `title`, `content`는 반드시 공백이 아니여야 한다.__
@@ -1366,7 +1733,7 @@ CANCEL -> 결제취소의 상태
 ```
 
 * 결제 검증 처리
-  * URL : http://15.165.22.64:8080/BillingVerify.do
+  * URL : http://54.180.56.44:8080/BillingVerify.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -1395,44 +1762,7 @@ CANCEL -> 결제취소의 상태
 
 <h1>Socket Protocol</h1>
 
-* URL : ws://15.165.22.64:8080/websocket
-
 * Web Socket 메시지 방식은 아래의 규칙을 따른다.
   * (1) 서버에 고유id값 등록 (ex. 점주라면 가게id값) : `connect:::가게id값`
   * (2) 특정 가게id에 메시지 보내기 : `message:::가게id값:::보낼메시지`
   * __connect, message는 고정으로 보내야 하는 것임__
-  * message에 아래와 같은 json형식으로 데이터를 담아 보낸다.
-```json
-{
-    "coupon_id":-1, //쿠폰 적용 안된것
-    "discount_price":-1,
-    "each_count":1,
-    "order_date":"2020/09/09 02:17:29",
-    "orders":
-    [
-        {
-        "extras":
-            [
-                {"extra_count":1,
-                "extra_id":1,
-                "extra_name":"HOT",
-                "extra_price":0
-                },
-                {"extra_count":1,
-                "extra_id":66,
-                "extra_name":"기본 크기",
-                "extra_price":0
-                }
-            ],
-        "menu_defaultprice":1500,
-        "menu_id":4,
-        "menu_name":"아메리카노",
-        "order_count":1
-        }
-    ],
-    "phone":"01093756927",
-    "receipt_id":"5f583b2e8f07510020236186",
-    "store_id":1,
-    "total_price":1500
-}
-```

@@ -177,8 +177,7 @@
             "extra_price":"extra_price",
             "menu_id":"menu_id",
             "is_required":"is_required",
-            "extra_group":"extra_group",
-            "extra_maxcount":"extra_maxcount"
+            "extra_group":"extra_group"
         },
         {
             "update_type":"UPDATE_STORE_NAME",
@@ -292,42 +291,6 @@
 }
 ```
 
-* 모든 주문 내역 정보 보기
-  * URL : http://54.180.56.44:8080/OrderFindAllByStoreId.do?store_id=가게id값&start=시작점&end=가져올개수
-  * Http Method : GET
-  * 제공해야하는 형식 : __`store_id`:가게 id값, `start`:페이징 처리를 위해 가져올 단위, `end`:한 페이지당 가져올 목록의 개수
-  * 응답 형식
-```json
-// 만약 144개의 주문이 존재하는데, start가 140이고 end가 10이면 140부터 144까지 5개만 가져온다.
-
-// 주문 내역이 존재하는 경우
-
-{
-    "result": true,
-    "orders": [
-        {
-            "order_date": "2020년 8월 28일 22시 14분 47초",
-            "order_count": 1,
-            "total_price": 1500,
-            "phone": "01093756927",
-            "discount_price": 0,
-            "receipt_id": "5f49033f2fa5c20033d41e57",
-            "order_state": "PREPARING"
-        },
-        {
-            "order_date": "2020년 8월 29일 18시 20분 38초",
-            "order_count": 1,
-            "total_price": 1500,
-            "phone": "01029093199",
-            "discount_price": 0,
-            "receipt_id": "5f4a1dd9878a560039ded415",
-            "order_state": "PREPARING"
-        }
-    ],
-    "message": "주문 내역 가져오기 성공."
-}
-```
-
 * 처리해야할 주문 내역의 상세 정보 보기
   * URL : http://54.180.56.44:8080/OrderFindByReceiptId.do?receipt_id=영수증번호
   * Http Method : GET
@@ -367,17 +330,11 @@
     ],
     "message": "상세 주문 내역 가져오기 성공"
 }
-
-// 주문 내역이 더 이상 존재하지 않거나 존재하지 않는 경우
-{
-    "result": false,
-    "message": "주문 내역이 존재하지 않습니다."
-}
 ```
 
 * 주문 결제 취소 처리
   * URL : http://54.180.56.44:8080/BillingCancel.do
-  * Http Method : POST
+  * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
 {
@@ -466,15 +423,3 @@
 }
 ```
 
-* 모든 주문 내역의 총 개수 구하기
-  * URL : http://54.180.56.44:8080/OrderFindCount.do?store_id=가게id값
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
-  * 응답 형식
-```json
-{
-    "order_count": 12
-}
-
-// 주문 내역이 존재하지 않으면 0으로 옴.
-```
