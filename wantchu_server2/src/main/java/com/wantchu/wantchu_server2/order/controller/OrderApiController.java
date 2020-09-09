@@ -92,4 +92,11 @@ public class OrderApiController {
         WriteToServer.send(response, jsonObject);
     }
 
+    @GetMapping("/OrderProgressingDetail.do")
+    public void showOrderProgressingDetails(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
+        String receipt_id = request.getParameter("receipt_id");
+        org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
+        WriteToServer.send(response,jsonObject);
+    }
+
 }
