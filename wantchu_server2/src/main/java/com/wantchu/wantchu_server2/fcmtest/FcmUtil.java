@@ -17,7 +17,7 @@ import java.io.InputStream;
 public class FcmUtil {
 
     public void send_FCM(String tokenId, String title, String content, org.json.simple.JSONObject jsonObject) throws IOException, FirebaseMessagingException {
-            InputStream inputStream = new ClassPathResource("/fcm/adminSDK.json").getInputStream();
+            InputStream inputStream = new ClassPathResource("baro-69065-firebase-adminsdk-78yyx-a312832ead.json").getInputStream();
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(inputStream))
                     .setDatabaseUrl("https://baro-69065.firebaseio.com")
