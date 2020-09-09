@@ -191,41 +191,41 @@ public class OrderService {
         return jsonObject;
     }
 
-    @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject findAllOrdersByStoreId(int store_id, int start, int end) {
-        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        try {
-            List<String> receiptIdList = orderDao.findReceiptIdsOfAllOrders(store_id, start, end);
-            Iterator<String> receiptIdIterator = receiptIdList.iterator();
-            jsonObject.put("result", true);
-            jsonObject.put("message", "주문 내역 가져오기 성공.");
-            org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
-            while(receiptIdIterator.hasNext()) {
-                String receipt_id = receiptIdIterator.next();
-                org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
-                objectOfOrder.put("receipt_id", receipt_id);
-                OrderVo orderVo = orderDao.findAllOrderInfoByReceiptId(receipt_id);
-                objectOfOrder.put("phone", orderVo.getPhone());
-                objectOfOrder.put("order_count", orderVo.getOrder_count());
-                objectOfOrder.put("order_date", DateConverter.convertDateWithTime(orderVo.getOrder_date()));
-                objectOfOrder.put("order_state", orderVo.getOrder_state());
-                int extraOrderSum = orderDao.findExtraOrderTotalPrice(receipt_id);
-                int menuDefaultPriceSum = orderDao.findOrderTotalPrice(receipt_id);
-                objectOfOrder.put("total_price", extraOrderSum + menuDefaultPriceSum);
-                try {
-                    CouponHistoryVo historyVo = orderDao.findOrderPriceInfoByReceiptId(receipt_id);
-                    objectOfOrder.put("discount_price", historyVo.getDiscount_price());
-                } catch(CouponHistoryNotFoundException exception) {
-                    objectOfOrder.put("discount_price", 0);
-                }
-                arrayOfOrders.add(objectOfOrder);
-            }
-            jsonObject.put("orders", arrayOfOrders);
-        } catch(Exception exception) {
-            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
-        }
-        return jsonObject;
-    }
+//    @SuppressWarnings("unchecked")
+//    public org.json.simple.JSONObject findAllOrdersByStoreId(int store_id, int start, int end) {
+//        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+//        try {
+//            List<String> receiptIdList = orderDao.findReceiptIdsOfAllOrders(store_id, start, end);
+//            Iterator<String> receiptIdIterator = receiptIdList.iterator();
+//            jsonObject.put("result", true);
+//            jsonObject.put("message", "주문 내역 가져오기 성공.");
+//            org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
+//            while(receiptIdIterator.hasNext()) {
+//                String receipt_id = receiptIdIterator.next();
+//                org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+//                objectOfOrder.put("receipt_id", receipt_id);
+//                OrderVo orderVo = orderDao.findAllOrderInfoByReceiptId(receipt_id);
+//                objectOfOrder.put("phone", orderVo.getPhone());
+//                objectOfOrder.put("order_count", orderVo.getOrder_count());
+//                objectOfOrder.put("order_date", DateConverter.convertDateWithTime(orderVo.getOrder_date()));
+//                objectOfOrder.put("order_state", orderVo.getOrder_state());
+//                int extraOrderSum = orderDao.findExtraOrderTotalPrice(receipt_id);
+//                int menuDefaultPriceSum = orderDao.findOrderTotalPrice(receipt_id);
+//                objectOfOrder.put("total_price", extraOrderSum + menuDefaultPriceSum);
+//                try {
+//                    CouponHistoryVo historyVo = orderDao.findOrderPriceInfoByReceiptId(receipt_id);
+//                    objectOfOrder.put("discount_price", historyVo.getDiscount_price());
+//                } catch(CouponHistoryNotFoundException exception) {
+//                    objectOfOrder.put("discount_price", 0);
+//                }
+//                arrayOfOrders.add(objectOfOrder);
+//            }
+//            jsonObject.put("orders", arrayOfOrders);
+//        } catch(Exception exception) {
+//            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+//        }
+//        return jsonObject;
+//    }
 
     public void setOrderStateAsCancel(String receipt_id) {
         orderDao.setOrderStateAsCancel(receipt_id);
