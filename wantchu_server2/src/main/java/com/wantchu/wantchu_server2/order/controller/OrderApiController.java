@@ -58,12 +58,12 @@ public class OrderApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @PutMapping("/OrderStatusDone.do")
-    public void setOrderStatusAsDone(@RequestBody OrderStateUpdateRequestDto requestDto, HttpServletResponse response) {
-        String receipt_id = requestDto.getReceipt_id();
-        org.json.simple.JSONObject jsonObject = orderService.setOrderStateAsDone(receipt_id);
-        WriteToServer.send(response, jsonObject);
-    }
+//    @PutMapping("/OrderStatusDone.do")
+//    public void setOrderStatusAsDone(@RequestBody OrderStateUpdateRequestDto requestDto, HttpServletResponse response) {
+//        String receipt_id = requestDto.getReceipt_id();
+//        org.json.simple.JSONObject jsonObject = orderService.setOrderStateAsDone(receipt_id);
+//        WriteToServer.send(response, jsonObject);
+//    }
 
 //    @GetMapping("/OrderFindAllByStoreId.do")
 //    public void findAllOrdersByStoreId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {

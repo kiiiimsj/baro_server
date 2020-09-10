@@ -88,4 +88,5 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.setStatistics(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("Owner")
 }
