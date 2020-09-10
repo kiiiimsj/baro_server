@@ -486,15 +486,19 @@
 }
 ```
 
-* 날짜별로 해당 점포의 주문 내역 가져오기(최신순을 위로 가져온다)
+* 날짜별로 해당 점포의 주문 내역 가져오기(최신순부터 20개를 가져온다)
   * URL : http://15.165.22.64:8080/OrderCompleteListByDate.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
+한꺼번에 가져오는것이 아닌 20개씩 가져오므로 스크롤을 내려 마지막으로 내려가면
+이 url을 통해 아래 20개를 또 가져와야하는데 start는 그에 해당하는 시작점이다.
+아래는 20째부터 20개를 가져와라. 라는 뜻이다.
 ```json
 {
     "store_id" : 1,
     "start_date" : "2020-08-27",
-    "end_date" : "2020-09-02"
+    "end_date" : "2020-09-02",
+    "start" : 20
 }
 ```
   * 응답 형식
@@ -528,6 +532,59 @@
             "phone": "01093756927",
             "discount_price": 0,
             "receipt_id": "5f55e8f7878a56003972e87b",
+            "order_state": "DONE"
+        }
+    ],
+    "message": "완료/취소된 주문 내역 가져오기 성공"
+}
+//실패시
+{
+    "result": false,
+    "message": "주문 내역이 존재하지 않습니다."
+}
+```
+* 휴대폰번호 검색을 통해 해당점포의 주문내역 가져오기(최신순부터 20개)
+  * URL : http://15.165.22.64:8080/OrderCompleteListByPhone.do 
+  * Http Method : POST
+  * 제공해야하는 JSON 형식
+```json
+{
+    "store_id": 1,
+    "phone": "01093756927",
+    "start" : 10
+}
+```
+  * 응답 형식
+```json
+//성공시(원래는 20개를 가져오지만 그냥 예시이므로 잘랏음)
+{
+    "result": true,
+    "orders": [
+        {
+            "order_date": "2020년 9월 7일 8시 2분 47초",
+            "order_count": 1,
+            "total_price": 1000,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f55e91b878a560040730f7c",
+            "order_state": "DONE"
+        },
+        {
+            "order_date": "2020년 9월 7일 8시 2분 8초",
+            "order_count": 1,
+            "total_price": 1500,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f55e8f7878a56003972e87b",
+            "order_state": "DONE"
+        },
+        {
+            "order_date": "2020년 9월 4일 12시 59분 0초",
+            "order_count": 5,
+            "total_price": 10200,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f523a080627a800311c1784",
             "order_state": "DONE"
         }
     ],
