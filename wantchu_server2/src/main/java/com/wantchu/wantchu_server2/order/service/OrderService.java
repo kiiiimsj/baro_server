@@ -231,14 +231,14 @@ public class OrderService {
         orderDao.setOrderStateAsCancel(receipt_id);
     }
 
-    @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject setOrderStateAsDone(String receipt_id) {
-        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        orderDao.setOrderStateAsDone(receipt_id);
-        jsonObject.put("result", true);
-        jsonObject.put("message", "제조 완료 상태로 변경 완료");
-        return jsonObject;
-    }
+//    @SuppressWarnings("unchecked")
+//    public org.json.simple.JSONObject setOrderStateAsDone(String receipt_id) {
+//        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+//        orderDao.setOrderStateAsDone(receipt_id);
+//        jsonObject.put("result", true);
+//        jsonObject.put("message", "제조 완료 상태로 변경 완료");
+//        return jsonObject;
+//    }
 
     public org.json.simple.JSONObject orderFindPrepareOrAcceptByPhone(String phone) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();

@@ -245,13 +245,13 @@ public class OrderDao {
         });
     }
 
-    public void setOrderStateAsDone(String receipt_id) {
-        jdbcTemplate.update(connection -> {
-           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Order.UPDATE_ORDER_AS_DONE);
-           preparedStatement.setString(1, receipt_id);
-           return preparedStatement;
-        });
-    }
+//    public void setOrderStateAsDone(String receipt_id) {
+//        jdbcTemplate.update(connection -> {
+//           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Order.UPDATE_ORDER_AS_DONE);
+//           preparedStatement.setString(1, receipt_id);
+//           return preparedStatement;
+//        });
+//    }
 
 
     public List<OrderListVo> findOrderPrepareOrAcceptByPhone(String phone) throws  OrderNotFoundByPhoneException{

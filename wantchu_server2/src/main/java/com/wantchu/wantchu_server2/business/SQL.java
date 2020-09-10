@@ -101,7 +101,7 @@ public class SQL {
         public static final String FIND_PREPARING_ORDER_INFO_BY_RECEIPT_ID = "select phone, sum(order_count) as CNT, order_date from orders where receipt_id=?;";
         public static final String FIND_ALL_ORDER_INFO_BY_RECEIPT_ID = "SELECT phone, sum(order_count) as CNT, order_date, order_state from orders where receipt_id=?";
         public static final String UPDATE_ORDER_AS_CANCEL = "UPDATE orders SET order_state='CANCEL' WHERE receipt_id=?";
-        public static final String UPDATE_ORDER_AS_DONE = "UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
+        //public static final String UPDATE_ORDER_AS_DONE = "UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
         public static final String FIND_RECEIPT_IDS_OF_DONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY) AND (order_state='DONE' OR order_state='CANCEL') ORDER BY order_date DESC limit ?,20";
     }
 

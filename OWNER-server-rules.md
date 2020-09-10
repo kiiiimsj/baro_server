@@ -1,8 +1,9 @@
 점주용 API 문서
 ======
+<h2>로그인/등록/변경 관련</h2>
 
 * 점주 로그인 처리
-  * URL : http://54.180.56.44:8080/OwnerLogin.do
+  * URL : http://15.165.22.64:8080/OwnerLogin.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
 ```json
@@ -28,7 +29,7 @@
 ```
 
 * 점주 비밀번호 변경 처리
-  * URL : http://54.180.56.44:8080/OwnerPassUpdate.do
+  * URL : http://15.165.22.64:8080/OwnerPassUpdate.do
   * Http Method : PUT
   * 제공해야 하는 JSON 형식
 ```json
@@ -50,7 +51,7 @@
 ```
 
 * 점주 이메일 변경 처리
-  * URL : http://54.180.56.44:8080/OwnerEmailUpdate.do
+  * URL : http://15.165.22.64:8080/OwnerEmailUpdate.do
   * Http Method : PUT
   * 제공해야 하는 JSON 형식
 ```json
@@ -73,7 +74,7 @@
 ```
 
 * 점주 회원가입 처리
-  * URL : http://54.180.56.44:8080/OwnerRegister.do
+  * URL : http://15.165.22.64:8080/OwnerRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -103,7 +104,7 @@
 ```
 
 * 점주 가게 등록 처리(이미 등록하는 가게일 경우)
-  * URL : http://54.180.56.44:8080/OwnerSetStore.do
+  * URL : http://15.165.22.64:8080/OwnerSetStore.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -123,8 +124,28 @@
 }
 ```
 
+* 점주 가게 영업중, 준비중 변경 처리
+  * URL : http://15.165.22.64:8080/OwnerSetStoreStatus.do
+  * Http Method : PUT
+  * 제공해야하는 JSON 형식
+```json
+{
+    "store_id":"가게id값",
+    "is_open":"Y 또는 N"
+}
+```
+  * 응답 형식
+```json
+{
+    "result": true,
+    "message": "정상 처리 되었습니다."
+}
+```
+
+<h2>메뉴 변경 관련(우선은 안씀)</h2>
+
 * 점주 가게, 메뉴, 엑스트라 변경 처리
-  * URL : http://54.180.56.44:8080/OwnerUpdates.do
+  * URL : http://15.165.22.64:8080/OwnerUpdates.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식 __(update_type은 반드시 아래 지정한 것들 중 하나여야함)__
 ```json
@@ -177,7 +198,8 @@
             "extra_price":"extra_price",
             "menu_id":"menu_id",
             "is_required":"is_required",
-            "extra_group":"extra_group"
+            "extra_group":"extra_group",
+            "extra_maxcount":"extra_maxcount"
         },
         {
             "update_type":"UPDATE_STORE_NAME",
@@ -218,7 +240,7 @@
 ```
 
 * 특정 기간의 매출 가져오기
-  * URL : http://54.180.56.44:8080/OwnerFindPriceBetweenDate.do
+  * URL : http://15.165.22.64:8080/OwnerFindPriceBetweenDate.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -236,26 +258,9 @@
 }
 ```
 
-* 점주 가게 영업중, 준비중 변경 처리
-  * URL : http://54.180.56.44:8080/OwnerSetStoreStatus.do
-  * Http Method : PUT
-  * 제공해야하는 JSON 형식
-```json
-{
-    "store_id":"가게id값",
-    "is_open":"Y 또는 N"
-}
-```
-  * 응답 형식
-```json
-{
-    "result": true,
-    "message": "정상 처리 되었습니다."
-}
-```
 
 * 처리해야할 주문들의 목록 가져오기
-  * URL : http://54.180.56.44:8080/OrderFindByStoreId.do?store_id=가게id값
+  * URL : http://15.165.22.64:8080/OrderFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -291,8 +296,8 @@
 }
 ```
 
-* 처리해야할 주문 내역의 상세 정보 보기
-  * URL : http://54.180.56.44:8080/OrderFindByReceiptId.do?receipt_id=영수증번호
+* 처리해야할 주문 내역의 상세 정보 보기(기존에 처리해야할 주문들이 남아있고 다시 로그인시에 보여져야하는 주문내역들)
+  * URL : http://15.165.22.64:8080/OrderFindByReceiptId.do?receipt_id=영수증번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=영수증id값` 전달__
   * 응답 형식
@@ -330,11 +335,85 @@
     ],
     "message": "상세 주문 내역 가져오기 성공"
 }
+
+// 주문 내역이 더 이상 존재하지 않거나 존재하지 않는 경우
+{
+    "result": false,
+    "message": "주문 내역이 존재하지 않습니다."
+}
 ```
 
-* 주문 결제 취소 처리
-  * URL : http://54.180.56.44:8080/BillingCancel.do
+* 주문 들어온 내역 클릭시에 상세정보
+  * URL :  http://15.165.22.64:8080/OrderListDoneOrCancelForOwner.do?receipt_id=receipt_id값
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=영수증id값` 전달__
+  * 응답형식
+```json
+{
+    "result": true,
+    "orders": [
+        {
+            "order_count": 1,
+            "menu_name": "아메리카노",
+            "menu_defaultprice": 1500,
+            "extras": [
+                {
+                    "extra_price": 0,
+                    "extra_name": "ICE",
+                    "extra_count": 1
+                },
+                {
+                    "extra_price": 0,
+                    "extra_name": "기본 크기",
+                    "extra_count": 1
+                }
+            ],
+            "order_id": 124,
+            "order_state": "PREPARING"
+        }
+    ],
+    "message": "상세 주문 내역 가져오기 성공"
+}
+```
+
+* 들어온 주문을 시간 설정후에 PREPARING상태를 ACCEPT상태로 바꿔주기
+  * URL : http://15.165.22.64:8080/OwnerSetOrderStatus.do
   * Http Method : PUT
+  * 제공해야하는 JSON 형식
+```json
+{
+    "receipt_id":"해당 주문의 고유 영수증id값"
+}
+```
+  * 응답 형식
+```json
+{
+    "result":true,
+    "message":"정상 처리 되었습니다."
+}
+```
+
+* 들어온 주문을 제조완료 버튼을 눌렀을때 ACCEPT상태를 DONE상태로 바꿔주기
+  * URL : http://15.165.22.64:8080/OwnerSetOrderStatusComplete.do
+  * Http Method : PUT
+  * 제공해야하는 JSON 형식
+```json
+{
+    "receipt_id":"해당 주문의 고유 영수증id값"
+}
+```
+  * 응답 형식
+```json
+{
+    "result":true,
+    "message":"정상 처리 되었습니다."
+}
+```
+
+
+* 주문 결제 취소 처리
+  * URL : http://15.165.22.64:8080/BillingCancel.do
+  * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
 {
@@ -364,25 +443,9 @@
 }
 ```
 
-* 주문 제조 완료로 상태 변경 처리
-  * URL : http://54.180.56.44:8080/OrderStatusDone.do
-  * Http Method : PUT
-  * 제공해야하는 JSON 형식
-```json
-{
-    "receipt_id":"해당 주문의 고유 영수증id값"
-}
-```
-  * 응답 형식
-```json
-{
-    "result":true,
-    "message":"제조 완료 상태로 변경 완료"
-}
-```
 
 * 주문한 고객에게 메시지 보내기
-  * URL : http://54.180.56.44:8080/OwnerSendMessage.do
+  * URL : http://15.165.22.64:8080/OwnerSendMessage.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -423,3 +486,123 @@
 }
 ```
 
+* 날짜별로 해당 점포의 주문 내역 가져오기(최신순을 위로 가져온다)
+  * URL : http://15.165.22.64:8080/OrderCompleteListByDate.do
+  * Http Method : POST
+  * 제공해야하는 JSON 형식
+```json
+{
+    "store_id" : 1,
+    "start_date" : "2020-08-27",
+    "end_date" : "2020-09-02"
+}
+```
+  * 응답 형식
+```json
+//성공시
+{
+    "result": true,
+    "orders": [
+        {
+            "order_date": "2020년 9월 7일 13시 26분 11초",
+            "order_count": 1,
+            "total_price": 1500,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f5634e28f075100202314d1",
+            "order_state": "CANCEL"
+        },
+        {
+            "order_date": "2020년 9월 7일 8시 2분 47초",
+            "order_count": 1,
+            "total_price": 1000,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f55e91b878a560040730f7c",
+            "order_state": "DONE"
+        },
+        {
+            "order_date": "2020년 9월 7일 8시 2분 8초",
+            "order_count": 1,
+            "total_price": 1500,
+            "phone": "01093756927",
+            "discount_price": 0,
+            "receipt_id": "5f55e8f7878a56003972e87b",
+            "order_state": "DONE"
+        }
+    ],
+    "message": "완료/취소된 주문 내역 가져오기 성공"
+}
+//실패시
+{
+    "result": false,
+    "message": "주문 내역이 존재하지 않습니다."
+}
+```
+
+* 모든 주문 내역의 총 개수 구하기
+  * URL : http://15.165.22.64:8080/OrderFindCount.do?store_id=가게id값
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
+  * 응답 형식
+```json
+{
+    "order_count": 12
+}
+
+// 주문 내역이 존재하지 않으면 0으로 옴.
+```
+AWEF
+<h1>Socket Protocol</h1>
+
+* Web Socket 메시지 방식은 아래의 규칙을 따른다.
+  * (1) 서버에 고유id값 등록 (ex. 점주라면 가게id값) : `connect:::가게id값`
+  * (2) 특정 가게id에 메시지 보내기 : `message:::가게id값:::보낼메시지`
+  * __connect, message는 고정으로 보내야 하는 것임__
+
+ex) 안드로이드 예제
+`USER`
+uri = new URI("ws://15.165.22.64:8080/websocket");
+webSocketClient.send("connect:::" + phone);
+webSocketClient.send("message:::" + store_id + ":::" + message);
+
+`OWNER`
+uri = new URI("ws://15.165.22.64:8080/websocket");
+webSocketClient.send("connect:::" + store_id);
+
+아래 예제와 같은 json방식으로 message를 웹소켓으로 보내주면된다.
+```json
+{
+    "coupon_id":-1,
+    "discount_price":-1,
+    "each_count":1,
+    "order_date":"2020/09/09 10:31:21",
+    "orders":
+    [
+        {
+            "extras":
+            [
+                {
+                    "extra_count":1,
+                    "extra_id":1,
+                    "extra_name":"HOT",
+                    "extra_price":0
+                },
+                {
+                    "extra_count":1,
+                    "extra_id":66,
+                    "extra_name":"기본 크기",
+                    "extra_price":0
+                }
+            ],
+            "menu_defaultprice":1500,
+            "menu_id":4,
+            "menu_name":"아메리카노",
+            "order_count":1
+        }
+    ],
+    "phone":"01093756927","receipt_id":"5f58aef2878a5600247386b5",
+    "store_id":1,
+    "total_price":1500
+}
+```
