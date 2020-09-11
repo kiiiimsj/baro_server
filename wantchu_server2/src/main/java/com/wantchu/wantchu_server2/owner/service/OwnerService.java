@@ -37,6 +37,7 @@ public class OwnerService {
             jsonObject.put("nick", ownerVo.getNick());
             jsonObject.put("store_name", ownerVo.getStore_name());
             jsonObject.put("email", ownerVo.getEmail());
+            jsonObject.put("is_open", ownerVo.getIs_open());
         } catch(OwnerLoginException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }

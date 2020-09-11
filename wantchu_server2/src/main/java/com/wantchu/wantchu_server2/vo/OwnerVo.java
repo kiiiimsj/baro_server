@@ -16,13 +16,15 @@ public class OwnerVo {
     private String pass;
     private int store_id;
     private String store_name;
+    private String is_open;
 
     @Builder
-    public OwnerVo(String phone, String store_name, String email, String nick, int store_id) {
+    public OwnerVo(String phone, String store_name, String email, String nick, int store_id, String is_open) {
         this.phone = phone;
         this.store_name = store_name;
         this.email = email;
         this.nick = nick;
         this.store_id = store_id;
+        this.is_open = is_open;
     }
 }
