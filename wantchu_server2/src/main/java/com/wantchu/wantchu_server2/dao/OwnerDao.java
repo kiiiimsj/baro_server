@@ -36,6 +36,7 @@ public class OwnerDao {
                         .store_name(resultSet.getString("store_name"))
                         .email(resultSet.getString("email"))
                         .nick(resultSet.getString("nick"))
+                        .is_open(resultSet.getString("is_open"))
                         .build();
                     return ownerVo;
                 }
