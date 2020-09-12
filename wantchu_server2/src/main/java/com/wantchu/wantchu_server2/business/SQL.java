@@ -2,8 +2,15 @@ package com.wantchu.wantchu_server2.business;
 
 public class SQL {
 
+    public static class Alert{
+        public static final String FIND_ALERT_ALL = "SELECT * FROM alert";
+    }
+
     public static class Type {
         public static final String FIND_ALL = "SELECT * FROM types";
+    }
+    public static class Event {
+        public static final String FIND_ALL = "SELECT * FROM events";
     }
 
     public static class Store {
