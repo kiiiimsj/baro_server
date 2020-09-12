@@ -14,7 +14,8 @@
 9/12일
 * 가게를 클릭할때마다 즐겨찾기의 유무를 확인하기 위한 /FavoriteExist.do가 추가됨.
 * 메인페이지에서 오른쪽위 종모양을 눌렀을때 알림을 받아오는 /AlertFindAll.do가 추가됨.(cf. 공지사항과 알림은 다른것! 공지사항은 버전 수정시에 올라가는 내용이라면 알림은 쿠폰이 지급되었으니 확인하세요! 같은 느낌임)
-* 메인페이지에서 광고배너에 대한 정보를 받아오는 /EventFindAll.do가 추가됨.
+* 메인페이지에서 광고배너에 대한 대략적인 정보(event_id, event_image)를 받아오는 /EventFindAll.do가 추가됨.
+* 광고배너를 클릭했을때 이벤트창으로 넘어가면서 세부적인 정보를 받아오는 /EventDetail.do 가 추가됨
 <hr/>
 
 <h1>신규 API</h1>
@@ -282,15 +283,11 @@
 //성공시
 {
     "result": true,
-    "message": "event 가져오기 성공",
+    "message": "event 대략 정보 가져오기 성공",
     "event": [
         {
-            "event_content": "맥도날드 숭실대점 / 버거킹 숭실대점 / 맘스터치 숭실대점이 추가되었습니다!! 많은 이용 부탁드립니다",
             "event_id": 1,
-            "event_image": "default.png",
-            "event_title": "새로운 가게들이 추가되었습니다!",
-            "event_startdate": "2020년 9월 12일 ",
-            "event_enddate": "2020년 9월 15일 "
+            "event_image": "default.png"
         }
     ]
 }
@@ -300,6 +297,29 @@
     "message": "등록된 이벤트가 없습니다."
 }
 
+```
+* 광고배너 이벤트중 하나를 클릭했을때 세부정보 가져오기
+  * URL : http://15.165.22.64:8080/EventDetail.do?event_id=이벤트아이디
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __URL에 이벤트 아이디 넣어주기__
+  * 응답형식
+```json
+//성공시
+{
+    "result": true,
+    "event_content": "맥도날드 숭실대점 / 버거킹 숭실대점 / 맘스터치 숭실대점이 추가되었습니다!! 많은 이용 부탁드립니다",
+    "event_id": 1,
+    "event_image": "default.png",
+    "event_title": "새로운 가게들이 추가되었습니다!",
+    "event_startdate": "2020년 9월 12일 ",
+    "message": "1의 상세 이벤트 내용 가져오기 성공",
+    "event_enddate": "2020년 9월 15일 "
+}
+//DB에 이벤트 내용이 없을때
+{
+    "result": false,
+    "message": "등록된 이벤트가 없습니다."
+}
 ```
 
 <h1>가게 종류 관련 API</h1>
