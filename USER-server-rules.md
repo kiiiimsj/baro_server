@@ -12,7 +12,9 @@
 
 
 9/12일
-* 가게를 클릭할때마다 즐겨찾기의 유무를 확인하기 위한 FavoriteExist.do가 추가됨.
+* 가게를 클릭할때마다 즐겨찾기의 유무를 확인하기 위한 /FavoriteExist.do가 추가됨.
+* 메인페이지에서 오른쪽위 종모양을 눌렀을때 알림을 받아오는 /AlertFindAll.do가 추가됨.(cf. 공지사항과 알림은 다른것! 공지사항은 버전 수정시에 올라가는 내용이라면 알림은 쿠폰이 지급되었으니 확인하세요! 같은 느낌임)
+* 메인페이지에서 광고배너에 대한 정보를 받아오는 /EventFindAll.do가 추가됨.
 <hr/>
 
 <h1>신규 API</h1>
@@ -245,10 +247,65 @@
 ```
 <hr/>
 
+* 메인페이지 오른쪽 위 종모양 클릭시 알림(Alert) 내용 가져오기
+  * URL : http://15.165.22.64:8080/AlertFindAll.do
+  * Http Method : GET
+  * 제공해야 하는 JSON 형식 : __없음__
+  * 응답 형식
+```json
+//성공시
+{
+    "result": true,
+    "alert": [
+        {
+            "alert_title": "새로운 쿠폰을 받으세요!",
+            "alert_content": "9월이벤트로 인한 새로운 쿠폰이 지급되었으니 쿠폰창에서 확인해주세요!",
+            "alert_startdate": "2020년 9월 12일 ",
+            "alert_id": 1
+        }
+    ],
+    "message": "알림 가져오기 성공"
+}
+// DB에 알림 내용이 없을때
+{
+    "result": false,
+    "message": "현재 DB에 알림 등록된게 없습니다."
+}
+```
+
+* 광고배너 이벤트에 대한 정보 가져오기
+  * URL : http://15.165.22.64:8080/EventFindAll.do
+  * Http Method : GET
+  * 제공해야 하는 JSON 형식 : __없음__
+  * 응답 형식
+```json
+//성공시
+{
+    "result": true,
+    "message": "event 가져오기 성공",
+    "event": [
+        {
+            "event_content": "맥도날드 숭실대점 / 버거킹 숭실대점 / 맘스터치 숭실대점이 추가되었습니다!! 많은 이용 부탁드립니다",
+            "event_id": 1,
+            "event_image": "default.png",
+            "event_title": "새로운 가게들이 추가되었습니다!",
+            "event_startdate": "2020년 9월 12일 ",
+            "event_enddate": "2020년 9월 15일 "
+        }
+    ]
+}
+//DB에 이벤트 내용이 없을때
+{
+    "result": false,
+    "message": "등록된 이벤트가 없습니다."
+}
+
+```
+
 <h1>가게 종류 관련 API</h1>
 
 * 가게 종류 목록 가져오기
-  * URL : http://54.180.56.44:8080/TypeFindAll.do
+  * URL : http://15.165.22.64:8080/TypeFindAll.do
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
   * 응답 형식
