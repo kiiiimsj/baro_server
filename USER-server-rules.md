@@ -9,6 +9,10 @@
   * `menu_name`과 `extra_name` 추가
 * `CouponFindByPhone.do` : `coupon_condition`이 문자열에서 INT 형으로 변경됨.
 * `가게 관련 API` : 가게가 영업중인지 아닌지를 알려주는 `is_open`이 `Y` 또는 `N`으로 추가됨.
+
+
+9/12일
+* 가게를 클릭할때마다 즐겨찾기의 유무를 확인하기 위한 FavoriteExist.do가 추가됨.
 <hr/>
 
 <h1>신규 API</h1>
@@ -1458,6 +1462,29 @@
 {
     "result": false,
     "message": "즐겨찾기 삭제에 실패했습니다."
+}
+```
+
+* 가게 클릭시 즐겨찾기의 유무 처리
+  * URL : http://54.180.56.44:8080/FavoriteExist.do
+  * Http Method : POST
+```json
+{
+    "phone": "01093756927",
+    "store_id": 18
+}
+```
+  * 응답형식
+```json
+//해당회원이 즐겨찾기를 이미한 가게라면
+{
+    "result": true,
+    "message": "해당회원이 즐겨찾기한 가게입니다."
+}
+//해당회원이 즐겨찾기를 하지 않은 가게라면
+{
+    "result": false,
+    "message": "해당회원이 즐겨찾기한 가게가 아닙니다."
 }
 ```
 
