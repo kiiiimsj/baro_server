@@ -1,9 +1,11 @@
 package com.wantchu.wantchu_server2.config;
 
 
+import com.wantchu.wantchu_server2.alert.service.AlertService;
 import com.wantchu.wantchu_server2.category.service.CategoryService;
 import com.wantchu.wantchu_server2.coupon.service.CouponService;
 import com.wantchu.wantchu_server2.dao.*;
+import com.wantchu.wantchu_server2.event.service.EventService;
 import com.wantchu.wantchu_server2.extra.service.ExtraService;
 import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
 import com.wantchu.wantchu_server2.inquiry.service.InquiryService;
@@ -46,6 +48,11 @@ public class ControllerConfigure {
     private StoreService storeService;
     @Autowired
     private TypeService typeService;
+    @Autowired
+    private AlertService alertService;
+    @Autowired
+    private EventService eventService;
+
 
     @Autowired
     private MemberDao memberDao;
@@ -53,33 +60,28 @@ public class ControllerConfigure {
     private CategoryDao categoryDao;
     @Autowired
     private CouponDao couponDao;
-
     @Autowired
     private ExtraDao extraDao;
-
     @Autowired
     private FavoriteDao favoriteDao;
-
     @Autowired
     private InquiryDao inquiryDao;
-
     @Autowired
     private MenuDao menuDao;
-
     @Autowired
     private NoticeDao noticeDao;
-
     @Autowired
     private OrderDao orderDao;
-
     @Autowired
     private OwnerDao ownerDao;
-
     @Autowired
     private StoreDao storeDao;
-
     @Autowired
     private TypeDao typeDao;
+    @Autowired
+    private AlertDao alertDao;
+    @Autowired
+    private EventDao eventDao;
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
@@ -120,6 +122,11 @@ public class ControllerConfigure {
     public StoreDao storeDao(){ return new StoreDao(dataSource());}
     @Bean
     public TypeDao typeDao(){ return new TypeDao(dataSource());}
+    @Bean
+    public AlertDao alertDao(){ return new AlertDao(dataSource());}
+    @Bean
+    public EventDao eventDao(){ return new EventDao(dataSource());}
+
 
     @Bean
     public MemberService memberService() {
@@ -179,6 +186,16 @@ public class ControllerConfigure {
     @Bean
     public TypeService typeService(){
         TypeService service = new TypeService(typeDao());
+        return service;
+    }
+    @Bean
+    public AlertService alertService(){
+        AlertService service = new AlertService(alertDao());
+        return service;
+    }
+    @Bean
+    public EventService eventService(){
+        EventService service = new EventService(eventDao());
         return service;
     }
 
