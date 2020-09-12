@@ -2,6 +2,7 @@ package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
+import com.wantchu.wantchu_server2.favorite.exception.FavoriteExistException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteInfoNotFoundException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteSaveException;
 import com.wantchu.wantchu_server2.vo.FavoriteInfoVo;
@@ -74,5 +75,18 @@ public class FavoriteDao {
                 }
         );
         if(result == 0) throw new FavoriteDeleteException();
+    }
+
+    public boolean existFavorite(String phone, int store_id) {
+        System.out.println(store_id);
+        List<FavoriteVo> results = jdbcTemplate.query(
+                SQL.Favorite.CHECK_FAVORITE,
+                (resultSet, i) -> new FavoriteVo(), phone, store_id);
+        if(results.size() == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

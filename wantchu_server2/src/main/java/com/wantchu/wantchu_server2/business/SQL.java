@@ -147,5 +147,6 @@ public class SQL {
         public static final String FIND_FAVORITES_BY_PHONE = "SELECT store_id, store_latitude, store_longitude, store_name, store_info, store_location, store_image, is_open FROM stores NATURAL JOIN favorites WHERE phone=?";
         public static final String INSERT_FAVORITE = "INSERT INTO favorites VALUES(?,?)";
         public static final String DELETE_FAVORITE = "DELETE FROM favorites WHERE phone=? AND store_id=?";
+        public static final String CHECK_FAVORITE = "SELECT * FROM favorites WHERE phone=? AND store_id=?";
     }
 }

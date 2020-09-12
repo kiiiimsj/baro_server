@@ -2,7 +2,9 @@ package com.wantchu.wantchu_server2.favorite.service;
 
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.FavoriteDao;
+import com.wantchu.wantchu_server2.favorite.dto.FavoriteExistRequestDto;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
+import com.wantchu.wantchu_server2.favorite.exception.FavoriteExistException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteInfoNotFoundException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteSaveException;
 import com.wantchu.wantchu_server2.vo.FavoriteInfoVo;
@@ -62,6 +64,23 @@ public class FavoriteService {
             jsonObject.put("message", "즐겨찾기 목록에서 삭제되었습니다.");
         } catch(FavoriteDeleteException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        }
+        return jsonObject;
+    }
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject existFavorite(FavoriteExistRequestDto favoriteExistRequestDto){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            if(favoriteDao.existFavorite(favoriteExistRequestDto.getPhone(), favoriteExistRequestDto.getStore_id())){
+                jsonObject.put("result", true);
+                jsonObject.put("message", "해당회원이 즐겨찾기한 가게입니다.");
+            }
+            else{
+                throw new FavoriteExistException();
+            }
+        }
+        catch(FavoriteExistException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;
     }

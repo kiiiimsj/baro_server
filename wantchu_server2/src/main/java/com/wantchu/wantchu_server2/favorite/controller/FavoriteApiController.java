@@ -1,7 +1,9 @@
 package com.wantchu.wantchu_server2.favorite.controller;
 
 import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.favorite.dto.FavoriteExistRequestDto;
 import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
+import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +36,11 @@ public class FavoriteApiController {
     @PutMapping("/FavoriteDelete.do")
     public void deleteFavorite(@RequestBody @NotNull FavoriteVo favoriteVo, @NotNull HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = favoriteService.deleteFavorite(favoriteVo);
+        WriteToServer.send(response, jsonObject);
+    }
+    @PostMapping("/FavoriteExist.do")
+    public void existFavorite(@RequestBody @NotNull FavoriteExistRequestDto favoriteExistRequestDto, @NotNull HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = favoriteService.existFavorite(favoriteExistRequestDto);
         WriteToServer.send(response, jsonObject);
     }
 }
