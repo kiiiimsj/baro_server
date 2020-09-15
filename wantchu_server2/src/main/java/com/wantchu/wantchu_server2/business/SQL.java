@@ -18,7 +18,13 @@ public class SQL {
         public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=?";
         public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ?";
         public static final String FIND_INFO_BY_TYPE_CODE = "SELECT store_id, store_name, store_latitude, store_longitude, store_location, store_info, store_image, is_open FROM stores WHERE type_code=?";
-        public static final String FIND_ALL_STORE_LOCATION = "SELECT store_id, store_name, store_latitude, store_longitude FROM stores";
+        public static final String FIND_ALL_STORE_LOCATION = "SELECT store_id, store_name, store_latitude, store_longitude , " +
+                "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 " +
+                "AS DISTANCE FROM stores " +
+                "HAVING DISTANCE <= 1500 " +
+                "ORDER BY distance " +
+                "LIMIT 0,300 ";
         public static final String FIND_STORE_ID_BY_NAME = "SELECT store_id FROM stores WHERE store_name=?";
         public static final String IS_STORE_OPEN = "SELECT is_open FROM stores WHERE store_id = ?";
         public static final String UPDATE_STORE_NAME = "UPDATE stores SET store_name=? WHERE store_id=?";
