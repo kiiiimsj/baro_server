@@ -1,6 +1,7 @@
 package com.wantchu.wantchu_server2.store.controller;
 
 import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +36,9 @@ public class StoreApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @GetMapping("/StoreInfoFindByType.do")
-    public void findInfoByTypeCode(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        String type_code = request.getParameter("type_code");
-        org.json.simple.JSONObject jsonObject = storeService.findInfoByTypeCode(type_code);
+    @PostMapping("/StoreInfoFindByType.do")
+    public void findInfoByTypeCode(@RequestBody @NotNull StoreInfoFindByTypeDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findInfoByTypeCode(requestDto);
         WriteToServer.send(response, jsonObject);
     }
 
