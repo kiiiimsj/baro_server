@@ -1,6 +1,7 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
 import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
@@ -85,18 +86,20 @@ public class StoreDao {
         }
     }
 
-    public List<StoreLocationVo> findAllStoreLocation() {
+    public List<StoreLocationVo> findAllStoreLocation(StoreLocationDto dto) {
         List<StoreLocationVo> list = jdbcTemplate.query(
                 SQL.Store.FIND_ALL_STORE_LOCATION,
                 (resultSet, i) -> {
                     StoreLocationVo locationVo = StoreLocationVo.builder()
+                            .store_id(resultSet.getInt("store_id"))
                             .store_name(resultSet.getString("store_name"))
                             .store_latitude(resultSet.getDouble("store_latitude"))
                             .store_longitude(resultSet.getDouble("store_longitude"))
+                            .distance(resultSet.getDouble("distance"))
                             .build();
                     return locationVo;
                 }
-        );
+        ,dto.getLatitude(),dto.getLongitude(),dto.getLatitude());
         return list;
     }
 

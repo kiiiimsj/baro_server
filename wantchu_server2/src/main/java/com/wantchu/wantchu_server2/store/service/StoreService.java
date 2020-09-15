@@ -2,6 +2,7 @@ package com.wantchu.wantchu_server2.store.service;
 
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.StoreDao;
+import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreNameNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
@@ -89,14 +90,15 @@ public class StoreService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject findAllStoreLocation() {
-        List<StoreLocationVo> list = storeDao.findAllStoreLocation();
+    public org.json.simple.JSONObject findAllStoreLocation(StoreLocationDto dto) {
+        List<StoreLocationVo> list = storeDao.findAllStoreLocation(dto);
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         jsonObject.put("result", true);
         jsonObject.put("message", "모든 가게의 위치 정보 가져오기 성공");
         org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
         for(StoreLocationVo locationVo : list) {
             org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+
             jTemp.putAll(locationVo.convertMap());
             jsonArray.add(jTemp);
         }
