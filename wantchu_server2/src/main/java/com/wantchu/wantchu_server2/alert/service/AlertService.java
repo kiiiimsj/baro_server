@@ -1,10 +1,13 @@
 package com.wantchu.wantchu_server2.alert.service;
 
+import com.google.protobuf.util.Timestamps;
 import com.wantchu.wantchu_server2.alert.exception.AlertNotFoundException;
+import com.wantchu.wantchu_server2.business.DateConverter;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.AlertDao;
 import com.wantchu.wantchu_server2.vo.AlertVo;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +41,17 @@ public class AlertService {
         return jsonObject;
     }
 
+    public JSONObject alertRecently() {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        AlertVo date;
+        try { date = alertDao.getRecently();
+            date.convertMap();
+            jsonObject.put("result", true);
+            jsonObject.put("message", "알림 가져오기 성공");
+            jsonObject.put("recentlyUpdate", DateConverter.convertDateWithTime(date.getAlert_startdate()));
+        } catch (AlertNotFoundException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }
