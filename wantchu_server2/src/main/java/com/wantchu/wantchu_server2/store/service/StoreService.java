@@ -2,15 +2,18 @@ package com.wantchu.wantchu_server2.store.service;
 
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.StoreDao;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreNameNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
 import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
+import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
 import com.wantchu.wantchu_server2.vo.StoreInfoVo;
 import com.wantchu.wantchu_server2.vo.StoreLocationVo;
 import com.wantchu.wantchu_server2.vo.StoreVo;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -70,14 +73,14 @@ public class StoreService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject findInfoByTypeCode(String type_code) {
+    public org.json.simple.JSONObject findInfoByTypeCode(@NotNull StoreInfoFindByTypeDto requestDto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<StoreInfoVo> list = storeDao.findInfoByTypeCode(type_code);
+            List<StoreInfoFindByTypeVo> list = storeDao.findInfoByTypeCode(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "type_code별로 가게 정보 가져오기 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(StoreInfoVo storeInfo : list) {
+            for(StoreInfoFindByTypeVo storeInfo : list) {
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
                 jTemp.putAll(storeInfo.convertMap());
                 jsonArray.add(jTemp);

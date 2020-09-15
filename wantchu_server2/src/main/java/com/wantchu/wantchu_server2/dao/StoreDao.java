@@ -1,14 +1,17 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
 import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
+import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
 import com.wantchu.wantchu_server2.vo.StoreInfoVo;
 import com.wantchu.wantchu_server2.vo.StoreLocationVo;
 import com.wantchu.wantchu_server2.vo.StoreVo;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -62,23 +65,22 @@ public class StoreDao {
         }
     }
 
-    public List<StoreInfoVo> findInfoByTypeCode(String type_code) throws StoreTypeNotFoundException {
-        List<StoreInfoVo> list = jdbcTemplate.query(
+    public List<StoreInfoFindByTypeVo> findInfoByTypeCode(@NotNull StoreInfoFindByTypeDto dto) throws StoreTypeNotFoundException {
+        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
                 SQL.Store.FIND_INFO_BY_TYPE_CODE,
                 (resultSet, i) -> {
-                    StoreInfoVo storeInfoVo = StoreInfoVo.builder()
+                    StoreInfoFindByTypeVo storeInfoVo = StoreInfoFindByTypeVo.builder()
                     .store_id(resultSet.getInt("store_id"))
                     .store_name(resultSet.getString("store_name"))
-                    .store_latitude(resultSet.getDouble("store_latitude"))
-                    .store_longitude(resultSet.getDouble("store_longitude"))
                     .store_info(resultSet.getString("store_info"))
                     .store_location(resultSet.getString("store_location"))
                     .is_open(resultSet.getString("is_open"))
                     .store_image(resultSet.getString("store_image") == null ? "default.png" : resultSet.getString("store_image"))
-                    .build();
+                            .distance(resultSet.getDouble("distance"))
+                            .build();
                     return storeInfoVo;
                 }
-                , type_code);
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code());
         if(list.size() == 0) {
             throw new StoreTypeNotFoundException();
         } else {
