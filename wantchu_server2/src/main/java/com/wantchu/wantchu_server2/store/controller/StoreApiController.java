@@ -1,11 +1,15 @@
 package com.wantchu.wantchu_server2.store.controller;
 
 import com.wantchu.wantchu_server2.business.WriteToServer;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
+import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +36,15 @@ public class StoreApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @GetMapping("/StoreInfoFindByType.do")
-    public void findInfoByTypeCode(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        String type_code = request.getParameter("type_code");
-        org.json.simple.JSONObject jsonObject = storeService.findInfoByTypeCode(type_code);
+    @PostMapping("/StoreInfoFindByType.do")
+    public void findInfoByTypeCode(@RequestBody @NotNull StoreInfoFindByTypeDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findInfoByTypeCode(requestDto);
         WriteToServer.send(response, jsonObject);
     }
 
-    @GetMapping("/StoreAllLocation.do")
-    public void findAllStoreLocation(@NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = storeService.findAllStoreLocation();
+    @PostMapping("/StoreAllLocation.do")
+    public void findAllStoreLocation(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findAllStoreLocation(requestDto);
         WriteToServer.send(response, jsonObject);
     }
 

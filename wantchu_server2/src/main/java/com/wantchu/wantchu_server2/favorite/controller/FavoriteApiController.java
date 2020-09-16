@@ -2,6 +2,7 @@ package com.wantchu.wantchu_server2.favorite.controller;
 
 import com.wantchu.wantchu_server2.business.WriteToServer;
 import com.wantchu.wantchu_server2.favorite.dto.FavoriteExistRequestDto;
+import com.wantchu.wantchu_server2.favorite.dto.FavoriteListDto;
 import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
 import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
@@ -20,10 +21,9 @@ public class FavoriteApiController {
 
     private final FavoriteService favoriteService;
 
-    @GetMapping("/FavoriteList.do")
-    public void findFavInfoByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        String phone = request.getParameter("phone");
-        org.json.simple.JSONObject jsonObject = favoriteService.findFavInfoByPhone(phone);
+    @PostMapping("/FavoriteList.do")
+    public void findFavInfoByPhone(@RequestBody @NotNull FavoriteListDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = favoriteService.findFavInfoByPhone(request);
         WriteToServer.send(response, jsonObject);
     }
 
