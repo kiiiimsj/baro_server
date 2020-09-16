@@ -4,6 +4,7 @@ public class SQL {
 
     public static class Alert{
         public static final String FIND_ALERT_ALL = "SELECT * FROM alert";
+        public static final String GET_RECENTLY_ALERT_DATE = "SELECT alert_startdate FROM alert ORDER BY alert_startdate DESC LIMIT 0,1";
     }
 
     public static class Type {
@@ -160,7 +161,13 @@ public class SQL {
     }
 
     public static class Favorite {
-        public static final String FIND_FAVORITES_BY_PHONE = "SELECT store_id, store_latitude, store_longitude, store_name, store_info, store_location, store_image, is_open FROM stores NATURAL JOIN favorites WHERE phone=?";
+        public static final String FIND_FAVORITES_BY_PHONE
+                = "SELECT store_id, (6371*acos(cos(radians(37.4685225))*cos(radians(?))*cos(radians(?)\n" +
+                "\n" +
+                "\t-radians(126.8943311))+sin(radians(37.4685225))*sin(radians(?))))\n" +
+                "\n" +
+                "\tAS distance, store_name, store_info, store_location, store_image, is_open FROM stores\n" +
+                " NATURAL JOIN favorites WHERE phone=? ORDER BY distance";
         public static final String INSERT_FAVORITE = "INSERT INTO favorites VALUES(?,?)";
         public static final String DELETE_FAVORITE = "DELETE FROM favorites WHERE phone=? AND store_id=?";
         public static final String CHECK_FAVORITE = "SELECT * FROM favorites WHERE phone=? AND store_id=?";

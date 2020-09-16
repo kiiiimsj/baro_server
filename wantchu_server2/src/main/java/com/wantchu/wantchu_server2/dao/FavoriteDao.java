@@ -1,13 +1,16 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.favorite.dto.FavoriteListDto;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteExistException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteInfoNotFoundException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteSaveException;
+import com.wantchu.wantchu_server2.vo.FavoriteInfoDistanceVo;
 import com.wantchu.wantchu_server2.vo.FavoriteInfoVo;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -23,14 +26,13 @@ public class FavoriteDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<FavoriteInfoVo> findFavInfoByPhone(String phone) throws FavoriteInfoNotFoundException{
-        List<FavoriteInfoVo> list = jdbcTemplate.query(
+    public List<FavoriteInfoDistanceVo> findFavInfoByPhone(@NotNull FavoriteListDto dto) throws FavoriteInfoNotFoundException{
+        List<FavoriteInfoDistanceVo> list = jdbcTemplate.query(
                 SQL.Favorite.FIND_FAVORITES_BY_PHONE,
                 (resultSet, i) -> {
-                     FavoriteInfoVo infoVo = new FavoriteInfoVo();
+                    FavoriteInfoDistanceVo infoVo = new FavoriteInfoDistanceVo();
                      infoVo.setStore_id(resultSet.getInt("store_id"));
-                     infoVo.setStore_latitude(resultSet.getDouble("store_latitude"));
-                     infoVo.setStore_longitude(resultSet.getDouble("store_longitude"));
+                     infoVo.setDistance(resultSet.getDouble("distance"));
                      infoVo.setStore_name(resultSet.getString("store_name"));
                      infoVo.setStore_location(resultSet.getString("store_location"));
                      infoVo.setStore_info(resultSet.getString("store_info"));
@@ -42,7 +44,7 @@ public class FavoriteDao {
                      infoVo.setIs_open(resultSet.getString("is_open"));
                      return infoVo;
                 }
-                , phone);
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getPhone());
         if(list.size() == 0) {
             throw new FavoriteInfoNotFoundException();
         } else {

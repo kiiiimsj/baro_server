@@ -23,4 +23,10 @@ public class AlertApiController {
         WriteToServer.send(response, jsonObject);
     }
 
+    @GetMapping("/GetRecentlyAlertDate.do")
+    public void alertRecently(@NotNull HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = alertService.alertRecently();
+        WriteToServer.send(response, jsonObject);
+    }
+
 }

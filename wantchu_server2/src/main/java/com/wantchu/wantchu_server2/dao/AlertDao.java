@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
@@ -33,6 +34,24 @@ public class AlertDao {
         }
         else{
             return list;
+        }
+    }
+
+    public AlertVo getRecently() throws AlertNotFoundException {
+        List<AlertVo> date = jdbcTemplate.query(
+                SQL.Alert.GET_RECENTLY_ALERT_DATE,
+                (resultSet,i) -> {
+                    AlertVo recently = AlertVo.builder()
+                            .alert_startdate(resultSet.getTimestamp("alert_startdate").toLocalDateTime())
+                            .build();
+                    return recently;
+                }
+                );
+        if(date.size()==0){
+            throw new AlertNotFoundException();
+        }
+        else{
+            return date.get(0);
         }
     }
 }
