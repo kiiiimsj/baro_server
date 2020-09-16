@@ -3,13 +3,16 @@ package com.wantchu.wantchu_server2.favorite.service;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.FavoriteDao;
 import com.wantchu.wantchu_server2.favorite.dto.FavoriteExistRequestDto;
+import com.wantchu.wantchu_server2.favorite.dto.FavoriteListDto;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteExistException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteInfoNotFoundException;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteSaveException;
+import com.wantchu.wantchu_server2.vo.FavoriteInfoDistanceVo;
 import com.wantchu.wantchu_server2.vo.FavoriteInfoVo;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +26,14 @@ public class FavoriteService {
     private final FavoriteDao favoriteDao;
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject findFavInfoByPhone(String phone) {
+    public org.json.simple.JSONObject findFavInfoByPhone(@NotNull FavoriteListDto dto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<FavoriteInfoVo> list = favoriteDao.findFavInfoByPhone(phone);
+            List<FavoriteInfoDistanceVo> list = favoriteDao.findFavInfoByPhone(dto);
             jsonObject.put("result", true);
-            jsonObject.put("message", phone + "의즐겨찾기 정보 가져오기 성공");
+            jsonObject.put("message", dto.getPhone() + "의즐겨찾기 정보 가져오기 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(FavoriteInfoVo info : list) {
+            for(FavoriteInfoDistanceVo info : list) {
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
                 jTemp.putAll(info.convertMap());
                 jsonArray.add(jTemp);
