@@ -1,6 +1,7 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.alert.exception.AlertNotFoundException;
+import com.wantchu.wantchu_server2.alert.exception.DoNotHaveAnyMoreAlert;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.vo.AlertVo;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +16,23 @@ public class AlertDao {
     private JdbcTemplate jdbcTemplate;
 
     public AlertDao(DataSource dataSource){ this.jdbcTemplate = new JdbcTemplate(dataSource);}
+
+    public AlertVo getLatestAlertId() throws DoNotHaveAnyMoreAlert {
+        List<AlertVo> list = jdbcTemplate.query(
+                SQL.Alert.GET_RECENTLY_ALERT_ID,
+                (resultSet, i ) -> {
+                    AlertVo alertVo = AlertVo.builder()
+                            .alert_id(resultSet.getInt("alert_id")).build();
+                 return alertVo;
+            }
+        );
+        if(list.size()==0){
+            throw new DoNotHaveAnyMoreAlert();
+        }
+        else{
+            return list.get(0);
+        }
+    }
 
     public List<AlertVo> findAll() throws AlertNotFoundException {
         List<AlertVo> list = jdbcTemplate.query(

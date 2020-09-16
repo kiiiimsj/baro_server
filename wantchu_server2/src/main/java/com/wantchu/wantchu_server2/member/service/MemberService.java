@@ -9,12 +9,11 @@ import com.wantchu.wantchu_server2.member.dto.MemberEmailUpdateRequestDto;
 import com.wantchu.wantchu_server2.member.dto.MemberLoginRequestDto;
 import com.wantchu.wantchu_server2.member.dto.MemberPassUpdateRequestDto;
 import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
-import com.wantchu.wantchu_server2.member.exception.MemberEmailInUseException;
-import com.wantchu.wantchu_server2.member.exception.MemberLoginException;
-import com.wantchu.wantchu_server2.member.exception.MemberPassUpdateException;
-import com.wantchu.wantchu_server2.member.exception.MemberPhoneInUseException;
+import com.wantchu.wantchu_server2.member.exception.*;
+import com.wantchu.wantchu_server2.vo.AlertVo;
 import com.wantchu.wantchu_server2.vo.MemberVo;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -119,4 +118,6 @@ public class MemberService {
         }
         return jsonObject;
     }
+
+
 }
