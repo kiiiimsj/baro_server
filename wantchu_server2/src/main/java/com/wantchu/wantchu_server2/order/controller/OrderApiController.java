@@ -32,9 +32,9 @@ public class OrderApiController {
 
     @GetMapping("/OrderListFindByPhone.do")
     public void orderFindByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-
         String phone = request.getParameter("phone");
-        org.json.simple.JSONObject jsonObject = orderService.orderListFindByPhone(phone);
+        int startPoint = Integer.valueOf(request.getParameter("startPoint"));
+        org.json.simple.JSONObject jsonObject = orderService.orderListFindByPhone(phone,startPoint);
         WriteToServer.send(response, jsonObject);
     }
 

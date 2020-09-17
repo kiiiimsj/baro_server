@@ -18,11 +18,11 @@ public class SQL {
 
     public static class Store {
         public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=?";
-        public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ?";
+        public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ? Limit ?,? ";
         public static final String FIND_INFO_BY_TYPE_CODE = "SELECT store_id, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE type_code=?"
-                +" ORDER BY DISTANCE ";
+                +" ORDER BY DISTANCE Limit ?,?";
         public static final String FIND_ALL_STORE_LOCATION = "SELECT store_id, store_name, store_latitude, store_longitude , " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 " +
@@ -107,7 +107,7 @@ public class SQL {
 
     public static class Order {
         public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?)";
-        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT FROM orders NATURAL JOIN stores WHERE phone =? GROUP BY receipt_id;";
+        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id Order By receipt_id Desc Limit ?,?;";
         public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT FROM orders NATURAL JOIN stores WHERE (phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT')) GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(menu_defaultprice*order_count),0) from orders where store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY)";

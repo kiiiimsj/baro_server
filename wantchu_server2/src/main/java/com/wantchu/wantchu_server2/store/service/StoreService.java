@@ -53,10 +53,10 @@ public class StoreService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject storeSearch(String keyword) {
+    public org.json.simple.JSONObject storeSearch(String keyword,int startPoint) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<StoreVo> list = storeDao.storeSearch(keyword);
+            List<StoreVo> list = storeDao.storeSearch(keyword,startPoint);
             jsonObject.put("result", true);
             jsonObject.put("message", "검색 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();

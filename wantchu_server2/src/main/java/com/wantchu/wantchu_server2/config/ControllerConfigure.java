@@ -8,7 +8,6 @@ import com.wantchu.wantchu_server2.dao.*;
 import com.wantchu.wantchu_server2.event.service.EventService;
 import com.wantchu.wantchu_server2.extra.service.ExtraService;
 import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
-import com.wantchu.wantchu_server2.inquiry.service.InquiryService;
 import com.wantchu.wantchu_server2.member.service.MemberService;
 import com.wantchu.wantchu_server2.menu.service.MenuService;
 import com.wantchu.wantchu_server2.notice.service.NoticeService;
@@ -34,8 +33,6 @@ public class ControllerConfigure {
     private ExtraService extraService;
     @Autowired
     private FavoriteService favoriteService;
-    @Autowired
-    private InquiryService inquiryService;
     @Autowired
     private MenuService menuService;
     @Autowired
@@ -64,8 +61,6 @@ public class ControllerConfigure {
     private ExtraDao extraDao;
     @Autowired
     private FavoriteDao favoriteDao;
-    @Autowired
-    private InquiryDao inquiryDao;
     @Autowired
     private MenuDao menuDao;
     @Autowired
@@ -109,8 +104,6 @@ public class ControllerConfigure {
     @Bean
     public FavoriteDao favoriteDao(){ return new FavoriteDao(dataSource());}
     @Bean
-    public InquiryDao inquiryDao(){ return new InquiryDao(dataSource());}
-    @Bean
     public MenuDao menuDao(){ return new MenuDao(dataSource());}
     @Bean
     public NoticeDao noticeDao(){ return new NoticeDao(dataSource());}
@@ -151,11 +144,6 @@ public class ControllerConfigure {
     @Bean
     public FavoriteService favoriteService(){
         FavoriteService service = new FavoriteService(favoriteDao());
-        return service;
-    }
-    @Bean
-    public InquiryService inquiryService(){
-        InquiryService service = new InquiryService(inquiryDao());
         return service;
     }
     @Bean

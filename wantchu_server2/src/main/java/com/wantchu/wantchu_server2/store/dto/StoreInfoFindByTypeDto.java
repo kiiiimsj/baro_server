@@ -11,4 +11,5 @@ public class StoreInfoFindByTypeDto {
     private String type_code;
     private double latitude;
     private double longitude;
+    private int startPoint;
 }

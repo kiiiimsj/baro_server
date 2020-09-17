@@ -59,7 +59,7 @@ public class OrderDao {
     }
 
 
-    public List<OrderListVo> findAbstractOrderInfo(String phone) throws OrderNotFoundByPhoneException {
+    public List<OrderListVo> findAbstractOrderInfo(String phone,int startPoint) throws OrderNotFoundByPhoneException {
         List<OrderListVo> list = jdbcTemplate.query(
                 SQL.Order.FIND_ORDER_LIST_BY_PHONE,
                 (resultSet, i) -> {
@@ -68,9 +68,10 @@ public class OrderDao {
                     orderListVo.setStore_name(resultSet.getString("store_name"));
                     orderListVo.setOrder_date(resultSet.getTimestamp("order_date").toLocalDateTime());
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
+                    orderListVo.setOrder_state(resultSet.getString("order_state"));
                     return orderListVo;
                 }
-                , phone);
+                , phone,startPoint,startPoint+20);
         if(list.size() == 0) {
             throw new OrderNotFoundByPhoneException();
         } else {

@@ -80,10 +80,10 @@ public class OrderService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject orderListFindByPhone(String phone) {
+    public org.json.simple.JSONObject orderListFindByPhone(String phone,int startPoint) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            List<OrderListVo> list = orderDao.findAbstractOrderInfo(phone);
+            List<OrderListVo> list = orderDao.findAbstractOrderInfo(phone,startPoint);
             jsonObject.put("result", true);
             jsonObject.put("message", "전화번호로 주문 정보 가져오기 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
