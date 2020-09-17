@@ -32,7 +32,8 @@ public class StoreApiController {
     @GetMapping("/StoreSearch.do")
     public void searchStore(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String keyword = request.getParameter("keyword");
-        org.json.simple.JSONObject jsonObject = storeService.storeSearch(keyword);
+        int startPoint = Integer.parseInt(request.getParameter("startPoint"));
+        org.json.simple.JSONObject jsonObject = storeService.storeSearch(keyword,startPoint);
         WriteToServer.send(response, jsonObject);
     }
 

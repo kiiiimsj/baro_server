@@ -48,8 +48,8 @@ public class StoreDao {
         }
     }
 
-    public List<StoreVo> storeSearch(String keyword) throws StoreSearchException {
-        String real_keyword = "%" + keyword + "%";
+    public List<StoreVo> storeSearch(String keyword,int startPoint) throws StoreSearchException {
+        String real_keyword = "%" + keyword.trim() + "%";
         List<StoreVo> list = jdbcTemplate.query(
                 SQL.Store.STORE_SEARCH,
                 (resultSet, i) -> {
@@ -57,7 +57,7 @@ public class StoreDao {
                     storeVo.setIs_open(resultSet.getString("is_open"));
                     return storeVo;
                 }
-                , real_keyword);
+                , real_keyword,startPoint,startPoint+20);
         if(list.size() == 0) {
             throw new StoreSearchException();
         } else {
@@ -80,7 +80,7 @@ public class StoreDao {
                             .build();
                     return storeInfoVo;
                 }
-                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code());
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code(),dto.getStartPoint(),dto.getStartPoint()+20);
         if(list.size() == 0) {
             throw new StoreTypeNotFoundException();
         } else {
