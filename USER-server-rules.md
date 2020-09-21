@@ -42,7 +42,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>회원 관련 API</h1>
 
 * 회원의 로그인 처리
-  * URL : http://54.180.56.44:8080/MemberLogin.do
+  * URL : http://15.165.22.64:8080/MemberLogin.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -68,7 +68,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 전화번호 중복 체크
-  * URL : http://54.180.56.44:8080/MemberPhoneCheck.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/MemberPhoneCheck.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=중복체크할전화번호` 형식으로 전달__
   * 응답 형식
@@ -80,7 +80,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 등록 처리
-  * URL : http://54.180.56.44:8080/MemberRegister.do
+  * URL : http://15.165.22.64:8080/MemberRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -107,7 +107,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 비밀번호 변경 처리
-  * URL : http://54.180.56.44:8080/MemberPassUpdate.do
+  * URL : http://15.165.22.64:8080/MemberPassUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -122,7 +122,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 이메일 변경 처리
-  * URL : http://54.180.56.44:8080/MemberEmailUpdate.do
+  * URL : http://15.165.22.64:8080/MemberEmailUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -141,7 +141,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>공지 관련 API</h1>
 
 * 모든 공지 읽어오기
-  * URL : http://54.180.56.44:8080/NoticeFindAll.do
+  * URL : http://15.165.22.64:8080/NoticeFindAll.do
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음__
   * 응답 형식
@@ -187,12 +187,12 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 특정 공지 읽어오기
-  * URL : http://54.180.56.44:8080/NoticeFindById.do?notice_id=id값
+  * URL : http://15.165.22.64:8080/NoticeFindById.do?notice_id=id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `notice_id=id값` 형태로 전달
   * 응답 형식
 ```json
-// 해당 notice_id = 1로 공지를 가져오는데 성공했을 시 (주소 : http://54.180.56.44:8080/NoticeFindById.do?notice_id=1)
+// 해당 notice_id = 1로 공지를 가져오는데 성공했을 시 (주소 : http://15.165.22.64:8080/NoticeFindById.do?notice_id=1)
 {
     "result": true,
     "notice_code": "NOTICE",
@@ -211,7 +211,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 공지사항 등록 처리
-  * URL : http://54.180.56.44:8080/NoticeSave.do
+  * URL : http://15.165.22.64:8080/NoticeSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -228,7 +228,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 공지사항 notice_code 별로 가져오기
-  * URL : http:54.180.56.44:8080/NoticeFindByCode.do?notice_code=공지코드
+  * URL : http:15.165.22.64:8080/NoticeFindByCode.do?notice_code=공지코드
   * HTTP Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 보내는 `notice_code`는 반드시 `EVENT`, `ALERT`, `NOTICE` 중 하나__
   * 응답 형식
@@ -384,7 +384,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>가게 관련 API</h1>
 
 * 특정 가게의 정보 가져오기
-  * URL : http://54.180.56.44:8080/StoreFindById.do?store_id=가게id값
+  * URL : http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 전송__
   * 응답 형식
@@ -415,7 +415,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 특정 이름의 가게 id만 가져오기
-  * URL : http://54.180.56.44:8080/StoreFindIdByStoreName.do?store_name=가게명
+  * URL : http://15.165.22.64:8080/StoreFindIdByStoreName.do?store_name=가게명
   * Http Method : GET
   * 제공해야 하는 형식 : __없음, 파라미터로 `store_name=가게명` 전송, 만약 가게명에 공백이 있을 경우 `%20`을 공백 자리에 넣어준다.__   
     예시 : 가게명이 `TEST CAFE2` 인 경우의 파라미터 : `store_name=TEST%20CAFE2`
@@ -436,7 +436,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 특정 종류의 가게 정보 리스트 가져오기
-  * URL : http://54.180.56.44:8080/StoreFindByType.do?type_code=가게type코드
+  * URL : http://15.165.22.64:8080/StoreFindByType.do?type_code=가게type코드
   * HTTP Method : GET
   * 제공해야 하는 형식 : __없음, 파라미터로 `type_code=타입코드` 전송__
   * 응답 형식
@@ -547,12 +547,12 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 가게명 검색 API
-  * URL : http://54.180.56.44:8080/StoreSearch.do?keyword=검색어
+  * URL : http://15.165.22.64:8080/StoreSearch.do?keyword=검색어
   * HTTP Method : GET
   * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어` 지정__
   * 응답 형식
 ```json
-// 검색 결과가 존재하는 경우 (예시 : http://54.180.56.44:8080/StoreSearch.do?keyword=중국)
+// 검색 결과가 존재하는 경우 (예시 : http://15.165.22.64:8080/StoreSearch.do?keyword=중국)
 {
     "result": true,
     "store": [
@@ -624,7 +624,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * type_code로 가게 정보 가져오기
-  * URL : http://54.180.56.44:8080/StoreInfoFindByType.do?type_code=타입코드값
+  * URL : http://15.165.22.64:8080/StoreInfoFindByType.do?type_code=타입코드값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `type_code=?` 형식으로 전송__
   * 응답 형식
@@ -685,7 +685,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 모든 가게의 위치 정보와 이름 가져오기
-  * URL : http://54.180.56.44:8080/StoreAllLocation.do
+  * URL : http://15.165.22.64:8080/StoreAllLocation.do
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음__
   * 응답 결과
@@ -727,7 +727,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>카테고리 관련 API</h1>
 
 * store_id별로 카테고리 가져오기
-  * URL : http://54.180.56.44:8080/CategoryFindByStoreId.do?store_id=가게id값
+  * URL : http://15.165.22.64:8080/CategoryFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 형식으로 전송__
   * 응답 형식
@@ -768,7 +768,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 결제하기 클릭 직전, 마지막으로 해당 매장의 영업 유무 확인하기
-  * URL : http://54.180.56.44:8080/StoreCheckIsOpen.do?store_id=가게id값
+  * URL : http://15.165.22.64:8080/StoreCheckIsOpen.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -790,7 +790,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>메뉴 관련 API</h1>
 
 * 가게의 모든 메뉴 목록 가져오기
-  * URL : http://54.180.56.44:8080/MenuFindByStoreId.do?store_id=가게id값
+  * URL : http://15.165.22.64:8080/MenuFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -1075,7 +1075,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * store_id와 category_id로 메뉴 정보 가져오기
-  * URL : http://54.180.56.44:8080/MenuFindByStoreAndCategoryId.do?store_id=가게id값&category_id=카테고리id값
+  * URL : http://15.165.22.64:8080/MenuFindByStoreAndCategoryId.do?store_id=가게id값&category_id=카테고리id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, `store_id=가게id값` 와 `category_id=카테고리id값` 의 총 2개 파라미터 전달__
   * 응답 형식
@@ -1179,7 +1179,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>Extra 관련 API</h1>
 
 * menu_id 별로 extra 목록 가져오기
-  * URL : http://54.180.56.44:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
+  * URL : http://15.165.22.64:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `menu_id=메뉴id값` 전송__
   * 응답 형식
@@ -1244,9 +1244,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>사진 관련 API</h1>
 
 * 이벤트 사진 가져오기
-  * URL(1, 이벤트 사진 가져오기) : http://54.180.56.44:8080/ImageEvent.do?image_name=이미지명
-  * URL(2, 가게 사진 가져오기) : http://54.180.56.44:8080/ImageStore.do?image_name=이미지명
-  * URL(3, 가게 타입 사진 가져오기) : http://54.180.56.44:8080/ImageType.do?image_name=이미지명
+  * URL(1, 이벤트 사진 가져오기) : http://15.165.22.64:8080/ImageEvent.do?image_name=이미지명
+  * URL(2, 가게 사진 가져오기) : http://15.165.22.64:8080/ImageStore.do?image_name=이미지명
+  * URL(3, 가게 타입 사진 가져오기) : http://15.165.22.64:8080/ImageType.do?image_name=이미지명
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터에 `image_name=이미지명`으로 전달
   * 응답 형식 : JSON이 아닌 byte[] 배열, slack에 올린 `MainActivity.java` 참고
@@ -1254,7 +1254,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>주문 관련 API</h1>
 
 * 주문 내역 저장 처리
-  * URL : http://54.180.56.44:8080/OrderInsert.do
+  * URL : http://15.165.22.64:8080/OrderInsert.do
   * Http Method : POST
   * 제공해야 하는 JSON형식
     * __`discount_price`와 `coupon_id`는 사용자가 쿠폰을 사용하지 않으면 둘 다 `-1`로 넣어주시면 됩니다__. 
@@ -1373,7 +1373,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 내역 리스트 가져오기
-  * URL : http://54.180.56.44:8080/OrderListFindByPhone.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/OrderListFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
   * 응답 형식
@@ -1400,7 +1400,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 상세 정보 가져오기
-  * URL : http://54.180.56.44:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
+  * URL : http://15.165.22.64:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=?`형식으로 전달__
   * 응답 형식
@@ -1452,7 +1452,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 횟수 가져오기
-  * URL : http://54.180.56.44:8080/OrderTotalCountByPhone.do?phone=?
+  * URL : http://15.165.22.64:8080/OrderTotalCountByPhone.do?phone=?
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
   * 응답 형식
@@ -1468,7 +1468,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>즐겨찾기 관련 API</h1>
 
 * 즐겨찾기 정보 가져오기
-  * URL : http://54.180.56.44:8080/FavoriteList.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/FavoriteList.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`로 전달__
   * 응답 형식
@@ -1509,7 +1509,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 즐겨찾기 등록 처리
-  * URL : http://54.180.56.44:8080/FavoriteSave.do
+  * URL : http://15.165.22.64:8080/FavoriteSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -1533,7 +1533,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 즐겨찾기 삭제 처리
-  * URL : http://54.180.56.44:8080/FavoriteDelete.do
+  * URL : http://15.165.22.64:8080/FavoriteDelete.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -1558,7 +1558,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 가게 클릭시 즐겨찾기의 유무 처리
-  * URL : http://54.180.56.44:8080/FavoriteExist.do
+  * URL : http://15.165.22.64:8080/FavoriteExist.do
   * Http Method : POST
 ```json
 {
@@ -1585,7 +1585,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>쿠폰 관련 API</h1>
 
 * 쿠폰 리스트 가져오기
-  * URL : http://54.180.56.44:8080/CouponFindByPhone.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/CouponFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 응답 형식
@@ -1639,7 +1639,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 장바구니에서 결제 전에 사용 가능한 쿠폰 목록 가져오기
-  * URL : http://54.180.56.44:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
+  * URL : http://15.165.22.64:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`와 `price=전체금액` 의 총 2개 전달__
   * 응답 형식
@@ -1677,7 +1677,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 쿠폰 개수 가져오기
-  * URL : http://54.180.56.44:8080/CouponCountByPhone.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/CouponCountByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 주의 사항 : 응답 형식에서 `result`는 무조건 `true`가 온다. 쿠폰이 없는 경우에는 `coupon_count`값이 `0`이 온다.
@@ -1699,7 +1699,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 쿠폰 사용 내역 가져오기
-  * URL : http://54.180.56.44:8080/CouponHistoryByPhone.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/CouponHistoryByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달
   * 응답 형식
@@ -1728,7 +1728,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>결제 관련 API</h1>
 
 * User Token 발급받는 API
-  * URL : http://54.180.56.44:8080/BillingGetUserToken.do
+  * URL : http://15.165.22.64:8080/BillingGetUserToken.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
     __`user_id`는 사용자 고유값이나, 우리의 경우 전화번호로 사용자 고유값을 사용하므로 `user_id`와 `phone`이 동일하다__
@@ -1749,7 +1749,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>1:1 문의 내역 관련 API</h1>
 
 * 문의 내역 리스트 가져오기
-  * URL : http://54.180.56.44:8080/InquiryListFindByEmail.do?email=이메일
+  * URL : http://15.165.22.64:8080/InquiryListFindByEmail.do?email=이메일
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `email=사용자이메일` 전달__
   * 응답 형식
@@ -1800,7 +1800,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 문의 내역 상세 정보 가져오기
-  * URL : http://54.180.56.44:8080/InquiryFindById.do?inquiry_id=문의내역id값
+  * URL : http://15.165.22.64:8080/InquiryFindById.do?inquiry_id=문의내역id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `inquiry_id=문의내역id값` 전달__
   * 응답 형식
@@ -1825,7 +1825,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 1:1 문의 등록 하기
-  * URL : http://54.180.56.44:8080/InquirySave.do
+  * URL : http://15.165.22.64:8080/InquirySave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
     __주의 : `title`, `content`는 반드시 공백이 아니여야 한다.__
@@ -1852,7 +1852,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 결제 검증 처리
-  * URL : http://54.180.56.44:8080/BillingVerify.do
+  * URL : http://15.165.22.64:8080/BillingVerify.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
