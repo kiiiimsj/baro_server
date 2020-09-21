@@ -1,10 +1,10 @@
 package com.wantchu.wantchu_server2.alert.service;
 
-import com.google.protobuf.util.Timestamps;
 import com.wantchu.wantchu_server2.alert.exception.AlertNotFoundException;
 import com.wantchu.wantchu_server2.business.DateConverter;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.AlertDao;
+import com.wantchu.wantchu_server2.alert.exception.DoNotHaveAnyMoreAlert;
 import com.wantchu.wantchu_server2.vo.AlertVo;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -50,6 +50,20 @@ public class AlertService {
             jsonObject.put("message", "알림 가져오기 성공");
             jsonObject.put("recentlyUpdate", DateConverter.convertDateWithTime(date.getAlert_startdate()));
         } catch (AlertNotFoundException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject getLatestAlert() {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        AlertVo alertVo;
+        try{
+            alertVo = alertDao.getLatestAlertId();
+            jsonObject.put("result",true);
+            jsonObject.put("message","최신의 alert정보 가져오기 성공");
+            jsonObject.put("recentlyAlertId",alertVo.getAlert_id());
+        }catch(DoNotHaveAnyMoreAlert e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;
