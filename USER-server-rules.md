@@ -21,12 +21,13 @@
 cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩만 가져오고 리스트의 가장 하단으로 갔을때 다시 db를 통해 그 아래있는 리스트 20개씩을 가져온다.
 * 가게명 검색하는 API -> /StoreSearch.do 수정됨 아래 수정사항 참고
 
-* map에 해당하는 API들은 원래 위도,경도를 DB에서 받아와서 front에서 거리를 계산하여 찍었지만 서버에서 거리를 계산하여 위도,경도 대신 distance를 front에 제공한다(StoreFindByType.do - > StoreInfoFindByType.do) get방식에서 post방식으로 바뀜. 또한 전체 리스트가 아닌 20개씩만 받아온다.(수정사항 참고)
-* StoreAllLocation.do -> 원래는 map을 들어갔을때 마커를 찍기위해 모든 가게들의 정보들을 다 받아왔는데 이제는 근처 2km이내의 가게들만의 위도,경도등의 정보들을 가져온다. 아래 수정사항 참고
+* map에 해당하는 API들은 원래 위도,경도를 DB에서 받아와서 front에서 거리를 계산하여 찍었지만 서버에서 거리를 계산하여 위도,경도 대신 distance를 front에 제공한다(StoreInfoFindByType.do) get방식에서 post방식으로 바뀜. 또한 전체 리스트가 아닌 20개씩만 받아온다.(수정사항 참고)
+
+* StoreAllLocation.do -> 원래는 map을 들어갔을때 마커를 찍기위해 모든 가게들의 정보들을 다 받아왔는데 이제는 근처 1.5km이내의 가게들만의 위도,경도등의 정보들을 가져온다. 아래 수정사항 참고
 
 * FavoriteList.do도 마찬가지로 위도 경도대신, distance를 제공한다. 아래 수정사항 참고
 
-* OrderListFindByPhone.do ??? 아래 수정사항 참고
+* OrderListFindByPhone.do 원래는 그냥 phone만 줬는데 수정으로 startpoint가 추가되어서 주문내역을 20개씩만 받아오는 api이다. 아래 수정사항 참고해주세요
 
 * getLatestAlertWhenMemberLogin.do -> 오른쪽 위에 해당하는 `종모양` 옆에 new를 표시해주기 위해 가장 최신의 알림에 해당하는 id를 로그인시에 받아온다. 사용자는 로그인시마다 이를 받아와서 세션에 저장하고, 비교하여 만약 db에 더 최신것이 들어온다면 값이 다를테니 그때 종옆에 new를 표시해주면된다. 또한 종모양을 클릭하고 들어가면 세션을 업데이트 시켜주어, 알림페이지를 나갔을때는 new모양을 사라지게 처리. 아래 수정사항 참고
 
@@ -337,6 +338,22 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
+<h1>Alert 관련 API</h1>
+
+* 새로운 알림을 DB에서 넣어줬을때 자신이 가지고 있는 최신의 alert_id와 비교하여 내가 가지고 있는 알림이 최신 버전이 아니면 메인페이지 오른쪽 위 알림 종모양옆에 new를 띄워주기 위한 용도
+* URL :  http://15.165.22.64:8080/GetLatestAlertWhenMemberLogin.do
+* Http Method : GET
+* 제공해야하는 JSON 형식 : __없음__
+* 응답 형식
+
+```json
+{
+    "result": true,
+    "recentlyAlertId": 8,
+    "message": "최신의 alert정보 가져오기 성공"
+}
+```
+
 <h1>가게 종류 관련 API</h1>
 
 * 가게 종류 목록 가져오기
@@ -435,121 +452,11 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 특정 종류의 가게 정보 리스트 가져오기
-  * URL : http://15.165.22.64:8080/StoreFindByType.do?type_code=가게type코드
-  * HTTP Method : GET
-  * 제공해야 하는 형식 : __없음, 파라미터로 `type_code=타입코드` 전송__
-  * 응답 형식
-```json
-// 해당 type_code를 가진 가게 정보들이 존재할 때 (URL : http://localhost:8080/StoreFindByType.do?type_code=CAFE)
-{
-    "result": true,
-    "store": [
-        {
-            "store_id": 1,
-            "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
-            "store_latitude": 37.4952,
-            "is_open": "Y",
-            "store_longitude": 126.9565,
-            "store_name": "test cafe",
-            "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
-            "store_image": "test_cafe1.png"
-        },
-        {
-            "store_id": 3,
-            "store_info": "CAFE2 의 정보 입니다.",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 0.1,
-            "store_name": "TEST CAFE2",
-            "store_location": "테스트시 테스트동",
-            "store_image": "test_cafe2.png"
-        },
-        {
-            "store_id": 4,
-            "store_info": "CAFE3 의 정보 입니다.",
-            "store_latitude": 0.2,
-            "is_open": "N",
-            "store_longitude": 0.2,
-            "store_name": "TEST CAFE3",
-            "store_location": "테스트시 테스트2동",
-            "store_image": "test_cafe3.png"
-        },
-        {
-            "store_id": 5,
-            "store_info": "CAFE4 의 정보 입니다.",
-            "store_latitude": 0.3,
-            "is_open": "N",
-            "store_longitude": 0.3,
-            "store_name": "TEST CAFE4",
-            "store_location": "테스트시 테스트3동",
-            "store_image": "test_cafe4.png"
-        },
-        {
-            "store_id": 20,
-            "store_info": "가게정보",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "테스트 카페5",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 21,
-            "store_info": "가게정보",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "테스트 카페6",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 22,
-            "store_info": "가게정보",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "테스트 카페7",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 23,
-            "store_info": "가게정보",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "테스트 카페8",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 24,
-            "store_info": "가게정보",
-            "store_latitude": 0.1,
-            "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "테스트 카페9",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        }
-    ],
-    "message": "type_code별로 가게 정보 가져오기 성공"
-}
-
-// 해당 type_code가 존재하지 않는 경우
-{
-    "result": false,
-    "message": "해당 type_code를 가진 가게 정보가 존재하지 않습니다."
-}
-```
 
 * 가게명 검색 API
-  * URL : http://15.165.22.64:8080/StoreSearch.do?keyword=검색어
+  * URL :  http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0
   * HTTP Method : GET
-  * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어` 지정__
+  * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어&startPoint=시작점` 지정__
   * 응답 형식
 ```json
 // 검색 결과가 존재하는 경우 (예시 : http://15.165.22.64:8080/StoreSearch.do?keyword=중국)
@@ -576,7 +483,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_info": "CAFE2 의 정보 입니다.",
             "store_latitude": 0.1,
             "store_closetime": "23:00",
-            "is_open": "N",
+            "is_open": "Y",
             "store_daysoff": "매주 월 휴무",
             "store_phone": "0211112222",
             "store_longitude": 0.1,
@@ -624,60 +531,108 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * type_code로 가게 정보 가져오기
-  * URL : http://15.165.22.64:8080/StoreInfoFindByType.do?type_code=타입코드값
-  * Http Method : GET
-  * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `type_code=?` 형식으로 전송__
+  * URL : http://15.165.22.64:8080/StoreInfoFindByType.do
+  * Http Method : POST
+  * 제공해야 하는 JSON 형식
+유저의 위도/경도 보내줘야한다.
+```json
+{
+    "type_code":"CAFE",
+    "latitude":"37.4989351557582",
+    "longitude":"126.95574335753918"
+}
+```
   * 응답 형식
 ```json
-// 성공 시
+//성공시
 {
     "result": true,
     "store": [
         {
-            "store_id": 6,
-            "store_info": "중국집1 의 정보 입니다.",
-            "store_latitude": 1.1,
+            "store_id": 1,
+            "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
+            "distance": 420.6602443447413,
+            "is_open": "Y",
+            "store_name": "test cafe",
+            "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 20,
+            "store_info": "가게정보",
+            "distance": 1.3079049541561143E7,
             "is_open": "N",
-            "store_longitude": 1.1,
-            "store_name": "중국집1",
-            "store_location": "테스트시 테스트4동",
+            "store_name": "테스트 카페5",
+            "store_location": "가게위치",
             "store_image": "default.png"
         },
         {
-            "store_id": 7,
-            "store_info": "중국집2 의 정보 입니다.",
-            "store_latitude": 1.2,
+            "store_id": 21,
+            "store_info": "가게정보",
+            "distance": 1.3079049541561143E7,
             "is_open": "N",
-            "store_longitude": 1.2,
-            "store_name": "중국집2",
-            "store_location": "테스트시 테스트5동",
+            "store_name": "테스트 카페6",
+            "store_location": "가게위치",
             "store_image": "default.png"
         },
         {
-            "store_id": 8,
-            "store_info": "중국집3 의 정보 입니다.",
-            "store_latitude": 1.3,
+            "store_id": 22,
+            "store_info": "가게정보",
+            "distance": 1.3079049541561143E7,
             "is_open": "N",
-            "store_longitude": 1.3,
-            "store_name": "중국집3",
+            "store_name": "테스트 카페7",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 23,
+            "store_info": "가게정보",
+            "distance": 1.3079049541561143E7,
+            "is_open": "N",
+            "store_name": "테스트 카페8",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 24,
+            "store_info": "가게정보",
+            "distance": 1.3079049541561143E7,
+            "is_open": "N",
+            "store_name": "테스트 카페9",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 5,
+            "store_info": "CAFE4 의 정보 입니다.",
+            "distance": 1.3128058525327127E7,
+            "is_open": "N",
+            "store_name": "TEST CAFE4",
+            "store_location": "테스트시 테스트3동",
+            "store_image": "test_cafe4.png"
+        },
+        {
+            "store_id": 4,
+            "store_info": "CAFE3 의 정보 입니다.",
+            "distance": 1.314378056359232E7,
+            "is_open": "N",
+            "store_name": "TEST CAFE3",
+            "store_location": "테스트시 테스트2동",
+            "store_image": "test_cafe3.png"
+        },
+        {
+            "store_id": 3,
+            "store_info": "CAFE2 의 정보 입니다.",
+            "distance": 1.3159502644120296E7,
+            "is_open": "Y",
+            "store_name": "TEST CAFE2",
             "store_location": "테스트시 테스트동",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 9,
-            "store_info": "중국집4 의 정보 입니다.",
-            "store_latitude": 37.495,
-            "is_open": "N",
-            "store_longitude": 126.9563,
-            "store_name": "중국집4",
-            "store_location": "테스트시 테스트동",
-            "store_image": "default.png"
+            "store_image": "test_cafe2.png"
         }
     ],
     "message": "type_code별로 가게 정보 가져오기 성공"
 }
-
-// 실패 시
+//실패시
 {
     "result": false,
     "message": "해당 type_code를 가진 가게 정보가 존재하지 않습니다."
@@ -686,37 +641,33 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 
 * 모든 가게의 위치 정보와 이름 가져오기
   * URL : http://15.165.22.64:8080/StoreAllLocation.do
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음__
+  * Http Method : POST
+  * 제공해야하는 JSON 형식
+```json
+{
+    "latitude":"37.4989351557582",
+    "longitude":"126.95574335753918"
+}
+```
+
   * 응답 결과
 ```json
 {
     "result": true,
     "store": [
         {
-            "store_name": "마루 스시",
-            "store_latitude": 2.1,
-            "store_longitude": 2.1
+            "store_id": 1,
+            "store_name": "test cafe",
+            "store_latitude": 37.4952,
+            "distance": 420.6602443447413,
+            "store_longitude": 126.9565
         },
         {
-            "store_name": "마루 스시",
-            "store_latitude": 2.1,
-            "store_longitude": 2.1
-        },
-        {
-            "store_name": "돈카츠",
-            "store_latitude": 2.2,
-            "store_longitude": 2.2
-        },
-        {
-            "store_name": "라멘집",
-            "store_latitude": 2.3,
-            "store_longitude": 2.3
-        },
-        {
-            "store_name": "해물탕집",
-            "store_latitude": 2.4,
-            "store_longitude": 2.4
+            "store_id": 9,
+            "store_name": "중국집4",
+            "store_latitude": 37.495,
+            "distance": 440.3163188094726,
+            "store_longitude": 126.9563
         }
     ],
     "message": "모든 가게의 위치 정보 가져오기 성공"
@@ -1373,9 +1324,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 내역 리스트 가져오기
-  * URL : http://15.165.22.64:8080/OrderListFindByPhone.do?phone=전화번호
+  * URL : http://15.165.22.64:8080/OrderListFindByPhone.do?phone=01093756927&startPoint=0
   * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
+  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호&startPoint=시작점` 형식으로 전달__
   * 응답 형식
 ```json
 // 주문 내역 리스트 가져오기 성공 시
@@ -1384,12 +1335,29 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "전화번호로 주문 정보 가져오기 성공",
     "order": [
         {
-            "order_date": "2020년 8월 24일 13시 23분 26초",
-            "receipt_id": "coupontest34",
+            "order_date": "2020년 8월 24일 16시 17분 59초",
+            "receipt_id": "5f43699f878a560047f9fea0",
             "store_name": "test cafe",
-            "total_price": 9500,
-            "total_count": 5
-        }
+            "total_price": 2900,
+            "order_state": "DONE",
+            "total_count": 1
+        },
+        {
+            "order_date": "2020년 8월 25일 20시 48분 59초",
+            "receipt_id": "5f44faa018e1ae0025e41da0",
+            "store_name": "test cafe",
+            "total_price": 2000,
+            "order_state": "DONE",
+            "total_count": 1
+        },
+        {
+            "order_date": "2020년 8월 26일 11시 7분 2초",
+            "receipt_id": "5f45c3bc2fa5c200399c3dc6",
+            "store_name": "test cafe",
+            "total_price": 2000,
+            "order_state": "DONE",
+            "total_count": 1
+        } // 20개를 원래 가져와야하는데 너무 길어서 짜름..
     ]
 }
 // 주문 내역 정보가 없을 때
@@ -1468,12 +1436,20 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>즐겨찾기 관련 API</h1>
 
 * 즐겨찾기 정보 가져오기
-  * URL : http://15.165.22.64:8080/FavoriteList.do?phone=전화번호
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`로 전달__
+  * URL : http://15.165.22.64:8080/FavoriteList.do
+  * Http Method : POST
+  * 제공해야하는 JSON 형식
+  * 유저의 위도/경도 보내줘야한다.
+```json
+{
+    "phone":"01093756927",
+    "latitude":"37.4989351557582",
+    "longitude":"126.95574335753918"
+}
+```
   * 응답 형식
 ```json
-// 성공 시
+//성공시
 {
     "result": true,
     "message": "01093756927의즐겨찾기 정보 가져오기 성공",
@@ -1481,27 +1457,51 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
         {
             "store_id": 1,
             "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
-            "store_latitude": 37.4952,
-            "is_open": "N",
-            "store_longitude": 126.9565,
+            "distance": 6.387430017715164,
+            "is_open": "Y",
             "store_name": "test cafe",
             "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
             "store_image": "test_cafe1.png"
         },
         {
+            "store_id": 3,
+            "store_info": "CAFE2 의 정보 입니다.",
+            "distance": 6.387430017715164,
+            "is_open": "Y",
+            "store_name": "TEST CAFE2",
+            "store_location": "테스트시 테스트동",
+            "store_image": "test_cafe2.png"
+        },
+        {
+            "store_id": 18,
+            "store_info": "소고기가 더 맛있음",
+            "distance": 6.387430017715164,
+            "is_open": "N",
+            "store_name": "삼겹살집",
+            "store_location": "테스트시 테스트13동",
+            "store_image": "default.png"
+        },
+        {
+            "store_id": 23,
+            "store_info": "가게정보",
+            "distance": 6.387430017715164,
+            "is_open": "N",
+            "store_name": "테스트 카페8",
+            "store_location": "가게위치",
+            "store_image": "default.png"
+        },
+        {
             "store_id": 25,
             "store_info": "유명한 레트로 분위기의 호프집",
-            "store_latitude": 37.506721,
+            "distance": 6.387430017715164,
             "is_open": "Y",
-            "store_longitude": 127.005268,
             "store_name": "하트타임",
             "store_location": "서초구 반포 쇼핑타운상가 5동 지하 1층",
             "store_image": "default.png"
         }
     ]
 }
-
-// 실패 시 (등록된 전화번호가 아니거나 즐겨찾기 정보가 없을 때)
+//실패시
 {
     "result": false,
     "message": "등록된 즐겨찾기 정보가 없습니다."
