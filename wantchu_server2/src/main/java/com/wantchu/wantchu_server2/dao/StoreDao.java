@@ -80,7 +80,7 @@ public class StoreDao {
                             .build();
                     return storeInfoVo;
                 }
-                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code(),0,0+20);
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code(),dto.getStartPoint(),dto.getStartPoint()+20);
         if(list.size() == 0) {
             throw new StoreTypeNotFoundException();
         } else {
