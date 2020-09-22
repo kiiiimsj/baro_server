@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/yeoyoo_server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/order/controller/OrderApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/order/controller/OrderApiController.java" afterDir="false" />
-    </list>
+    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,11 +24,15 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wantchu_server2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="" />
@@ -48,17 +47,18 @@
       <workItem from="1600159041625" duration="253000" />
       <workItem from="1600159373298" duration="9000" />
       <workItem from="1600332156696" duration="304000" />
+      <workItem from="1600769761286" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1600159380646">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1600769779315">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1600159380646" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1600769779315" />
     <state x="180" y="22" key="new project wizard" timestamp="1600080702201">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
