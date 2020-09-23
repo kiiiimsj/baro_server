@@ -42,4 +42,30 @@ public class FcmUtil {
             String response = FirebaseMessaging.getInstance().send(message);
             jsonObject.put("response", response);
     }
+
+    public void send_owner_FCM(String tokenId, org.json.simple.JSONObject jsonObject) throws IOException, FirebaseMessagingException {
+        InputStream inputStream = new ClassPathResource("baro-69065-firebase-adminsdk-78yyx-a312832ead.json").getInputStream();
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(inputStream))
+                .setDatabaseUrl("https://baro-69065.firebaseio.com")
+                .build();
+
+        if(FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options);
+        }
+
+        String registrationToken = tokenId;
+
+        Message message = Message.builder()
+                .setAndroidConfig(AndroidConfig.builder()
+                        .setTtl(3600 * 1000)
+                        .setPriority(AndroidConfig.Priority.NORMAL)
+                        .build())
+                .putData("title", "주문이 들어왔습니다!!")
+                .setToken(registrationToken)
+                .build();
+
+        String response = FirebaseMessaging.getInstance().send(message);
+        jsonObject.put("response", response);
+    }
 }

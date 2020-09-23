@@ -4,6 +4,7 @@ import com.google.firebase.auth.internal.HttpErrorResponse;
 import com.wantchu.wantchu_server2.business.WriteToServer;
 import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
+import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
 import com.wantchu.wantchu_server2.order.dto.OrderStateUpdateRequestDto;
 import com.wantchu.wantchu_server2.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -104,5 +105,10 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObject = orderService.findDoneOrCancelByPhone(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("/OrderSendMessage.do")
+    public void sendMessageToOwner(@RequestBody OrderMessageRequestDto requestDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = orderService.sendMessageToOwner(requestDto);
+        WriteToServer.send(response, jsonObject);
 
+    }
 }

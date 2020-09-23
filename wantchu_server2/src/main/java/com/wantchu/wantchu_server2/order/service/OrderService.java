@@ -1,12 +1,16 @@
 package com.wantchu.wantchu_server2.order.service;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.wantchu.wantchu_server2.business.DateConverter;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
 import com.wantchu.wantchu_server2.dao.OrderDao;
+import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
+import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
+import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
@@ -14,6 +18,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -331,6 +336,26 @@ public class OrderService {
         }
         catch(Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject sendMessageToOwner(OrderMessageRequestDto requestDto){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            String owner_device_token = orderDao.getDeviceTokenByStoreId(requestDto.getStore_id());
+            FcmUtil fcmUtil = new FcmUtil();
+            fcmUtil.send_owner_FCM(owner_device_token, jsonObject);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "메시지 전송 성공");
+        }
+        catch(StoreIdNotFoundException exception){
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        } catch(FirebaseMessagingException exception){
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        } catch(IOException exception){
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }
         return jsonObject;
     }
