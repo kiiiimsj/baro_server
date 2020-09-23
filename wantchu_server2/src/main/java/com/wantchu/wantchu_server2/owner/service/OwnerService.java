@@ -27,10 +27,11 @@ public class OwnerService {
     private final OwnerDao ownerDao;
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject login(String phone, String pass) {
+    public org.json.simple.JSONObject login(String phone, String pass, String owner_device_token) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
             OwnerVo ownerVo = ownerDao.isValidAccount(phone, pass);
+            ownerDao.updateDeviceToken(phone, owner_device_token);
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 점주 로그인이 되었습니다.");
             jsonObject.put("store_id", ownerVo.getStore_id());

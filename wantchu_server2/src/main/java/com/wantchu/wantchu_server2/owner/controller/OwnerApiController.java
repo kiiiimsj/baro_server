@@ -22,7 +22,7 @@ public class OwnerApiController {
 
     @PostMapping("/OwnerLogin.do")
     public void login(@RequestBody @NotNull OwnerLoginRequestDto requestDto, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = ownerService.login(requestDto.getPhone(), requestDto.getPass());
+        org.json.simple.JSONObject jsonObject = ownerService.login(requestDto.getPhone(), requestDto.getPass(), requestDto.getOwner_device_token());
         WriteToServer.send(response, jsonObject);
     }
 
