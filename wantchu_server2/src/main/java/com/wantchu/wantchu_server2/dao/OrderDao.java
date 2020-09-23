@@ -8,9 +8,9 @@ import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
+import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
-import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -295,6 +295,20 @@ public class OrderDao {
             throw new OrderNotFoundException();
         } else {
             return list;
+        }
+    }
+    public String getDeviceTokenByStoreId(int store_id) throws StoreIdNotFoundException {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_OWNER_DEVICE_TOKEN,
+                (resultSet, i) -> {
+                    String owner_device_token = resultSet.getString("owner_device_token");
+                    return owner_device_token;
+                }
+                ,store_id);
+        if(list.size() == 0){
+            throw new StoreIdNotFoundException();
+        } else{
+            return list.get(0);
         }
     }
 }
