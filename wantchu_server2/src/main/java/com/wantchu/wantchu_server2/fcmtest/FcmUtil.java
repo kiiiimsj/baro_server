@@ -61,7 +61,8 @@ public class FcmUtil {
                         .setTtl(3600 * 1000)
                         .setPriority(AndroidConfig.Priority.NORMAL)
                         .build())
-                .putData("title", "주문이 들어왔습니다!!")
+                .putData("title", "주문이 들어왔습니다")
+                .putData("content", "주문을 확인해주세요")
                 .setToken(registrationToken)
                 .build();
 

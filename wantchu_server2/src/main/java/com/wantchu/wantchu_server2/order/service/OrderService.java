@@ -345,6 +345,7 @@ public class OrderService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             String owner_device_token = orderDao.getDeviceTokenByStoreId(requestDto.getStore_id());
+            System.out.println(owner_device_token);
             FcmUtil fcmUtil = new FcmUtil();
             fcmUtil.send_owner_FCM(owner_device_token, jsonObject);
             jsonObject.put("result", true);
