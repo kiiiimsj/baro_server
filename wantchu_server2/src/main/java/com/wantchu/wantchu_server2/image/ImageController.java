@@ -10,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 @NoArgsConstructor
@@ -68,14 +71,22 @@ public class ImageController {
     @GetMapping(value = "/ImageMenu.do", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getMenuImage(@NotNull HttpServletRequest request) throws IOException {
         String image_name = getImageName(request);
-        InputStream inputStream = null;
-        try{
-            inputStream = new ClassPathResource("/images/menus/" + image_name).getInputStream();
+        int store_id = Integer.parseInt(request.getParameter("store_id"));
+        int menu_id = Integer.parseInt(request.getParameter("menu_id"));
+        ByteArrayOutputStream baos = null;
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/menus/" + store_id + "/" + menu_id + ".png"));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
         }
-        catch (FileNotFoundException e){
+        catch(MalformedURLException e){
             e.printStackTrace();
-            inputStream = new ClassPathResource("/images/menus/default.png").getInputStream();
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png"));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image,"png",baos);
         }
-        return IOUtils.toByteArray(inputStream);
+        baos.flush();
+        return baos.toByteArray();
     }
 }
