@@ -139,14 +139,16 @@
 ```json
 {
     "store_id":"가게id값",
-    "is_open":"Y 또는 N"
+    "is_open":"Y 또는 N",
+    "owner_device_token":"~~~~"
 }
 ```
   * 응답 형식
 ```json
 {
     "result": true,
-    "message": "정상 처리 되었습니다."
+    "message": "정상 처리 되었습니다.",
+    "device_result" : true(or false)
 }
 ```
 
@@ -255,14 +257,16 @@
 {
     "store_id":"가게id값",
     "startDate":"yyyy:MM:dd",
-    "endDate":"yyyy:MM:dd"
+    "endDate":"yyyy:MM:dd",
+    "owner_device_token" : "~~~~~~"
 }
 ```
   * 응답 형식
 ```json
 {
     "total_price": 총매출(int),
-    "coupon_total_price": 쿠폰으로 할인된 총 가격(int)
+    "coupon_total_price": 쿠폰으로 할인된 총 가격(int),
+    "device_result": true(or false)
 }
 ```
 
@@ -390,6 +394,8 @@
   * 제공해야하는 JSON 형식
 ```json
 {
+    "receipt_id":"5f43699f878a560047f9fea0",
+    "store_id":"1",
     "receipt_id":"해당 주문의 고유 영수증id값"
 }
 ```
@@ -397,7 +403,8 @@
 ```json
 {
     "result":true,
-    "message":"정상 처리 되었습니다."
+    "message":"정상 처리 되었습니다.",
+    "device_result": true(or false)
 }
 ```
 
@@ -407,6 +414,8 @@
   * 제공해야하는 JSON 형식
 ```json
 {
+    "receipt_id":"5f43699f878a560047f9fea0",
+    "store_id":"1",
     "receipt_id":"해당 주문의 고유 영수증id값"
 }
 ```
@@ -414,7 +423,8 @@
 ```json
 {
     "result":true,
-    "message":"정상 처리 되었습니다."
+    "message":"정상 처리 되었습니다.",
+    "device_result": true(or false)
 }
 ```
 
@@ -477,20 +487,23 @@
 // response는 단순 확인용 입니다.
 {
     "result": true,
-    "response": "projects/wantchu-e2a20/messages/0:1598672051903691%3dce49aff9fd7ecd",
-    "message": "메시지 전송 성공"
+    "response": "projects/baro-69065/messages/0:1600950519362771%3dce49aff9fd7ecd",
+    "message": "메시지 전송 성공",
+    "device_result": true(or false)
 }
 
 // 실패 시 (고객 전화번호가 잘못되었을 때)
 {
     "result": false,
-    "message": "존재하지 않는 고객 전화번호 입니다."
+    "message": "존재하지 않는 고객 전화번호 입니다.",
+    "device_result": true(or false)
 }
 
 // 실패 시 (서버 오류일 때)
 {
     "result": false,
-    "message": "The registration token is not a valid FCM registration token"
+    "message": "The registration token is not a valid FCM registration token",
+    "device_result": true(or false)
 }
 ```
 
@@ -669,5 +682,48 @@ webSocketClient.send("connect:::" + store_id);
     "phone":"01093756927","receipt_id":"5f58aef2878a5600247386b5",
     "store_id":1,
     "total_price":1500
+}
+```
+
+* 그래프 통계를 위한 날짜사이의 하루별 매출 가져오기
+  * URL : http://15.165.22.64:8080//OwnerSetstatistics.do
+  * Http Method : POST
+  * 제공해야하는 JSON 형식
+
+```json
+{
+    "store_id":"1",
+    "start_date":"2020-09-20",
+    "end_date":"2020-09-24",
+    "owner_device_token":"~~~"
+}
+```
+  * 응답형식
+```json
+//성공시
+{
+    "result": true,
+    "message": "통계내역 가져오기 성공",
+    "device_result": false,
+    "statistics": [
+        {
+            "date": "2020-09-21",
+            "price": 1500
+        },
+        {
+            "date": "2020-09-23",
+            "price": 3000
+        },
+        {
+            "date": "2020-09-24",
+            "price": 1500
+        }
+    ]
+}
+//실패시
+{
+    "result": false,
+    "message": "통계할 정보가 존재하지 않습니다.",
+    "device_result": false
 }
 ```
