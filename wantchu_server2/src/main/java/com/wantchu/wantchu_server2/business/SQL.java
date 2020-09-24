@@ -29,6 +29,7 @@ public class SQL {
                 "AS DISTANCE FROM stores " +
                 "HAVING DISTANCE <= 1500 " +
                 "ORDER BY distance ";
+        public static final String FIND_ALL_STORE_LOCATION2 = "SELECT store_id, store_name, store_latitude, store_longitude,(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) -radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE FROM stores ORDER BY distance";
         public static final String FIND_STORE_ID_BY_NAME = "SELECT store_id FROM stores WHERE store_name=?";
         public static final String IS_STORE_OPEN = "SELECT is_open FROM stores WHERE store_id = ?";
         public static final String UPDATE_STORE_NAME = "UPDATE stores SET store_name=? WHERE store_id=?";
@@ -76,6 +77,7 @@ public class SQL {
         //public static final String FIND_STORE_STATISTICS_EXTRA="SELECT DATE(order_date),IFNULL(SUM(extra_price),0) as extra_total_price FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id where store_id=? and order_date BETWEEN ? AND ? GROUP BY DATE(order_date)";
 
         public static final String UPDATE_OWNER_DEVICE_TOKEN = "UPDATE owners SET owner_device_token = ? WHERE phone = ?";
+        public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
     }
 
     public static class Extra {
@@ -125,6 +127,7 @@ public class SQL {
         public static final String FIND_RECEIPT_IDS_OF_DONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY) AND (order_state='DONE' OR order_state='CANCEL') ORDER BY order_date DESC limit ?,20";
         public static final String FIND_RECEIPT_IDS_OF_DONE_OR_CANCEL_BY_PHONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND phone=? AND (order_state='DONE' OR order_state='CANCEL') ORDER BY order_date DESC LIMIT ?,20";
         public static final String FIND_OWNER_DEVICE_TOKEN = "SELECT owner_device_token FROM owners WHERE store_id=?";
+        public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
     }
 
     public static class ExtraOrder {

@@ -460,6 +460,7 @@ public class OwnerDao {
             return list;
         }
     }
+
 //    public List<PriceByDayVo> setStatisticsExtra(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
 //        List<PriceByDayVo> list = jdbcTemplate.query(
 //                SQL.Owner.FIND_STORE_STATISTICS_EXTRA,
@@ -477,4 +478,19 @@ public class OwnerDao {
 //            return list;
 //        }
 //    }
+    public boolean duplicateToken(int store_id, String owner_device_token){
+        List<String> list = jdbcTemplate.query(
+                SQL.Owner.FIND_DUPLICATE_TOKEN,
+                (resultSet, i) -> {
+                    String phone = resultSet.getString("phone");
+                    return phone;
+                }
+                ,store_id, owner_device_token);
+        if(list.size() == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }

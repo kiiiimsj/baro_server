@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.StyledEditorKit;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -271,9 +272,11 @@ public class OrderService {
     public org.json.simple.JSONObject findDoneOrdersByDate(OrderCompleteBetweenDateReqeustDto reqeustDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
+            Boolean device_result = orderDao.duplicateToken(reqeustDto.getStore_id(), reqeustDto.getOwner_device_token());
             List<String> receiptIdList = orderDao.findReceiptIdsOfDoneOrders(reqeustDto);
             Iterator<String> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
+            jsonObject.put("device_result", device_result);
             jsonObject.put("message", "완료/취소된 주문 내역 가져오기 성공");
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
             while(receiptIdIterator.hasNext()){
@@ -307,9 +310,11 @@ public class OrderService {
     public org.json.simple.JSONObject findDoneOrCancelByPhone(OrderCompletePhoneDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
+            Boolean device_result = orderDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
             List<String> receiptIdList = orderDao.findReceiptIdsOfDoneOrCancelByPhone(requestDto);
             Iterator<String> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
+            jsonObject.put("device_result", device_result);
             jsonObject.put("message", "완료/취소된 주문 내역 가져오기 성공");
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
             while(receiptIdIterator.hasNext()){

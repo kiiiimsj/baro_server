@@ -11,4 +11,5 @@ public class OrderCompletePhoneDto {
     private int store_id;
     private String phone;
     private int start;
+    private String owner_device_token;
 }

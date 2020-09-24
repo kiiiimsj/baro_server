@@ -9,4 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OwnerSetStatusCompleteRequestDto {
     private String receipt_id;
+    private int store_id;
+    private String owner_device_token;
 }

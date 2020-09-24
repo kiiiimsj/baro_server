@@ -12,4 +12,5 @@ public class OwnerPriceBetweenDateRequestDto {
     private int store_id;
     private String startDate;
     private String endDate;
+    private String owner_device_token;
 }

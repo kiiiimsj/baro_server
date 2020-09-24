@@ -90,7 +90,8 @@ public class StoreDao {
 
     public List<StoreLocationVo> findAllStoreLocation(StoreLocationDto dto) {
         List<StoreLocationVo> list = jdbcTemplate.query(
-                SQL.Store.FIND_ALL_STORE_LOCATION,
+                //SQL.Store.FIND_ALL_STORE_LOCATION,
+                SQL.Store.FIND_ALL_STORE_LOCATION2,
                 (resultSet, i) -> {
                     StoreLocationVo locationVo = StoreLocationVo.builder()
                             .store_id(resultSet.getInt("store_id"))
