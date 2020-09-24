@@ -271,8 +271,9 @@ public class OrderService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findDoneOrdersByDate(OrderCompleteBetweenDateReqeustDto reqeustDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        Boolean device_result = null;
         try{
-            Boolean device_result = orderDao.duplicateToken(reqeustDto.getStore_id(), reqeustDto.getOwner_device_token());
+            device_result = orderDao.duplicateToken(reqeustDto.getStore_id(), reqeustDto.getOwner_device_token());
             List<String> receiptIdList = orderDao.findReceiptIdsOfDoneOrders(reqeustDto);
             Iterator<String> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
@@ -303,14 +304,16 @@ public class OrderService {
         }
         catch(Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findDoneOrCancelByPhone(OrderCompletePhoneDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        Boolean device_result = null;
         try{
-            Boolean device_result = orderDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+            device_result = orderDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
             List<String> receiptIdList = orderDao.findReceiptIdsOfDoneOrCancelByPhone(requestDto);
             Iterator<String> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
@@ -341,6 +344,7 @@ public class OrderService {
         }
         catch(Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }

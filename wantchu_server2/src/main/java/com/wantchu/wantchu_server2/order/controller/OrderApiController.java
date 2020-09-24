@@ -78,8 +78,6 @@ public class OrderApiController {
     @GetMapping("/OrderListDoneOrCancelForOwner.do")
     public void findOrderListDoneOrCancel(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
         String receipt_id = request.getParameter("receipt_id");
-        int store_id = Integer.parseInt(request.getParameter("store_id"));
-        String owner_device_token = request.getParameter("owner_device_token");
         org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
         WriteToServer.send(response,jsonObject);
     }
