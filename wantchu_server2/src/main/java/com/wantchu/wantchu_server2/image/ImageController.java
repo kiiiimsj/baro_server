@@ -72,11 +72,10 @@ public class ImageController {
     public @ResponseBody byte[] getMenuImage(@NotNull HttpServletRequest request) throws IOException {
         String image_name = getImageName(request);
         int store_id = Integer.parseInt(request.getParameter("store_id"));
-        int menu_id = Integer.parseInt(request.getParameter("menu_id"));
         ByteArrayOutputStream baos = null;
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/menus/" + store_id + "/" + menu_id + ".png"));
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/menus/" + store_id + "/" + image_name));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
