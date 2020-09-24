@@ -311,4 +311,19 @@ public class OrderDao {
             return list.get(0);
         }
     }
+    public boolean duplicateToken(int store_id, String owner_device_token) {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_DUPLICATE_TOKEN,
+                (resultSet, i) -> {
+                    String phone = resultSet.getString("phone");
+                    return phone;
+                }
+                ,store_id, owner_device_token);
+        if(list.size() == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 }

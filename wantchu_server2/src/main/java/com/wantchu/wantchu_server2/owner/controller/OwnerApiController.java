@@ -44,17 +44,17 @@ public class OwnerApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @PutMapping("/OwnerSetStore.do")
-    public void setOwnerStore(@RequestBody @NotNull OwnerStoreSetRequestDto requestDto, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = ownerService.setOwnerStore(requestDto);
-        WriteToServer.send(response, jsonObject);
-    }
+//    @PutMapping("/OwnerSetStore.do")
+//    public void setOwnerStore(@RequestBody @NotNull OwnerStoreSetRequestDto requestDto, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = ownerService.setOwnerStore(requestDto);
+//        WriteToServer.send(response, jsonObject);
+//    }
 
-    @PutMapping("/OwnerUpdates.do")
-    public void ownerUpdates(@RequestBody @NotNull String updateRequest, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObjectForResponse = ownerService.ownerUpdates(updateRequest);
-        WriteToServer.send(response, jsonObjectForResponse);
-    }
+//    @PutMapping("/OwnerUpdates.do")
+//    public void ownerUpdates(@RequestBody @NotNull String updateRequest, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObjectForResponse = ownerService.ownerUpdates(updateRequest);
+//        WriteToServer.send(response, jsonObjectForResponse);
+//    }
 
     @PostMapping("/OwnerFindPriceBetweenDate.do")
     public void findPriceBetweenDate(@RequestBody OwnerPriceBetweenDateRequestDto requestDto, HttpServletResponse response) {
@@ -64,7 +64,7 @@ public class OwnerApiController {
 
     @PutMapping("/OwnerSetStoreStatus.do")
     public void setStoreOpenOrClosed(@RequestBody OwnerStoreStatusUpdateRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStoreOpenOrClosed(requestDto.getIs_open(), requestDto.getStore_id());
+        org.json.simple.JSONObject jsonObject = ownerService.setStoreOpenOrClosed(requestDto.getIs_open(), requestDto.getStore_id(), requestDto.getOwner_device_token());
         WriteToServer.send(response, jsonObject);
     }
 
@@ -75,12 +75,12 @@ public class OwnerApiController {
     }
     @PutMapping("/OwnerSetOrderStatus.do")
     public void setOrderStatus(@RequestBody OwnerSetStatusRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id());
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id(), requestDto.getOwner_device_token());
         WriteToServer.send(response, jsonObject);
     }
     @PutMapping("/OwnerSetOrderStatusComplete.do")
     public void setOrderStatusComplete(@RequestBody OwnerSetStatusCompleteRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id());
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id(), requestDto.getOwner_device_token());
         WriteToServer.send(response, jsonObject);
     }
     @PostMapping("/OwnerSetstatistics.do")

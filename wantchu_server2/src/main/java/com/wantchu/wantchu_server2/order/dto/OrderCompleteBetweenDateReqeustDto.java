@@ -12,4 +12,5 @@ public class OrderCompleteBetweenDateReqeustDto {
     private String start_date;
     private String end_date;
     private int start;
+    private String owner_device_token;
 }

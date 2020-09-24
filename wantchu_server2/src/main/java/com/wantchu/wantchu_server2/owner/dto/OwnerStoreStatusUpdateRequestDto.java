@@ -11,4 +11,5 @@ public class OwnerStoreStatusUpdateRequestDto {
 
     private int store_id;
     private String is_open;
+    private String owner_device_token;
 }

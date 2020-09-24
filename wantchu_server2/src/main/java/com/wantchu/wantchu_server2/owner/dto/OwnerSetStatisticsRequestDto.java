@@ -11,4 +11,5 @@ public class OwnerSetStatisticsRequestDto {
     private int store_id;
     private String start_date;
     private String end_date;
+    private String owner_device_token;
 }
