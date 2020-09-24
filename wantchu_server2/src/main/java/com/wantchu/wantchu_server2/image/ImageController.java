@@ -79,7 +79,7 @@ public class ImageController {
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
-        catch(MalformedURLException e){
+        catch(Exception e){
             e.printStackTrace();
             image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
