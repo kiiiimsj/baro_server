@@ -328,8 +328,9 @@ public class OwnerService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject sendMessageToCustomer(OwnerMessageRequestDto requestDto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        Boolean device_result = null;
         try {
-            Boolean device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+            device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
             String device_token = ownerDao.getDeviceTokenByPhone(requestDto.getPhone());
             FcmUtil fcmUtil = new FcmUtil();
             fcmUtil.send_FCM(device_token, requestDto.getTitle(), requestDto.getContent(), jsonObject);
@@ -338,10 +339,13 @@ public class OwnerService {
             jsonObject.put("device_result", device_result);
         } catch(MemberPhoneNotFoundException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+            jsonObject.put("device_result", device_result);
         } catch(FirebaseMessagingException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+            jsonObject.put("device_result", device_result);
         } catch(IOException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+            jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
@@ -368,8 +372,9 @@ public class OwnerService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        Boolean device_result = null;
         try{
-            Boolean device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+            device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
             List<PriceByDayVo> defaultPriceList = ownerDao.setStatistics(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("device_result", device_result);
@@ -397,6 +402,7 @@ public class OwnerService {
         }
         catch (StatisticsNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
