@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 @NoArgsConstructor
 @Component
@@ -30,6 +31,7 @@ public class ImageController {
         InputStream inputStream = null;
         try {
             inputStream = new ClassPathResource("/images/events/" + image_name).getInputStream();
+
         } catch(FileNotFoundException e) {
             e.printStackTrace();
             inputStream = new ClassPathResource("/images/events/default.png").getInputStream();
@@ -59,6 +61,20 @@ public class ImageController {
         } catch(FileNotFoundException e) {
             e.printStackTrace();
             inputStream = new ClassPathResource("/images/types/default.png").getInputStream();
+        }
+        return IOUtils.toByteArray(inputStream);
+    }
+
+    @GetMapping(value = "/ImageMenu.do", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getMenuImage(@NotNull HttpServletRequest request) throws IOException {
+        String image_name = getImageName(request);
+        InputStream inputStream = null;
+        try{
+            inputStream = new ClassPathResource("/images/menus/" + image_name).getInputStream();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+            inputStream = new ClassPathResource("/images/menus/default.png").getInputStream();
         }
         return IOUtils.toByteArray(inputStream);
     }
