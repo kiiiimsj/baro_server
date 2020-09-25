@@ -43,7 +43,7 @@ public class FcmUtil {
             jsonObject.put("response", response);
     }
 
-    public void send_owner_FCM(String tokenId, org.json.simple.JSONObject jsonObject) throws IOException, FirebaseMessagingException {
+    public void send_owner_FCM(String tokenId, String content, org.json.simple.JSONObject jsonObject) throws IOException, FirebaseMessagingException {
         InputStream inputStream = new ClassPathResource("baro-69065-firebase-adminsdk-78yyx-a312832ead.json").getInputStream();
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(inputStream))
@@ -62,7 +62,7 @@ public class FcmUtil {
                         .setPriority(AndroidConfig.Priority.NORMAL)
                         .build())
                 .putData("title", "주문이 들어왔습니다")
-                .putData("body", "주문을 확인해주세요")
+                .putData("body", content)
                 .setToken(registrationToken)
                 .build();
 
