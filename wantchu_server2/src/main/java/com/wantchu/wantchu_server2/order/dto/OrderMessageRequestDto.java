@@ -9,4 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderMessageRequestDto {
     private int store_id;
+    private String receipt_id;
 }

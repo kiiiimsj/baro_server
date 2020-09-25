@@ -356,7 +356,7 @@ public class OrderService {
             String owner_device_token = orderDao.getDeviceTokenByStoreId(requestDto.getStore_id());
             System.out.println(owner_device_token);
             FcmUtil fcmUtil = new FcmUtil();
-            fcmUtil.send_owner_FCM(owner_device_token, jsonObject);
+            fcmUtil.send_owner_FCM(owner_device_token, requestDto.getReceipt_id(), jsonObject);
             jsonObject.put("result", true);
             jsonObject.put("message", "메시지 전송 성공");
         }
