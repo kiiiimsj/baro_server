@@ -1,5 +1,6 @@
 package com.wantchu.wantchu_server2.image;
 
+import com.google.cloud.ByteArray;
 import lombok.NoArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
@@ -31,15 +32,21 @@ public class ImageController {
     @GetMapping(value = "/ImageEvent.do", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getEventImage(@NotNull HttpServletRequest request) throws IOException {
         String image_name = getImageName(request);
-        InputStream inputStream = null;
-        try {
-            inputStream = new ClassPathResource("/images/events/" + image_name).getInputStream();
-
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-            inputStream = new ClassPathResource("/images/events/default.png").getInputStream();
+        ByteArrayOutputStream baos = null;
+        BufferedImage image = null;
+        try{
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/events/"+ image_name));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
         }
-        return IOUtils.toByteArray(inputStream);
+        catch(Exception e){
+            e.printStackTrace();
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png/"));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+        }
+        baos.flush();
+        return baos.toByteArray();
     }
 
     @GetMapping(value = "/ImageStore.do", produces = MediaType.IMAGE_PNG_VALUE)
@@ -58,14 +65,21 @@ public class ImageController {
     @GetMapping(value = "/ImageType.do", produces = MediaType.IMAGE_PNG_VALUE)
     public @ResponseBody byte[] getTypeImage(@NotNull HttpServletRequest request) throws IOException {
         String image_name = getImageName(request);
-        InputStream inputStream = null;
-        try {
-            inputStream = new ClassPathResource("/images/types/" + image_name).getInputStream();
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-            inputStream = new ClassPathResource("/images/types/default.png").getInputStream();
+        ByteArrayOutputStream baos = null;
+        BufferedImage image = null;
+        try{
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/types/" + image_name));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
         }
-        return IOUtils.toByteArray(inputStream);
+        catch(Exception e){
+            e.printStackTrace();
+            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png/"));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+        }
+        baos.flush();
+        return baos.toByteArray();
     }
 
     @GetMapping(value = "/ImageMenu.do", produces = MediaType.IMAGE_PNG_VALUE)
@@ -83,7 +97,7 @@ public class ImageController {
             e.printStackTrace();
             image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
-            ImageIO.write(image,"png",baos);
+            ImageIO.write(image,"png", baos);
         }
         baos.flush();
         return baos.toByteArray();
