@@ -25,7 +25,7 @@ public class StoreVo {
     private String store_info;
     private String is_open;
 
-    public StoreVo(int store_id, String type_code, String store_name, double store_latitude, double store_longitude, String store_opentime, String store_closetime, String store_phone, String store_daysoff, String store_location, String store_info) {
+    public StoreVo(int store_id, String type_code, String store_name, double store_latitude, double store_longitude, String store_opentime, String store_closetime, String store_phone, String store_daysoff, String store_location, String store_image, String store_info) {
         this.store_id = store_id;
         this.type_code = type_code;
         this.store_name = store_name;
@@ -36,6 +36,7 @@ public class StoreVo {
         this.store_phone = store_phone;
         this.store_daysoff = store_daysoff;
         this.store_location = store_location;
+        this.store_image = store_image;
         this.store_info = store_info;
     }
 
@@ -51,6 +52,7 @@ public class StoreVo {
         map.put("store_phone", store_phone);
         map.put("store_daysoff", store_daysoff);
         map.put("store_location", store_location);
+        map.put("store_image", store_image);
         map.put("store_info", store_info);
         map.put("is_open", is_open);
         return map;

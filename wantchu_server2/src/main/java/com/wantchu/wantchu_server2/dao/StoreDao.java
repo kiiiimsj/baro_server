@@ -32,7 +32,7 @@ public class StoreDao {
             StoreVo storeVo = jdbcTemplate.queryForObject(
                     SQL.Store.FIND_BY_STORE_ID,
                     (resultSet, i) -> {
-                        StoreVo storeVo1 = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_info"));
+                        StoreVo storeVo1 = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("store_info"));
                         if(resultSet.getString("store_image") == null) {
                             storeVo1.setStore_image("default.png");
                         } else {
@@ -53,7 +53,7 @@ public class StoreDao {
         List<StoreVo> list = jdbcTemplate.query(
                 SQL.Store.STORE_SEARCH,
                 (resultSet, i) -> {
-                    StoreVo storeVo = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_info"));
+                    StoreVo storeVo = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("store_info"));
                     storeVo.setIs_open(resultSet.getString("is_open"));
                     return storeVo;
                 }
