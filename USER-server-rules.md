@@ -459,7 +459,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어&startPoint=시작점` 지정__
   * 응답 형식
 ```json
-// 검색 결과가 존재하는 경우 (예시 : http://15.165.22.64:8080/StoreSearch.do?keyword=중국)
+// 검색 결과가 존재하는 경우 (예시 : http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0)
 {
     "result": true,
     "store": [
@@ -475,7 +475,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_longitude": 126.9565,
             "store_name": "test cafe",
             "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
-            "type_code": "CAFE"
+            "type_code": "CAFE",
+            "store_image": "test_cafe1.png"
         },
         {
             "store_id": 3,
@@ -489,7 +490,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_longitude": 0.1,
             "store_name": "TEST CAFE2",
             "store_location": "테스트시 테스트동",
-            "type_code": "CAFE"
+            "type_code": "CAFE",
+            "store_image": "test_cafe2.png"
         },
         {
             "store_id": 4,
@@ -503,7 +505,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_longitude": 0.2,
             "store_name": "TEST CAFE3",
             "store_location": "테스트시 테스트2동",
-            "type_code": "CAFE"
+            "type_code": "CAFE",
+            "store_image": "test_cafe3.png"
         },
         {
             "store_id": 5,
@@ -517,7 +520,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_longitude": 0.3,
             "store_name": "TEST CAFE4",
             "store_location": "테스트시 테스트3동",
-            "type_code": "CAFE"
+            "type_code": "CAFE",
+            "store_image": "test_cafe4.png"
         }
     ],
     "message": "검색 성공"
