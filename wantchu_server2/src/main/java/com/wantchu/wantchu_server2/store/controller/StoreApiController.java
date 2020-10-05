@@ -29,6 +29,12 @@ public class StoreApiController {
         WriteToServer.send(response, jsonObject);
     }
 
+    @GetMapping("/StoreFindByUltra.do")
+    public void findByUltra(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findByUltra();
+        WriteToServer.send(response, jsonObject);
+    }
+
     @GetMapping("/StoreSearch.do")
     public void searchStore(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String keyword = request.getParameter("keyword");
