@@ -96,12 +96,14 @@ public class SQL {
     }
 
     public static class Menu {
-        public static final String FIND_BY_STORE_ID = "SELECT * FROM menus WHERE store_id=?";
+        public static final String FIND_BY_STORE_ID = "SELECT * FROM menus WHERE store_id=? AND is_soldout = 'Y'";
         public static final String UPDATE_MENU_PRICE = "UPDATE menus SET menu_defaultprice=? WHERE store_id=? AND menu_id=?";
         public static final String UPDATE_MENU_NAME = "UPDATE menus SET menu_name=? WHERE store_id=? AND menu_id=?";
         public static final String UPDATE_MENU_INFO = "UPDATE menus SET menu_info=? WHERE store_id=? AND menu_id=?";
         public static final String DELETE_MENU = "DELETE FROM menus WHERE menu_id=?";
         public static final String INSERT_MENU = "INSERT INTO menus VALUES(DEFAULT, ?, ?, ?, ?, ?)";
+        public static final String SAVE_SOLDOUT = "UPDATE menus SET is_soldout ='Y' WHERE menu_id=?";
+        public static final String DELETE_SOLDOUT = "UPDATE menus SET is_soldout ='N' WHERE menu_id=?";
     }
 
     public static class Category {
@@ -140,7 +142,7 @@ public class SQL {
 
     public static class Coupon {
         public static final String FIND_COUPONS_BY_PHONE = "select coupon_id, coupon_title, coupon_content, coupon_condition, coupon_enddate, coupon_discount, coupon_type from coupons natural join members natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND is_used='N'";
-        public static final String FIND_USABLE_COUPONS_AT_PURCHASE = "select coupon_id, coupon_enddate, coupon_discount, coupon_type, coupon_title, coupon_content, coupon_condition  from coupons natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND (coupon_condition <= ?) AND is_used='N'";
+        public static final String FIND_USABLE_COUPONS_AT_PURCHASE = "select coupon_id, coupon_enddate, coupon_discount, coupon_type, coupon_title, coupon_content, coupon_condition  from coupons natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND (? - coupon_condition >= 500) AND is_used='N'";
     }
 
     public static class CouponHistory {

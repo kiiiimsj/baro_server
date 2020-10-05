@@ -1,12 +1,15 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.menu.exception.MenuDeleteSoldOutException;
 import com.wantchu.wantchu_server2.menu.exception.MenuNotFoundByStoreIdException;
+import com.wantchu.wantchu_server2.menu.exception.MenuSaveSoldOutException;
 import com.wantchu.wantchu_server2.vo.MenuVo;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 
 @Component
@@ -31,5 +34,29 @@ public class MenuDao {
         } else {
             return list;
         }
+    }
+    public void updateSaveSoldOut(int menu_id) throws MenuSaveSoldOutException {
+        try {
+            jdbcTemplate.update(
+                    connection -> {
+                        PreparedStatement preparedStatement = connection.prepareStatement(SQL.Menu.SAVE_SOLDOUT);
+                        preparedStatement.setInt(1, menu_id);
+                        return preparedStatement;
+                    }
+            );
+        }
+        catch(Exception e){
+            throw new MenuSaveSoldOutException();
+        }
+    }
+    public void updateDeleteSoldeOut(int menu_id) throws MenuDeleteSoldOutException {
+        int result = jdbcTemplate.update(
+                connection -> {
+                    PreparedStatement preparedStatement = connection.prepareStatement(SQL.Menu.DELETE_SOLDOUT);
+                    preparedStatement.setInt(1, menu_id);
+                    return preparedStatement;
+                }
+        );
+        if(result == 0) throw  new MenuDeleteSoldOutException();
     }
 }

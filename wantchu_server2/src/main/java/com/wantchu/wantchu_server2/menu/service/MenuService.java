@@ -2,7 +2,9 @@ package com.wantchu.wantchu_server2.menu.service;
 
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.MenuDao;
+import com.wantchu.wantchu_server2.menu.exception.MenuDeleteSoldOutException;
 import com.wantchu.wantchu_server2.menu.exception.MenuNotFoundByStoreIdException;
+import com.wantchu.wantchu_server2.menu.exception.MenuSaveSoldOutException;
 import com.wantchu.wantchu_server2.vo.MenuVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,31 @@ public class MenuService {
             }
             jsonObject.put("menu", jsonArray);
         } catch(MenuNotFoundByStoreIdException exception) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        }
+        return jsonObject;
+    }
+
+    public org.json.simple.JSONObject updateSaveSoldOut(int menu_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            menuDao.updateSaveSoldOut(menu_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "품절처리되었습니다.");
+        }
+        catch(MenuSaveSoldOutException exception){
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        }
+        return jsonObject;
+    }
+    public org.json.simple.JSONObject updateDeleteSoldOut(int menu_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            menuDao.updateDeleteSoldeOut(menu_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "판매중처리되었습니다.");
+        }
+        catch(MenuDeleteSoldOutException exception){
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }
         return jsonObject;
