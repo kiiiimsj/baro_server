@@ -40,6 +40,7 @@ public class OrderDao {
             preparedStatement.setInt(6, orderVo.getOrder_count());
             preparedStatement.setString(7, orderVo.getReceipt_id());
             preparedStatement.setString(8, orderVo.getOrder_state());
+            preparedStatement.setString(9, orderVo.getRequests());
             return preparedStatement;
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
@@ -325,5 +326,15 @@ public class OrderDao {
         else{
             return true;
         }
+    }
+    public String getRequests(String receipt_id){
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_ORDER_REQUESTS,
+                (resultSet, i) -> {
+                    String requests = resultSet.getString("requests");
+                    return requests;
+                }
+                ,receipt_id);
+        return list.get(0);
     }
 }

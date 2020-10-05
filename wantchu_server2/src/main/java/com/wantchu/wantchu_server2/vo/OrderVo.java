@@ -23,14 +23,16 @@ public class OrderVo {
     private int order_count;
     private String receipt_id;
     private String order_state;
+    private String requests;
 
-    public OrderVo(int order_id, LocalDateTime order_date, String phone, int store_id, int menu_id, int menu_defaultprice) {
+    public OrderVo(int order_id, LocalDateTime order_date, String phone, int store_id, int menu_id, int menu_defaultprice, String requests) {
         this.order_id = order_id;
         this.order_date = order_date;
         this.phone = phone;
         this.store_id = store_id;
         this.menu_id = menu_id;
         this.menu_defaultprice = menu_defaultprice;
+        this.requests = requests;
     }
 
     public HashMap<String, Object> convertMap() {
@@ -42,6 +44,7 @@ public class OrderVo {
         map.put("menu_id", menu_id);
         map.put("menu_name", menu_name);
         map.put("menu_defaultprice", menu_defaultprice);
+        map.put("requests", requests);
         return map;
     }
 }

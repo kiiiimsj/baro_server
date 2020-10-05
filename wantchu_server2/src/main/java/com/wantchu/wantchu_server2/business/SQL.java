@@ -110,7 +110,7 @@ public class SQL {
     }
 
     public static class Order {
-        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?)";
+        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id Limit ?,?;";
         public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT FROM orders NATURAL JOIN stores WHERE (phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT')) GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
@@ -128,6 +128,7 @@ public class SQL {
         public static final String FIND_RECEIPT_IDS_OF_DONE_OR_CANCEL_BY_PHONE_ORDERS = "SELECT DISTINCT receipt_id FROM orders WHERE store_id=? AND phone=? AND (order_state='DONE' OR order_state='CANCEL') ORDER BY order_date DESC LIMIT ?,20";
         public static final String FIND_OWNER_DEVICE_TOKEN = "SELECT owner_device_token FROM owners WHERE store_id=?";
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
+        public static final String FIND_ORDER_REQUESTS = "SELECT requests FROM orders WHERE receipt_id= ? LIMIT 1";
     }
 
     public static class ExtraOrder {
@@ -139,7 +140,7 @@ public class SQL {
 
     public static class Coupon {
         public static final String FIND_COUPONS_BY_PHONE = "select coupon_id, coupon_title, coupon_content, coupon_condition, coupon_enddate, coupon_discount, coupon_type from coupons natural join members natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND is_used='N'";
-        public static final String FIND_USABLE_COUPONS_AT_PURCHASE = "select DISTINCT coupon_id, coupon_enddate, coupon_discount, coupon_type, coupon_title, coupon_content, coupon_condition  from coupons natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND (coupon_condition <= ?) AND is_used='N'";
+        public static final String FIND_USABLE_COUPONS_AT_PURCHASE = "select coupon_id, coupon_enddate, coupon_discount, coupon_type, coupon_title, coupon_content, coupon_condition  from coupons natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND (coupon_condition <= ?) AND is_used='N'";
     }
 
     public static class CouponHistory {
