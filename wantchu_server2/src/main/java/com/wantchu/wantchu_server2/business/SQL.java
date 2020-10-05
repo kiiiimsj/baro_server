@@ -19,6 +19,7 @@ public class SQL {
     public static class Store {
         public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=?";
         public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ? Limit ?,? ";
+        public static final String STORE_SEARCH_BY_ULTRA = "SELECT * FROM stores WHERE is_ultra='Y'";
         public static final String FIND_INFO_BY_TYPE_CODE = "SELECT store_id, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE type_code=?"
