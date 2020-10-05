@@ -96,7 +96,7 @@ public class SQL {
     }
 
     public static class Menu {
-        public static final String FIND_BY_STORE_ID = "SELECT * FROM menus WHERE store_id=? AND is_soldout = 'Y'";
+        public static final String FIND_BY_STORE_ID = "SELECT * FROM menus WHERE store_id=? AND is_soldout = 'N'";
         public static final String UPDATE_MENU_PRICE = "UPDATE menus SET menu_defaultprice=? WHERE store_id=? AND menu_id=?";
         public static final String UPDATE_MENU_NAME = "UPDATE menus SET menu_name=? WHERE store_id=? AND menu_id=?";
         public static final String UPDATE_MENU_INFO = "UPDATE menus SET menu_info=? WHERE store_id=? AND menu_id=?";
