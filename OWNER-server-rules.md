@@ -7,6 +7,13 @@
 
 2. 
 ======
+
+##### 10/5 변경사항
+* MenuUpdateSaveSoldOut.do - 해당 메뉴에 대해 매진상태로 바꿔주기 위한 api
+* MenuUpdateDeleteSoldOut.do - 해당 메뉴에 대해 다시 재고가 들어와서 고객에게 보여지게 하기위한 api
+
+
+
 <h2>로그인/등록/변경 관련</h2>
 
 * 점주 로그인 처리
@@ -630,7 +637,31 @@
 
 // 주문 내역이 존재하지 않으면 0으로 옴.
 ```
-AWEF
+### 재고 관리 API
+* 해당 메뉴에 대해 매진상태로 바꿔주기 위해 is_soldout을 Y로 바꿔주는 api
+  * URL : http://15.165.22.64:8080/MenuUpdateSaveSoldOut.do?menu_id=메뉴ID
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __파라미터로 `menu_id=메뉴ID` 전달__
+  * 응답 형식
+```json
+{
+    "result": true,
+    "message": "품절처리되었습니다."
+}
+```
+*  해당 메뉴에 대해 다시 재고가 들어와서 고객에게 보여지게 하기위한 api
+*  URL : http://15.165.22.64:8080/MenuUpdateDeleteSoldOut.do?menu_id=메뉴ID
+*  Http Method : GET
+*  제공해야하는 JSON 형식 : __파라미터로 `menu_id=메뉴ID` 전달__
+*  응답 형식
+```json
+{
+    "result": true,
+    "message": "판매중처리되었습니다."
+}
+```
+
+
 <h1>Socket Protocol</h1>
 
 * Web Socket 메시지 방식은 아래의 규칙을 따른다.
