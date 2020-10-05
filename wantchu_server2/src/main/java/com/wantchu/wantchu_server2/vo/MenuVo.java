@@ -18,8 +18,9 @@ public class MenuVo {
     private String menu_info;
     private int store_id;
     private String menu_image;
+    private String is_soldout;
 
-    public MenuVo(int menu_id, int menu_defaultprice, int category_id, String menu_name, String menu_info, int store_id, String menu_image) {
+    public MenuVo(int menu_id, int menu_defaultprice, int category_id, String menu_name, String menu_info, int store_id, String menu_image, String is_soldout) {
         this.menu_id = menu_id;
         this.menu_defaultprice = menu_defaultprice;
         this.category_id = category_id;
@@ -27,6 +28,7 @@ public class MenuVo {
         this.menu_info = menu_info;
         this.store_id = store_id;
         this.menu_image = menu_image;
+        this.is_soldout = is_soldout;
     }
 
 
@@ -39,6 +41,7 @@ public class MenuVo {
         map.put("menu_info", menu_info);
         map.put("store_id", store_id);
         map.put("menu_image", menu_image);
+        map.put("is_soldout", is_soldout);
         return map;
     }
 
