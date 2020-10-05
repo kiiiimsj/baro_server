@@ -25,7 +25,7 @@ public class MenuDao {
         List<MenuVo> list = jdbcTemplate.query(
                 SQL.Menu.FIND_BY_STORE_ID,
                 (resultSet, i) -> {
-                    MenuVo menuVo = new MenuVo(resultSet.getInt("menu_id"), resultSet.getInt("menu_defaultprice"), resultSet.getInt("category_id"), resultSet.getString("menu_name"), resultSet.getString("menu_info"), resultSet.getInt("store_id"), resultSet.getString("menu_image"));
+                    MenuVo menuVo = new MenuVo(resultSet.getInt("menu_id"), resultSet.getInt("menu_defaultprice"), resultSet.getInt("category_id"), resultSet.getString("menu_name"), resultSet.getString("menu_info"), resultSet.getInt("store_id"), resultSet.getString("menu_image"), resultSet.getString("is_soldout"));
                     return menuVo;
                 }
                 , store_id);
