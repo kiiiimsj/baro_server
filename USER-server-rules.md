@@ -216,7 +216,11 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
-{"title":"제목", "content":"내용", "notice_code":"공지 코드"}
+{
+    "title":"제목", 
+    "content":"내용", 
+    "notice_code":"공지 코드"
+}
 ```
   * __`notice_code`에 해당하는 부분은 반드시 `NOTICE`, `ALERT` 중 하나여야 함__.
 
@@ -444,6 +448,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "store_id": 3,
     "message": "가게 id 가져오기 성공"
 }
+
 
 // 해당 store_name이 존재하지 않는 경우
 {
@@ -1201,7 +1206,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 * 이벤트 사진 가져오기
   * URL(1, 이벤트 사진 가져오기) : http://15.165.22.64:8080/ImageEvent.do?image_name=이미지명
   * URL(2, 가게 사진 가져오기) : http://15.165.22.64:8080/ImageStore.do?image_name=이미지명
-  * URL(3, 가게 타입 사진 가져오기) : http://15.165.22.64:8080/ImageType.do?image_name=이미지명
+  * URL(3, 타입 사진 가져오기) : http://15.165.22.64:8080/ImageType.do?image_name=이미지명
+  * URL(4, 가게에 해당하는 메뉴 사진 가져오기) : http://15.165.22.64:8080/ImageMenu.do?store_id=가게id&image_name=이미지명
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터에 `image_name=이미지명`으로 전달
   * 응답 형식 : JSON이 아닌 byte[] 배열, slack에 올린 `MainActivity.java` 참고
