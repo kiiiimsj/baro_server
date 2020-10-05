@@ -37,9 +37,9 @@ public class OrderService {
         String receipt_id = jsonObject.getString("receipt_id");
         int store_id = jsonObject.getInt("store_id");
         int total_price = jsonObject.getInt("total_price");
-
         int discount_price = jsonObject.getInt("discount_price");
         int coupon_id = jsonObject.getInt("coupon_id");
+        String requests = jsonObject.getString("requests");
 
         if((discount_price != -1) && (coupon_id != -1)) {
             CouponHistoryVo historyVo = new CouponHistoryVo();
@@ -65,6 +65,7 @@ public class OrderService {
             orderVo.setOrder_count(order.getInt("order_count"));
             orderVo.setReceipt_id(receipt_id);
             orderVo.setOrder_state("PREPARING");
+            orderVo.setRequests(requests);
             int order_id = orderDao.orderInsert(orderVo);
             JSONArray extraOrders = order.getJSONArray("extras");
             for(int j = 0; j < extraOrders.length(); j++) {
@@ -111,10 +112,12 @@ public class OrderService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject orderFindByReceiptId(String receipt_id) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        String requests = orderDao.getRequests(receipt_id);
         List<Integer> orderIdList = orderDao.findOrderIdsByReceiptId(receipt_id);
         Iterator<Integer> iterator = orderIdList.iterator();
         jsonObject.put("result", true);
         jsonObject.put("message", "상세 주문 내역 가져오기 성공");
+        jsonObject.put("requests", requests);
         org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
 
         while(iterator.hasNext()) {
