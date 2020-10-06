@@ -7,10 +7,7 @@ import com.wantchu.wantchu_server2.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +26,9 @@ public class StoreApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @GetMapping("/StoreFindByUltra.do")
-    public void findByUltra(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = storeService.findByUltra();
+    @PostMapping("/StoreFindByUltra.do")
+    public void findByUltra(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findByUltra(requestDto);
         WriteToServer.send(response, jsonObject);
     }
 
@@ -68,4 +65,17 @@ public class StoreApiController {
         org.json.simple.JSONObject jsonObject = storeService.isStoreOpen(store_id);
         WriteToServer.send(response, jsonObject);
     }
+//    @PostMapping("/StoreFindByNew.do")
+//    public void findByNew(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = storeService.findByNew(requestDto);
+//        WriteToServer.send(response, jsonObject);
+//    }
+
+
+
+//    @PostMapping("/StoreFindByUltra.do")
+//    public void findByUltra(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = storeService.findByUltra(requestDto);
+//        WriteToServer.send(response, jsonObject);
+//    }
 }

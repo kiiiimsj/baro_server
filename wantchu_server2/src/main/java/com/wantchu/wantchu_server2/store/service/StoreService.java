@@ -53,14 +53,14 @@ public class StoreService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject findByUltra(){
+    public org.json.simple.JSONObject findByUltra(@NotNull StoreLocationDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<StoreVo> list = storeDao.storeSearchByUltra();
+            List<StoreInfoFindByTypeVo> list = storeDao.storeSearchByUltra(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "울트라가게 출력 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(StoreVo store: list){
+            for(StoreInfoFindByTypeVo store: list){
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
                 jTemp.putAll(store.convertMap());
                 jsonArray.add(jTemp);
