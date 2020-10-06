@@ -161,4 +161,25 @@ public class StoreService {
         }
         return jsonObject;
     }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject findByNew(@NotNull StoreLocationDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            List<StoreInfoFindByTypeVo> list = storeDao.storeSearchByNew(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "신규가게 출력 성공");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(StoreInfoFindByTypeVo store : list){
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(store.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("store", jsonArray);
+        }
+        catch (StoreSearchException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }

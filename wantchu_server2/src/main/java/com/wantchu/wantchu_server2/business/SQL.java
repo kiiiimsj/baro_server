@@ -32,6 +32,9 @@ public class SQL {
                 "AS DISTANCE FROM stores " +
                 "HAVING DISTANCE <= 1500 " +
                 "ORDER BY distance ";
+        public static final String STORE_SEARCH_BY_NEW = "SELECT store_id, store_name,\n" +
+                "(6371*acos(cos(RADIANS( ? ))*cos(RADIANS(store_latitude))*cos(RADIANS(store_longitude)\n" +
+                "-RADIANS( ? ))+sin(RADIANS( ? ))*sin(radians(store_latitude))))*1000 AS distance , store_location, store_info, store_image, is_open FROM new_stores";
         public static final String FIND_ALL_STORE_LOCATION2 = "SELECT store_id, store_name, store_latitude, store_longitude,(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) -radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE FROM stores ORDER BY distance";
         public static final String FIND_STORE_ID_BY_NAME = "SELECT store_id FROM stores WHERE store_name=?";
         public static final String IS_STORE_OPEN = "SELECT is_open FROM stores WHERE store_id = ?";
