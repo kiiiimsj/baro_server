@@ -65,13 +65,13 @@ public class StoreDao {
         }
     }
 
-    public List<StoreVo> storeSearchByUltra() throws StoreSearchException {
-        List<StoreVo> list = jdbcTemplate.query(
+    public List<StoreInfoFindByTypeVo> storeSearchByUltra(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
+        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
                 SQL.Store.STORE_SEARCH_BY_ULTRA,
                 (resultSet, i) -> {
-                    StoreVo storeVo = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("store_info"));
-                    return storeVo;
-                });
+                    StoreInfoFindByTypeVo storeInfoFindByTypeVo = new StoreInfoFindByTypeVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("is_open"));
+                    return storeInfoFindByTypeVo;
+                }, requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getLatitude());
         if(list.size() == 0){
             throw new StoreSearchException();
         }
