@@ -142,4 +142,19 @@ public class StoreDao {
                 SQL.Store.IS_STORE_OPEN, String.class, store_id);
         return is_open;
     }
+
+    public List<StoreInfoFindByTypeVo> storeSearchByNew(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
+        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
+                SQL.Store.STORE_SEARCH_BY_NEW,
+                (resultSet, i) -> {
+                    StoreInfoFindByTypeVo storeInfoFindByTypeVo = new StoreInfoFindByTypeVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("is_open"));
+                    return storeInfoFindByTypeVo;
+                }, requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getLatitude());
+        if(list.size() == 0){
+            throw new StoreSearchException();
+        }
+        else{
+            return list;
+        }
+    }
 }
