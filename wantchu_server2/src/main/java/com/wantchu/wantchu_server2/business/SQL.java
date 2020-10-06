@@ -178,9 +178,9 @@ public class SQL {
 
     public static class Favorite {
         public static final String FIND_FAVORITES_BY_PHONE
-                = "SELECT store_id, (6371*acos(cos(radians(37.4685225))*cos(radians(?))*cos(radians(?)\n" +
+                = "SELECT store_id, (6371*acos(cos(radians(?))*cos(radians(store_latitude))*cos(radians(store_longitude)\n" +
                 "\n" +
-                "\t-radians(126.8943311))+sin(radians(37.4685225))*sin(radians(?))))\n" +
+                "\t-radians(?))+sin(radians(?))*sin(radians(store_latitude))))*1000\n" +
                 "\n" +
                 "\tAS distance, store_name, store_info, store_location, store_image, is_open FROM stores\n" +
                 " NATURAL JOIN favorites WHERE phone=? ORDER BY distance";
