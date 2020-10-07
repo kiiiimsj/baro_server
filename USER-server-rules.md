@@ -39,6 +39,11 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 * MenuFindByStoreId.do 여기에 원래 is_soldout 은 없었는데 추가됌
   * 재고가 있는것을 default로 `N`이며 업주측앱에서 `Y`로 바꾸면 품절된 것이다. `Y`인것은 색깔을 살짝 어둡게 바꿔주어 클릭을 못하게 막아주면된다.
 
+##### 10/7일 변경사항
+* StoreFindByUltra.do - 메인페이지에서 울트라가게 띄워주기 위해 해당 가게 정보 가져오는 api
+* StoreFindByNew.do - 메인페이지에서 신규가입가게 띄워주기위해 해당 가게 정보 가져오는 api
+
+
 <hr/>
 
 <h1>신규 API</h1>
@@ -408,6 +413,111 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     ]
 }
 ```
+<h1> 메인페이지에서 ultra / new 가게 관련 API </h1>
+
+* ultra가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
+  * URL : http://15.165.22.64:8080/StoreFindByUltra.do
+  * Http Method : POST
+  * 제공해야 하는 JSON 형식
+```json
+{
+  "latitude":"11.11",
+  "longitude":"10.11"
+}
+```
+  * 응답 형식
+```json
+{
+    "result": true,
+    "store": [
+        {
+            "store_id": 1,
+            "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
+            "distance": 1.1514252084013896E7,
+            "is_open": "Y",
+            "store_name": "test cafe",
+            "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 3,
+            "store_info": "CAFE2 의 정보 입니다.",
+            "distance": 1649839.4917998884,
+            "is_open": "Y",
+            "store_name": "TEST CAFE2",
+            "store_location": "테스트시 테스트동",
+            "store_image": "test_cafe2.png"
+        },
+        {
+            "store_id": 18,
+            "store_info": "소고기가 더 맛있음",
+            "distance": 1132219.8952504133,
+            "is_open": "N",
+            "store_name": "삼겹살집",
+            "store_location": "테스트시 테스트13동",
+            "store_image": null
+        },
+        {
+            "store_id": 23,
+            "store_info": "가게정보",
+            "distance": 1577907.9373017927,
+            "is_open": "N",
+            "store_name": "테스트 카페8",
+            "store_location": "가게위치",
+            "store_image": null
+        },
+        {
+            "store_id": 25,
+            "store_info": "유명한 레트로 분위기의 호프집",
+            "distance": 1.1517568545209687E7,
+            "is_open": "Y",
+            "store_name": "하트타임",
+            "store_location": "서초구 반포 쇼핑타운상가 5동 지하 1층",
+            "store_image": null
+        }
+    ],
+    "message": "울트라가게 출력 성공"
+}
+```
+
+* new 가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
+  * URL : http://15.165.22.64:8080/StoreFindByNew.do
+  * Http Method : POST
+  * 제공해야 하는 JSON 형식
+```json
+{
+  "latitude":"11.11",
+  "longitude":"10.11"
+}
+```
+  * 응답 형식
+```json
+{
+    "result": true,
+    "store": [
+        {
+            "store_id": 1,
+            "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
+            "distance": 1.1514252084013896E7,
+            "is_open": "Y",
+            "store_name": "test cafe",
+            "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 3,
+            "store_info": "CAFE2 의 정보 입니다.",
+            "distance": 1.1514356756608706E7,
+            "is_open": "Y",
+            "store_name": "TEST CAFE2",
+            "store_location": "테스트시 테스트동",
+            "store_image": "test_cafe2.png"
+        }
+    ],
+    "message": "신규가게 출력 성공"
+}
+```
+
 
 <h1>가게 관련 API</h1>
 
