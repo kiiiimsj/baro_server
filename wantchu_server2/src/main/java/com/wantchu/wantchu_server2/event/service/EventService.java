@@ -62,4 +62,20 @@ public class EventService {
         return jsonObject;
     }
 
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject findAdvertising(){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            EventVo eventVo = eventDao.findAdvertising();
+            jsonObject.put("result", true);
+            jsonObject.put("message", "advertising가져오기 성공");
+            jsonObject.put("event_id", eventVo.getEvent_id());
+            jsonObject.put("event_image", eventVo.getEvent_image());
+        }
+        catch(EventNotFoundException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
 }

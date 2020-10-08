@@ -54,4 +54,21 @@ public class EventDao {
         }
     }
 
+    public EventVo findAdvertising() throws EventNotFoundException{
+        List<EventVo> results = jdbcTemplate.query(
+                SQL.Event.FIND_EVENT_ADVERTISING,
+                (resultSet, i) -> {
+                    EventVo eventVo = new EventVo();
+                    eventVo.setEvent_id(resultSet.getInt("event_id"));
+                    eventVo.setEvent_image(resultSet.getString("event_image"));
+                    return eventVo;
+                });
+        if(results.size() == 0){
+            throw new EventNotFoundException();
+        }
+        else{
+            return results.get(0);
+        }
+    }
+
 }
