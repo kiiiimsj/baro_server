@@ -30,4 +30,10 @@ public class EventApiController {
         org.json.simple.JSONObject jsonObject = eventService.findDetail(event_id);
         WriteToServer.send(response, jsonObject);
     }
+
+    @GetMapping("/EventFindAdvertising.do")
+    public void EventAdvertising(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = eventService.findAdvertising();
+        WriteToServer.send(response, jsonObject);
+    }
 }

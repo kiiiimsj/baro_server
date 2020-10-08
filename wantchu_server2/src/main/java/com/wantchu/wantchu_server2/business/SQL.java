@@ -14,6 +14,7 @@ public class SQL {
     public static class Event {
         public static final String FIND_ALL = "SELECT event_id, event_image FROM events";
         public static final String FIND_EVENT_DETAIL = "SELECT * FROM events WHERE event_id=?";
+        public static final String FIND_EVENT_ADVERTISING = "SELECT event_id, event_image FROM events WHERE is_advertising='Y'";
     }
 
     public static class Store {
