@@ -33,7 +33,7 @@ public class FavoriteApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @PutMapping("/FavoriteDelete.do")
+    @PostMapping("/FavoriteDelete.do")
     public void deleteFavorite(@RequestBody @NotNull FavoriteVo favoriteVo, @NotNull HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = favoriteService.deleteFavorite(favoriteVo);
         WriteToServer.send(response, jsonObject);

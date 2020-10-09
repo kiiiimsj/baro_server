@@ -68,15 +68,19 @@ public class FavoriteDao {
     }
 
     public void deleteFavorite(FavoriteVo favoriteVo) throws FavoriteDeleteException {
-        int result = jdbcTemplate.update(
-                connection -> {
-                    PreparedStatement preparedStatement = connection.prepareStatement(SQL.Favorite.DELETE_FAVORITE);
-                    preparedStatement.setString(1, favoriteVo.getPhone());
-                    preparedStatement.setInt(2, favoriteVo.getStore_id());
-                    return preparedStatement;
-                }
-        );
-        if(result == 0) throw new FavoriteDeleteException();
+        try{
+            jdbcTemplate.update(
+                    connection -> {
+                        PreparedStatement preparedStatement = connection.prepareStatement(SQL.Favorite.DELETE_FAVORITE);
+                        preparedStatement.setString(1, favoriteVo.getPhone());
+                        preparedStatement.setInt(2, favoriteVo.getStore_id());
+                        return preparedStatement;
+                    }
+            );
+        }
+        catch(Exception e){
+            throw new FavoriteDeleteException();
+        }
     }
 
     public boolean existFavorite(String phone, int store_id) {
