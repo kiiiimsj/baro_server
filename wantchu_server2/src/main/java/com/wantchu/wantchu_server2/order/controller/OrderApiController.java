@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static jdk.nashorn.internal.objects.Global.print;
+
 @RequiredArgsConstructor
 @Component
 @RestController
@@ -43,6 +45,22 @@ public class OrderApiController {
     public void orderFindByReceiptId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String receipt_id = request.getParameter("receipt_id");
         org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //ios용
+    @GetMapping("/OrderDefaultFindByReceiptId.do")
+    public void orderDefaultFindByReceiptId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String receipt_id = request.getParameter("receipt_id");
+        org.json.simple.JSONObject jsonObject = orderService.orderDefaultFindByReceiptId(receipt_id);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //ios용
+    @GetMapping("/OrderExtraFindByOrderId.do")
+    public void orderExtraFindByOrderId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int order_id = Integer.parseInt(request.getParameter("order_id"));
+        org.json.simple.JSONObject jsonObject = orderService.orderExtraFindByOrderId(order_id);
         WriteToServer.send(response, jsonObject);
     }
 
