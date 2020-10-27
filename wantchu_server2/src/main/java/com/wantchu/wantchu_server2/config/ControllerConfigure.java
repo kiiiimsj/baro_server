@@ -82,7 +82,11 @@ public class ControllerConfigure {
     public DataSource dataSource() {
         DataSource dataSource = new DataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+<<<<<<< HEAD
         dataSource.setUrl("jdbc:mysql://baro.c3ptb78nhjkk.ap-northeast-2.rds.amazonaws.com:3306/baro?autoReconnection=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;verifyServerCertificate=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC");
+=======
+        dataSource.setUrl("jdbc:mysql://wantchu-server.cszxzzjyxxdv.ap-northeast-2.rds.amazonaws.com:3306/wantchu?autoReconnection=true");
+>>>>>>> parent of 4949115... 12
         dataSource.setUsername("root");
         dataSource.setPassword("qwerasdf12");
         dataSource.setInitialSize(2);
