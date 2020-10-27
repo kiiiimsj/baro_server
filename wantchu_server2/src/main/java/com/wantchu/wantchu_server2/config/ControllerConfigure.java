@@ -81,7 +81,7 @@ public class ControllerConfigure {
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         DataSource dataSource = new DataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.cj.Driver");
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://baro.c3ptb78nhjkk.ap-northeast-2.rds.amazonaws.com:3306/baro?autoReconnection=true&amp;useUnicode=true&amp;characterEncoding=utf8&amp;verifyServerCertificate=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC");
         dataSource.setUsername("root");
         dataSource.setPassword("qwerasdf12");
