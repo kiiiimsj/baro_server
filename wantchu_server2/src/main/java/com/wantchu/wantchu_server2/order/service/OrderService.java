@@ -12,6 +12,7 @@ import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
+import io.netty.util.internal.SuppressJava6Requirement;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +23,8 @@ import javax.swing.text.StyledEditorKit;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
+import static jdk.nashorn.internal.objects.Global.print;
 
 @RequiredArgsConstructor
 @Component
@@ -153,6 +156,56 @@ public class OrderService {
         jsonObject.put("orders", arrayOfOrders);
         return jsonObject;
     }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject orderDefaultFindByReceiptId(String receipt_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        String requests = orderDao.getRequests(receipt_id);
+        List<Integer> orderIdList = orderDao.findOrderIdsByReceiptId(receipt_id);
+        Iterator<Integer> iterator = orderIdList.iterator();
+        jsonObject.put("result", true);
+        jsonObject.put("message", "상세 주문 내역 가져오기 성공");
+        jsonObject.put("requests", requests);
+        org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
+
+        while(iterator.hasNext()) {
+            int order_id = iterator.next();
+            org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
+            objectOfOrder.put("order_id", order_id);
+            OrderDetailVo detailVo = orderDao.findOrderDetailByOrderId(order_id);
+            objectOfOrder.put("menu_name", detailVo.getMenu_name());
+            objectOfOrder.put("menu_defaultprice", detailVo.getMenu_defaultprice());
+            objectOfOrder.put("order_count", detailVo.getOrder_count());
+            objectOfOrder.put("order_state", detailVo.getOrder_state());
+
+            arrayOfOrders.add(objectOfOrder);
+        }
+        jsonObject.put("orders", arrayOfOrders);
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject orderExtraFindByOrderId(int order_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+
+        org.json.simple.JSONArray arrayOfExtras = ObjectMaker.getSimpleJSONArray();
+
+        List<ExtraOrderVo> extraOrderList = orderDao.findExtraOrdersByOrderId(order_id);
+        Iterator<ExtraOrderVo> extraOrderIterator = extraOrderList.iterator();
+        if(extraOrderIterator.hasNext()) {
+            while(extraOrderIterator.hasNext()) {
+                ExtraOrderVo extraOrderVo = extraOrderIterator.next();
+                org.json.simple.JSONObject objectOfExtra = ObjectMaker.getSimpleJSONObject();
+                objectOfExtra.put("extra_name", extraOrderVo.getExtra_name());
+                objectOfExtra.put("extra_price", extraOrderVo.getExtra_price());
+                objectOfExtra.put("extra_count", extraOrderVo.getExtra_count());
+                arrayOfExtras.add(objectOfExtra);
+            }
+        }
+        jsonObject.put("extras", arrayOfExtras);
+        return jsonObject;
+    }
+
 
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findOrderCountByPhone(String phone) {
