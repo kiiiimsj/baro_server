@@ -42,7 +42,6 @@
           <element id="library" level="project" name="Maven: com.google.apis:google-api-services-storage:v1-rev135-1.24.1" />
           <element id="library" level="project" name="Maven: com.google.cloud:google-cloud-firestore:0.61.0-beta" />
           <element id="library" level="project" name="Maven: com.google.cloud:google-cloud-core-grpc:1.43.0" />
-          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.0" />
           <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf:1.13.1" />
           <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf-lite:1.13.1" />
           <element id="library" level="project" name="Maven: io.grpc:grpc-context:1.13.1" />
@@ -93,7 +92,8 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-jdbc:8.5.59" />
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:8.5.59" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.45" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.16" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.2" />
           <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
         </element>
