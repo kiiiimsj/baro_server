@@ -85,8 +85,6 @@ public class ControllerConfigure {
         dataSource.setUrl("jdbc:mysql://baro.c3ptb78nhjkk.ap-northeast-2.rds.amazonaws.com:3306/baro?autoReconnection=true");
         dataSource.setUsername("root");
 
-
-
         dataSource.setPassword("qwerasdf12");
         dataSource.setInitialSize(2);
         dataSource.setMaxIdle(10);
