@@ -158,7 +158,7 @@ public class OrderService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject orderDefaultFindByReceiptId(String receipt_id) {
+    public org.json.simple.JSONObject orderFindByReceiptIdDefault(String receipt_id) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         String requests = orderDao.getRequests(receipt_id);
         List<Integer> orderIdList = orderDao.findOrderIdsByReceiptId(receipt_id);
@@ -185,7 +185,7 @@ public class OrderService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject orderExtraFindByOrderId(int order_id) {
+    public org.json.simple.JSONObject orderFindByOrderIdExtra(int order_id) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
 
         org.json.simple.JSONArray arrayOfExtras = ObjectMaker.getSimpleJSONArray();
