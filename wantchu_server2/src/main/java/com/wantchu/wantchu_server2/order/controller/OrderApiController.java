@@ -46,8 +46,6 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
         WriteToServer.send(response, jsonObject);
     }
-
-
     @GetMapping("/OrderFindByReceiptIdDefault.do")
     public void orderFindByReceiptIdDefault(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String receipt_id = request.getParameter("receipt_id");
@@ -61,6 +59,8 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObject = orderService.orderFindByOrderIdExtra(order_id);
         WriteToServer.send(response, jsonObject);
     }
+
+
 
     @GetMapping("/OrderTotalCountByPhone.do")
     public void findOrderCountByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
