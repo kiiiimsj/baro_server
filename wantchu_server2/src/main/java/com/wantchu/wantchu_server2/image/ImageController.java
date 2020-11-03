@@ -35,13 +35,13 @@ public class ImageController {
         ByteArrayOutputStream baos = null;
         BufferedImage image = null;
         try{
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/events/"+ image_name));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/events/"+ image_name));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
@@ -68,13 +68,13 @@ public class ImageController {
         ByteArrayOutputStream baos = null;
         BufferedImage image = null;
         try{
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/types/" + image_name));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/types/" + image_name));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
@@ -89,13 +89,13 @@ public class ImageController {
         ByteArrayOutputStream baos = null;
         BufferedImage image = null;
         try {
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/menus/" + store_id + "/" + image_name));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/menus/" + store_id + "/" + image_name));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://15.165.22.64:8080/images/default.png"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image,"png", baos);
         }
