@@ -32,7 +32,6 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObjectForResponse = orderService.orderInsert(orderInsertRequest);
         WriteToServer.send(response, jsonObjectForResponse);
     }
-
     @GetMapping("/OrderListFindByPhone.do")
     public void orderFindByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String phone = request.getParameter("phone");
@@ -47,22 +46,21 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptId(receipt_id);
         WriteToServer.send(response, jsonObject);
     }
-
-    //ios용
-    @GetMapping("/OrderDefaultFindByReceiptId.do")
-    public void orderDefaultFindByReceiptId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+    @GetMapping("/OrderFindByReceiptIdDefault.do")
+    public void orderFindByReceiptIdDefault(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String receipt_id = request.getParameter("receipt_id");
-        org.json.simple.JSONObject jsonObject = orderService.orderDefaultFindByReceiptId(receipt_id);
+        org.json.simple.JSONObject jsonObject = orderService.orderFindByReceiptIdDefault(receipt_id);
         WriteToServer.send(response, jsonObject);
     }
 
-    //ios용
-    @GetMapping("/OrderExtraFindByOrderId.do")
-    public void orderExtraFindByOrderId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+    @GetMapping("/OrderFindByOrderIdExtra.do")
+    public void orderFindByOrderIdExtra(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         int order_id = Integer.parseInt(request.getParameter("order_id"));
-        org.json.simple.JSONObject jsonObject = orderService.orderExtraFindByOrderId(order_id);
+        org.json.simple.JSONObject jsonObject = orderService.orderFindByOrderIdExtra(order_id);
         WriteToServer.send(response, jsonObject);
     }
+
+
 
     @GetMapping("/OrderTotalCountByPhone.do")
     public void findOrderCountByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
