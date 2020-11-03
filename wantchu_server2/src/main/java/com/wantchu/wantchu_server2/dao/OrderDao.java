@@ -70,6 +70,7 @@ public class OrderDao {
                     orderListVo.setOrder_date(resultSet.getTimestamp("order_date").toLocalDateTime());
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
+                    orderListVo.setStore_image(resultSet.getString("store_image"));
                     return orderListVo;
                 }
                 , phone,startPoint,startPoint+20);
@@ -267,6 +268,7 @@ public class OrderDao {
                     orderListVo.setOrder_date(resultSet.getTimestamp("order_date").toLocalDateTime());
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
+                    orderListVo.setStore_image(resultSet.getString("store_image"));
                     return orderListVo;
                 }
                 , phone);
