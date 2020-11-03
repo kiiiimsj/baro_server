@@ -7,8 +7,8 @@
     <context:component-scan base-package="com.wantchu"/>
     <context:component-scan base-package="*"/>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.mysql.jdbc.cj.Driver"/>
-        <property name="url" value="jdbc:mysql://baro.c3ptb78nhjkk.ap-northeast-2.rds.amazonaws.com:3306/baro?autoReconnection=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+        <property name="driverClassName" value="org.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://baro.c3ptb78nhjkk.ap-northeast-2.rds.amazonaws.com:3306/"/>
         <property name="username" value="root"/>
         <property name="password" value="qwerasdf12"/>
     </bean>
