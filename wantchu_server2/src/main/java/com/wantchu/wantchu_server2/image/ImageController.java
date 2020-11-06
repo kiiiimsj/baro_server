@@ -54,10 +54,10 @@ public class ImageController {
         String image_name = getImageName(request);
         InputStream inputStream = null;
         try {
-            inputStream = new ClassPathResource("/images/stores/" + image_name).getInputStream();
+            inputStream = new ClassPathResource("http://3.35.180.57:8080/images/stores/" + image_name).getInputStream();
         } catch(FileNotFoundException e) {
             e.printStackTrace();
-            inputStream = new ClassPathResource("/images/stores/default.png").getInputStream();
+            inputStream = new ClassPathResource("http://3.35.180.57:8080/images/stores/default.png").getInputStream();
         }
         return IOUtils.toByteArray(inputStream);
     }
