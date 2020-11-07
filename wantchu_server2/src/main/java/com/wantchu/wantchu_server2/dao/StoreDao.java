@@ -50,22 +50,22 @@ public class StoreDao {
         }
     }
 
-    public List<StoreVo> storeSearch(String keyword,int startPoint) throws StoreSearchException {
-        String real_keyword = "%" + keyword.trim() + "%";
-        List<StoreVo> list = jdbcTemplate.query(
-                SQL.Store.STORE_SEARCH,
-                (resultSet, i) -> {
-                    StoreVo storeVo = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("store_info"));
-                    storeVo.setIs_open(resultSet.getString("is_open"));
-                    return storeVo;
-                }
-                , real_keyword,startPoint,startPoint+20);
-        if(list.size() == 0) {
-            throw new StoreSearchException();
-        } else {
-            return list;
-        }
-    }
+//    public List<StoreVo> storeSearch(String keyword,int startPoint) throws StoreSearchException {
+//        String real_keyword = "%" + keyword.trim() + "%";
+//        List<StoreVo> list = jdbcTemplate.query(
+//                SQL.Store.STORE_SEARCH,
+//                (resultSet, i) -> {
+//                    StoreVo storeVo = new StoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"), resultSet.getDouble("store_latitude"), resultSet.getDouble("store_longitude"), resultSet.getString("store_opentime"), resultSet.getString("store_closetime"), resultSet.getString("store_phone"), resultSet.getString("store_daysoff"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("store_info"));
+//                    storeVo.setIs_open(resultSet.getString("is_open"));
+//                    return storeVo;
+//                }
+//                , real_keyword,startPoint,startPoint+20);
+//        if(list.size() == 0) {
+//            throw new StoreSearchException();
+//        } else {
+//            return list;
+//        }
+//    }
 
     public List<StoreInfoFindByTypeVo> storeSearchByUltra(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
         List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
@@ -120,7 +120,7 @@ public class StoreDao {
                             .build();
                     return storeInfoVo;
                 }
-                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getKeyword(),dto.getStartPoint(),dto.getStartPoint()+20);
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getKeyword()/*,dto.getStartPoint(),dto.getStartPoint()+20*/);
         if(list.size() == 0) {
             throw new StoreKeywordNotFoundException();
         } else {

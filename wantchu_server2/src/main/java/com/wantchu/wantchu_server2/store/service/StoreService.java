@@ -71,25 +71,25 @@ public class StoreService {
         return jsonObject;
     }
 
-    @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject storeSearch(String keyword,int startPoint) {
-        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        try {
-            List<StoreVo> list = storeDao.storeSearch(keyword,startPoint);
-            jsonObject.put("result", true);
-            jsonObject.put("message", "검색 성공");
-            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(StoreVo store : list) {
-                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
-                jTemp.putAll(store.convertMap());
-                jsonArray.add(jTemp);
-            }
-            jsonObject.put("store", jsonArray);
-        } catch(StoreSearchException e) {
-            jsonObject = ObjectMaker.getJSONObjectWithException(e);
-        }
-        return jsonObject;
-    }
+//    @SuppressWarnings("unchecked")
+//    public org.json.simple.JSONObject storeSearch(String keyword,int startPoint) {
+//        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+//        try {
+//            List<StoreVo> list = storeDao.storeSearch(keyword,startPoint);
+//            jsonObject.put("result", true);
+//            jsonObject.put("message", "검색 성공");
+//            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+//            for(StoreVo store : list) {
+//                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+//                jTemp.putAll(store.convertMap());
+//                jsonArray.add(jTemp);
+//            }
+//            jsonObject.put("store", jsonArray);
+//        } catch(StoreSearchException e) {
+//            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+//        }
+//        return jsonObject;
+//    }
 
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findInfoByTypeCode(@NotNull StoreInfoFindByTypeDto requestDto) {
