@@ -1,9 +1,11 @@
 package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByKeywordDto;
 import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
+import com.wantchu.wantchu_server2.store.exception.StoreKeywordNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
 import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
 import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
@@ -98,6 +100,29 @@ public class StoreDao {
                 , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getType_code(),dto.getStartPoint(),dto.getStartPoint()+20);
         if(list.size() == 0) {
             throw new StoreTypeNotFoundException();
+        } else {
+            return list;
+        }
+    }
+
+    public List<StoreInfoFindByTypeVo> findInfoByKeyword(@NotNull StoreInfoFindByKeywordDto dto) throws StoreKeywordNotFoundException {
+        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
+                SQL.Store.FIND_INFO_BY_KEYWORD,
+                (resultSet, i) -> {
+                    StoreInfoFindByTypeVo storeInfoVo = StoreInfoFindByTypeVo.builder()
+                            .store_id(resultSet.getInt("store_id"))
+                            .store_name(resultSet.getString("store_name"))
+                            .store_info(resultSet.getString("store_info"))
+                            .store_location(resultSet.getString("store_location"))
+                            .is_open(resultSet.getString("is_open"))
+                            .store_image(resultSet.getString("store_image") == null ? "default.png" : resultSet.getString("store_image"))
+                            .distance(resultSet.getDouble("distance"))
+                            .build();
+                    return storeInfoVo;
+                }
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude(),dto.getKeyword(),dto.getStartPoint(),dto.getStartPoint()+20);
+        if(list.size() == 0) {
+            throw new StoreKeywordNotFoundException();
         } else {
             return list;
         }
