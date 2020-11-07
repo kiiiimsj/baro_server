@@ -2,12 +2,10 @@ package com.wantchu.wantchu_server2.store.service;
 
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.StoreDao;
+import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByKeywordDto;
 import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
-import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
-import com.wantchu.wantchu_server2.store.exception.StoreNameNotFoundException;
-import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
-import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
+import com.wantchu.wantchu_server2.store.exception.*;
 import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
 import com.wantchu.wantchu_server2.vo.StoreInfoVo;
 import com.wantchu.wantchu_server2.vo.StoreLocationVo;
@@ -112,6 +110,27 @@ public class StoreService {
         }
         return jsonObject;
     }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject findInfoByKeyword(@NotNull StoreInfoFindByKeywordDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<StoreInfoFindByTypeVo> list = storeDao.findInfoByKeyword(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "type_code별로 가게 정보 가져오기 성공");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(StoreInfoFindByTypeVo storeInfo : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(storeInfo.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("store", jsonArray);
+        } catch(StoreKeywordNotFoundException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
 
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findAllStoreLocation(StoreLocationDto dto) {
