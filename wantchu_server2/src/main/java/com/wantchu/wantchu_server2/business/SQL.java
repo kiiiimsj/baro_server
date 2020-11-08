@@ -29,7 +29,7 @@ public class SQL {
                 +" ORDER BY DISTANCE Limit ?,?";
         public static final String FIND_INFO_BY_KEYWORD = "SELECT store_id, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
-                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE store_name LIKE ?"
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE store_name LIKE '%?%' "
                 +" ORDER BY DISTANCE";
         public static final String FIND_ALL_STORE_LOCATION = "SELECT store_id, store_name, store_latitude, store_longitude , " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
