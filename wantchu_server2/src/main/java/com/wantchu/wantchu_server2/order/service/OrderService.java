@@ -390,6 +390,9 @@ public class OrderService {
         catch(OrderNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
+        catch(Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
         return jsonObject;
     }
 }
