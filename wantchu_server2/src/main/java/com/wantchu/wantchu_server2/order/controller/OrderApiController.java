@@ -1,11 +1,9 @@
 package com.wantchu.wantchu_server2.order.controller;
 
 import com.google.firebase.auth.internal.HttpErrorResponse;
+import com.google.firestore.v1beta1.Write;
 import com.wantchu.wantchu_server2.business.WriteToServer;
-import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
-import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
-import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
-import com.wantchu.wantchu_server2.order.dto.OrderStateUpdateRequestDto;
+import com.wantchu.wantchu_server2.order.dto.*;
 import com.wantchu.wantchu_server2.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -124,6 +122,11 @@ public class OrderApiController {
     @PostMapping("/OrderSendMessage.do")
     public void sendMessageToOwner(@RequestBody OrderMessageRequestDto requestDto, HttpServletResponse response){
         org.json.simple.JSONObject jsonObject = orderService.sendMessageToOwner(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+    @PostMapping("/OrderAcceptCheck.do")
+    public void orderAcceptCheck(@RequestBody OrderCheckDto requestDto, HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = orderService.ordercheck(requestDto);
         WriteToServer.send(response, jsonObject);
     }
 }
