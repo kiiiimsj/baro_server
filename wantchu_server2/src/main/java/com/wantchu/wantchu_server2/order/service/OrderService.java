@@ -6,6 +6,7 @@ import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
 import com.wantchu.wantchu_server2.dao.OrderDao;
 import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
+import com.wantchu.wantchu_server2.order.dto.OrderCheckDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
 import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
@@ -372,6 +373,21 @@ public class OrderService {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         } catch(IOException exception){
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        }
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject ordercheck(OrderCheckDto requestDto){
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            String order_state = orderDao.orderStateCheck(requestDto.getReceipt_id());
+            jsonObject.put("order_state", order_state);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "주문상태전송 성공");
+        }
+        catch(Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;
     }

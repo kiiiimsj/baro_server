@@ -339,4 +339,15 @@ public class OrderDao {
                 ,receipt_id);
         return list.get(0);
     }
+
+    public String orderStateCheck(String receipt_id) {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_ORDER_STATE,
+                (resultSet, i) -> {
+                    String order_state = resultSet.getString("order_state");
+                    return order_state;
+                }
+                ,receipt_id);
+        return list.get(0);
+    }
 }

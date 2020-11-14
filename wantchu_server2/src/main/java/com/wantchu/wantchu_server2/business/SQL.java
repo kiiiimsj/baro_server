@@ -142,6 +142,7 @@ public class SQL {
         public static final String FIND_OWNER_DEVICE_TOKEN = "SELECT owner_device_token FROM owners WHERE store_id=?";
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
         public static final String FIND_ORDER_REQUESTS = "SELECT requests FROM orders WHERE receipt_id= ? LIMIT 1";
+        public static final String FIND_ORDER_STATE = "SELECT order_state FROM orders WHERE receipt_id=?";
     }
 
     public static class ExtraOrder {
