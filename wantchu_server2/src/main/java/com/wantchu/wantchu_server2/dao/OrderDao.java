@@ -340,7 +340,7 @@ public class OrderDao {
         return list.get(0);
     }
 
-    public String orderStateCheck(String receipt_id) {
+    public String orderStateCheck(String receipt_id) throws OrderNotFoundException{
         List<String> list = jdbcTemplate.query(
                 SQL.Order.FIND_ORDER_STATE,
                 (resultSet, i) -> {

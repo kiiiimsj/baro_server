@@ -11,6 +11,7 @@ import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
 import com.wantchu.wantchu_server2.order.dto.OrderMessageRequestDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNotFoundByPhoneException;
+import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import io.netty.util.internal.SuppressJava6Requirement;
@@ -386,7 +387,7 @@ public class OrderService {
             jsonObject.put("result", true);
             jsonObject.put("message", "주문상태전송 성공");
         }
-        catch(Exception e){
+        catch(OrderNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;
