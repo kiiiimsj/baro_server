@@ -269,6 +269,9 @@ public class OrderDao {
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
                     orderListVo.setStore_image(resultSet.getString("store_image"));
+                    orderListVo.setStore_latitude(resultSet.getString("store_latitude"));
+                    orderListVo.setStore_longitude(resultSet.getString("store_longitude"));
+
                     return orderListVo;
                 }
                 , phone);

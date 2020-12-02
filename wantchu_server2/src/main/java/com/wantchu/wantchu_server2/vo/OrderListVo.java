@@ -19,6 +19,8 @@ public class OrderListVo {
     private int total_count;
     private String order_state;
     private String store_image;
+    private String store_latitude;
+    private String store_longitude;
 
     public OrderListVo(String receipt_id, String store_name, LocalDateTime order_date) {
         this.receipt_id = receipt_id;
@@ -34,6 +36,8 @@ public class OrderListVo {
         map.put("total_count", total_count);
         map.put("order_state",order_state);
         map.put("store_image", store_image);
+        map.put("store_latitude", store_latitude);
+        map.put("store_longitude", store_longitude);
         return map;
     }
 }
