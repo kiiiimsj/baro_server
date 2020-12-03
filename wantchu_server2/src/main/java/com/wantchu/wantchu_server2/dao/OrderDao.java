@@ -272,7 +272,7 @@ public class OrderDao {
                     orderListVo.setStore_image(resultSet.getString("store_image"));
                     orderListVo.setStore_latitude(resultSet.getString("store_latitude"));
                     orderListVo.setStore_longitude(resultSet.getString("store_longitude"));
-
+                    orderListVo.setStore_phone(resultSet.getString("store_phone"));
                     return orderListVo;
                 }
                 , phone);
