@@ -71,6 +71,7 @@ public class OrderDao {
                     orderListVo.setTotal_count(resultSet.getInt("CNT"));
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
                     orderListVo.setStore_image(resultSet.getString("store_image"));
+                    orderListVo.setStore_id(resultSet.getInt("store_id"));
                     return orderListVo;
                 }
                 , phone,startPoint,startPoint+20);
