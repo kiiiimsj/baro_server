@@ -21,10 +21,10 @@ public class AlertService {
     private final AlertDao alertDao;
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject alertFind() {
+    public org.json.simple.JSONObject alertFind(String phone) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<AlertVo> list = alertDao.findAll();
+            List<AlertVo> list = alertDao.findAll(phone);
             jsonObject.put("result", true);
             jsonObject.put("message", "알림 가져오기 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
