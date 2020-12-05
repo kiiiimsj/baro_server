@@ -4,6 +4,7 @@ import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
 import com.wantchu.wantchu_server2.coupon.exception.CouponNoUsableFoundException;
 import com.wantchu.wantchu_server2.coupon.exception.CouponNotFoundByPhoneException;
+import com.wantchu.wantchu_server2.coupon.exception.CouponNotInsertException;
 import com.wantchu.wantchu_server2.dao.CouponDao;
 import com.wantchu.wantchu_server2.vo.CouponHistoryVo;
 import com.wantchu.wantchu_server2.vo.CouponVo;
@@ -86,6 +87,20 @@ public class CouponService {
             }
             jsonObject.put("coupon", jsonArray);
         } catch(CouponNoUsableFoundException exception) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(exception);
+        }
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject insertCouponNumber(String phone, String coupon_number) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            couponDao.insertCouponNumber(phone, coupon_number);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "쿠폰이 정상적으로 등록되었습니다.");
+        }
+        catch(CouponNotInsertException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }
         return jsonObject;

@@ -4,12 +4,14 @@ import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
 import com.wantchu.wantchu_server2.coupon.exception.CouponNoUsableFoundException;
 import com.wantchu.wantchu_server2.coupon.exception.CouponNotFoundByPhoneException;
+import com.wantchu.wantchu_server2.coupon.exception.CouponNotInsertException;
 import com.wantchu.wantchu_server2.vo.CouponHistoryVo;
 import com.wantchu.wantchu_server2.vo.CouponVo;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.PreparedStatement;
 import java.util.Iterator;
 import java.util.List;
 
@@ -90,6 +92,20 @@ public class CouponDao {
             return list;
         } else {
             throw new CouponNoUsableFoundException();
+        }
+    }
+
+    public void insertCouponNumber(String phone, String coupon_id) throws CouponNotInsertException {
+        int result = jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Coupon.INSERT_BY_COUPON_NUMBER);
+            preparedStatement.setString(1, phone);
+            preparedStatement.setString(2, coupon_id);
+            preparedStatement.setString(1, phone);
+            preparedStatement.setString(2, coupon_id);
+            return preparedStatement;
+        });
+        if(result == 0) {
+            throw new CouponNotInsertException();
         }
     }
 

@@ -155,6 +155,7 @@ public class SQL {
     public static class Coupon {
         public static final String FIND_COUPONS_BY_PHONE = "select coupon_id, coupon_title, coupon_content, coupon_condition, coupon_enddate, coupon_discount, coupon_type from coupons natural join members natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND is_used='N'";
         public static final String FIND_USABLE_COUPONS_AT_PURCHASE = "select coupon_id, coupon_enddate, coupon_discount, coupon_type, coupon_title, coupon_content, coupon_condition  from coupons natural join couponsbymembers where phone=? AND (now() < coupon_enddate) AND (? - coupon_condition >= 500) AND is_used='N'";
+        public static final String INSERT_BY_COUPON_NUMBER = "INSERT INTO couponsbymembers(phone,coupon_id) SELECT phone,coupon_id FROM members NATURAL JOIN coupons WHERE phone = ? AND coupon_id = ? AND NOT EXISTS (SELECT * FROM couponsbymembers WHERE phone = ? AND coupon_id = ?)";
     }
 
     public static class CouponHistory {
