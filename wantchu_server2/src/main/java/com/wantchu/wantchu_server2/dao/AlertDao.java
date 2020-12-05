@@ -72,4 +72,9 @@ public class AlertDao {
             return date.get(0);
         }
     }
+
+    public int getNewAlertCount(String phone) {
+        Integer result = jdbcTemplate.queryForObject(SQL.Alert.FIND_NEW_ALERT_COUNT, Integer.class, phone);
+        return result;
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -31,6 +32,13 @@ public class AlertApiController {
     @GetMapping("/GetLatestAlertWhenMemberLogin.do")
     public void getLatestAlert(@NotNull HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = alertService.getLatestAlert();
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @GetMapping("/GetNewAlertCount.do")
+    public void getNewAlertCount(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = alertService.getNewAlertCount(phone);
         WriteToServer.send(response, jsonObject);
     }
 
