@@ -6,6 +6,7 @@ public class SQL {
         public static final String FIND_ALERT_ALL = "SELECT * FROM alert";
         public static final String GET_RECENTLY_ALERT_DATE = "SELECT alert_startdate FROM alert ORDER BY alert_startdate DESC LIMIT 0,1";
         public static final String GET_RECENTLY_ALERT_ID = "SELECT alert_id FROM alert Order by alert_id DESC LIMIT 0,1";
+        public static final String FIND_NEW_ALERT_COUNT = "SELECT COUNT(*) FROM alertsbymembers WHERE phone = ? AND is_read = 'N'";
     }
 
     public static class Type {

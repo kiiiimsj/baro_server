@@ -68,4 +68,13 @@ public class AlertService {
         }
         return jsonObject;
     }
+
+    public JSONObject getNewAlertCount(String phone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        int count = alertDao.getNewAlertCount(phone);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "안읽은 알림의 갯수 가져오기 성공");
+        jsonObject.put("count", count);
+        return jsonObject;
+    }
 }
