@@ -100,8 +100,8 @@ public class CouponDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Coupon.INSERT_BY_COUPON_NUMBER);
             preparedStatement.setString(1, phone);
             preparedStatement.setInt(2, coupon_id);
-            preparedStatement.setString(1, phone);
-            preparedStatement.setInt(2, coupon_id);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setInt(4, coupon_id);
             return preparedStatement;
         });
         if(result == 0) {
