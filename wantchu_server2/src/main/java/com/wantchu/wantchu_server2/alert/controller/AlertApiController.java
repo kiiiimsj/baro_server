@@ -19,8 +19,9 @@ public class AlertApiController {
     private final AlertService alertService;
 
     @GetMapping("/AlertFindAll.do")
-    public void alertFind(@NotNull HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = alertService.alertFind();
+    public void alertFind(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response){
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = alertService.alertFind(phone);
         WriteToServer.send(response, jsonObject);
     }
 

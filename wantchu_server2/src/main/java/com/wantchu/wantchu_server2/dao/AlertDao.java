@@ -34,19 +34,20 @@ public class AlertDao {
         }
     }
 
-    public List<AlertVo> findAll() throws AlertNotFoundException {
+    public List<AlertVo> findAll(String phone) throws AlertNotFoundException {
         List<AlertVo> list = jdbcTemplate.query(
                 SQL.Alert.FIND_ALERT_ALL,
                 (resultSet, i) -> {
                     AlertVo alertVo = AlertVo.builder()
+                            .id(resultSet.getInt("id"))
                             .alert_id(resultSet.getInt("alert_id"))
+                            .is_read(resultSet.getString("is_read"))
                             .alert_title(resultSet.getString("alert_title"))
-                            .alert_content(resultSet.getString("alert_content"))
                             .alert_startdate(resultSet.getTimestamp("alert_startdate").toLocalDateTime())
                             .build();
                     return alertVo;
                 }
-        );
+        , phone);
         if(list.size() == 0){
             throw new AlertNotFoundException();
         }
