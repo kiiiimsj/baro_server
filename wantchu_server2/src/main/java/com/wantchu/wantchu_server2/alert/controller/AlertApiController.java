@@ -43,4 +43,10 @@ public class AlertApiController {
         WriteToServer.send(response, jsonObject);
     }
 
+    @GetMapping("/GetAlertDetail.do")
+    public void getAlertDetail(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int alert_id = Integer.parseInt(request.getParameter("alert_id"));
+        org.json.simple.JSONObject jsonObject = alertService.getAlertDetail(alert_id);
+        WriteToServer.send(response, jsonObject);
+    }
 }
