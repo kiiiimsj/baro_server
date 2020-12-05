@@ -95,13 +95,13 @@ public class CouponDao {
         }
     }
 
-    public void insertCouponNumber(String phone, String coupon_id) throws CouponNotInsertException {
+    public void insertCouponNumber(String phone, int coupon_id) throws CouponNotInsertException {
         int result = jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Coupon.INSERT_BY_COUPON_NUMBER);
             preparedStatement.setString(1, phone);
-            preparedStatement.setString(2, coupon_id);
+            preparedStatement.setInt(2, coupon_id);
             preparedStatement.setString(1, phone);
-            preparedStatement.setString(2, coupon_id);
+            preparedStatement.setInt(2, coupon_id);
             return preparedStatement;
         });
         if(result == 0) {
