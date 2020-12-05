@@ -78,4 +78,9 @@ public class AlertDao {
         Integer result = jdbcTemplate.queryForObject(SQL.Alert.FIND_NEW_ALERT_COUNT, Integer.class, phone);
         return result;
     }
+
+    public String getAlertDetail(int alert_id) {
+        String content = jdbcTemplate.queryForObject(SQL.Alert.GET_ALERT_DETAIL_CONTENT, String.class, alert_id);
+        return content;
+    }
 }

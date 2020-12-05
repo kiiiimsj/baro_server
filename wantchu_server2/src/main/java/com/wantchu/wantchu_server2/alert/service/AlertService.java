@@ -77,4 +77,13 @@ public class AlertService {
         jsonObject.put("count", count);
         return jsonObject;
     }
+
+    public JSONObject getAlertDetail(int alert_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        String content = alertDao.getAlertDetail(alert_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "상세 알림 내용 출력 성공");
+        jsonObject.put("content", content);
+        return jsonObject;
+    }
 }
