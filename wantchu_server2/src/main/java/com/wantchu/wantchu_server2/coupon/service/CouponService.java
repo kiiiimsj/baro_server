@@ -93,10 +93,10 @@ public class CouponService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject insertCouponNumber(String phone, String coupon_number) {
+    public org.json.simple.JSONObject insertCouponNumber(String phone, int coupon_id) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            couponDao.insertCouponNumber(phone, coupon_number);
+            couponDao.insertCouponNumber(phone, coupon_id);
             jsonObject.put("result", true);
             jsonObject.put("message", "쿠폰이 정상적으로 등록되었습니다.");
         }

@@ -50,8 +50,8 @@ public class CouponApiController {
     @GetMapping("/CouponInsertByNumber.do")
     public void insertCouponNumber(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String phone = request.getParameter("phone");
-        String coupon_number = request.getParameter("coupon_number");
-        org.json.simple.JSONObject jsonObject = couponService.insertCouponNumber(phone, coupon_number);
+        int coupon_id = Integer.parseInt(request.getParameter("coupon_id"));
+        org.json.simple.JSONObject jsonObject = couponService.insertCouponNumber(phone, coupon_id);
         WriteToServer.send(response, jsonObject);
     }
 }
