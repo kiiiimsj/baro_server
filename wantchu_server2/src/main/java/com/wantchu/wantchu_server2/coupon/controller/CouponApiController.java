@@ -46,4 +46,12 @@ public class CouponApiController {
         org.json.simple.JSONObject jsonObject = couponService.findUsableCouponsByPhoneAndPrice(phone, price);
         WriteToServer.send(response, jsonObject);
     }
+
+    @GetMapping("/CouponInsertByNumber.do")
+    public void insertCouponNumber(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String phone = request.getParameter("phone");
+        String coupon_number = request.getParameter("coupon_number");
+        org.json.simple.JSONObject jsonObject = couponService.insertCouponNumber(phone, coupon_number);
+        WriteToServer.send(response, jsonObject);
+    }
 }
