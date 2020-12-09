@@ -86,4 +86,13 @@ public class AlertService {
         jsonObject.put("content", content);
         return jsonObject;
     }
+
+    public JSONObject alertReadCheck(int alert_id, String phone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        alertDao.getAlertReadCheck(alert_id, phone);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "안읽은 메세지 읽음 처리로 바꾸기 성공");
+        return jsonObject;
+    }
+
 }

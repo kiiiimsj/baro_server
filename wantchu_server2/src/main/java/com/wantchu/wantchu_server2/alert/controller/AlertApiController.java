@@ -3,6 +3,7 @@ package com.wantchu.wantchu_server2.alert.controller;
 import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.alert.service.AlertService;
 import com.wantchu.wantchu_server2.business.WriteToServer;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,14 @@ public class AlertApiController {
     public void getAlertDetail(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         int alert_id = Integer.parseInt(request.getParameter("alert_id"));
         org.json.simple.JSONObject jsonObject = alertService.getAlertDetail(alert_id);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @GetMapping("/AlertReadCheck.do")
+    public void alertReadCheck(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int alert_id = Integer.parseInt(request.getParameter("alert_id"));
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = alertService.alertReadCheck(alert_id, phone);
         WriteToServer.send(response, jsonObject);
     }
 }
