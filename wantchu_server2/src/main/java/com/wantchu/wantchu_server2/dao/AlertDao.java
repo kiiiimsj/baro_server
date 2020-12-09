@@ -3,11 +3,14 @@ package com.wantchu.wantchu_server2.dao;
 import com.wantchu.wantchu_server2.alert.exception.AlertNotFoundException;
 import com.wantchu.wantchu_server2.alert.exception.DoNotHaveAnyMoreAlert;
 import com.wantchu.wantchu_server2.business.SQL;
+import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
 import com.wantchu.wantchu_server2.vo.AlertVo;
+import com.wantchu.wantchu_server2.vo.FavoriteVo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -83,4 +86,31 @@ public class AlertDao {
         String content = jdbcTemplate.queryForObject(SQL.Alert.GET_ALERT_DETAIL_CONTENT, String.class, alert_id);
         return content;
     }
+
+    public void getAlertReadCheck(int alert_id, String phone) {
+        jdbcTemplate.update(
+                connection -> {
+                    PreparedStatement preparedStatement = connection.prepareStatement(SQL.Alert.ALERT_READ_CHECK);
+                    preparedStatement.setInt(1, alert_id);
+                    preparedStatement.setString(2, phone);
+                    return preparedStatement;
+                }
+        );
+    }
 }
+
+//    public void deleteFavorite(FavoriteVo favoriteVo) throws FavoriteDeleteException {
+//        try{
+//            jdbcTemplate.update(
+//                    connection -> {
+//                        PreparedStatement preparedStatement = connection.prepareStatement(SQL.Favorite.DELETE_FAVORITE);
+//                        preparedStatement.setString(1, favoriteVo.getPhone());
+//                        preparedStatement.setInt(2, favoriteVo.getStore_id());
+//                        return preparedStatement;
+//                    }
+//            );
+//        }
+//        catch(Exception e){
+//            throw new FavoriteDeleteException();
+//        }
+//    }
