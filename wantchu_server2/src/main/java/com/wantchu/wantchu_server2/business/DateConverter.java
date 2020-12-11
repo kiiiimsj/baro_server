@@ -32,13 +32,13 @@ public class DateConverter {
     public static String convertDateOnlyHour(LocalDateTime localDateTime) {
         if(localDateTime.getHour() > 12) {
             builder.delete(0, builder.toString().length())
-                    .append(localDateTime.getHour() + " : ")
+                    .append(localDateTime.getHour() + ":")
                     .append(localDateTime.getMinute() + " PM");
             return builder.toString();
         }
         else {
             builder.delete(0, builder.toString().length())
-                    .append(localDateTime.getHour() + " : ")
+                    .append(localDateTime.getHour() + ":")
                     .append(localDateTime.getMinute() + " AM");
             return builder.toString();
         }
