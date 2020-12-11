@@ -264,7 +264,7 @@ public class OrderService {
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
             for (OrderListVo info : list) {
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
-                jTemp.putAll(info.convertMap());
+                jTemp.putAll(info.convertMapOnlyHour());
                 int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
                 int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
                 jTemp.put("total_price", extraSum + orderSum);

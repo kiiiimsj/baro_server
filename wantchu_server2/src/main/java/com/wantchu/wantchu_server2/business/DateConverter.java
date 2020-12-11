@@ -28,4 +28,11 @@ public class DateConverter {
                 .append(localDateTime.getSecond() + "초");
         return builder.toString();
     }
+
+    public static String convertDateOnlyHour(LocalDateTime localDateTime) {
+        builder.delete(0, builder.toString().length())
+                .append(localDateTime.getHour() + "시 ")
+                .append(localDateTime.getMinute() + "분");
+        return builder.toString();
+    }
 }
