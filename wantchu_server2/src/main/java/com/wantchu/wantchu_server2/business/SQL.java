@@ -128,7 +128,7 @@ public class SQL {
     public static class Order {
         public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state, store_image, store_id FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id Limit ?,?;";
-        public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT, store_image, store_latitude, store_longitude, store_phone FROM orders NATURAL JOIN stores WHERE (phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT')) GROUP BY receipt_id;";
+        public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT, store_image, store_latitude, store_longitude, store_phone FROM orders NATURAL JOIN stores WHERE (phone =? AND order_state ='PREPARING' OR order_state ='ACCEPT') GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(menu_defaultprice*order_count),0) from orders where store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY)";
         public static final String FIND_ORDER_IDS_BY_RECEIPT_ID = "SELECT order_id FROM orders WHERE receipt_id=?";
