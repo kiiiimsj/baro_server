@@ -193,7 +193,7 @@ public class SQL {
                 "\t-radians(?))+sin(radians(?))*sin(radians(store_latitude))))*1000\n" +
                 "\n" +
                 "\tAS distance, store_name, store_info, store_location, store_image, is_open FROM stores\n" +
-                " NATURAL JOIN favorites WHERE phone=? ORDER BY is_open='Y' AND distance";
+                " NATURAL JOIN favorites WHERE phone=? ORDER BY is_open='N' AND distance";
         public static final String INSERT_FAVORITE = "INSERT INTO favorites VALUES(?,?)";
         public static final String DELETE_FAVORITE = "DELETE FROM favorites WHERE phone=? AND store_id=?";
         public static final String CHECK_FAVORITE = "SELECT * FROM favorites WHERE phone=? AND store_id=?";
