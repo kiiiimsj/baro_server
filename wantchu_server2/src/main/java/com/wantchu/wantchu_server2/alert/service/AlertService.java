@@ -75,7 +75,7 @@ public class AlertService {
         jsonObject.put("result", true);
         jsonObject.put("message", "안읽은 알림의 갯수 가져오기 성공");
         jsonObject.put("count", count);
-        return jsonObject;
+        return jsonObject;//
     }
 
     public JSONObject getAlertDetail(int alert_id) {
