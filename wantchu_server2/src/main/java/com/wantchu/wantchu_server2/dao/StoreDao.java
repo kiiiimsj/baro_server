@@ -107,7 +107,7 @@ public class StoreDao {
 
     public List<StoreInfoFindByTypeVo> findInfoByKeyword(@NotNull StoreInfoFindByKeywordDto dto) throws StoreKeywordNotFoundException {
         List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
-                SQL.Store.FIND_INFO_BY_KEYWORD+"'%"+dto.getKeyword()+"%'"+" ORDER BY DISTANCE",
+                SQL.Store.FIND_INFO_BY_KEYWORD+"'%"+dto.getKeyword()+"%'"+" ORDER BY is_open='N' AND DISTANCE",
                 (resultSet, i) -> {
                     StoreInfoFindByTypeVo storeInfoVo = StoreInfoFindByTypeVo.builder()
                             .store_id(resultSet.getInt("store_id"))
