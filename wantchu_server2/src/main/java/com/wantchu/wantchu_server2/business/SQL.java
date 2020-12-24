@@ -92,6 +92,7 @@ public class SQL {
 
         public static final String UPDATE_OWNER_DEVICE_TOKEN = "UPDATE owners SET owner_device_token = ? WHERE phone = ?";
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
+        public static final String FIND_MENU_LIST_STATISTICS = "";
     }
 
     public static class Extra {
