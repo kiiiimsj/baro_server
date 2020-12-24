@@ -279,13 +279,13 @@ public class OrderService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findDoneOrdersByDate(OrderCompleteBetweenDateReqeustDto reqeustDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        Boolean device_result = null;
+        //Boolean device_result = null;
         try{
-            device_result = orderDao.duplicateToken(reqeustDto.getStore_id(), reqeustDto.getOwner_device_token());
+            //device_result = orderDao.duplicateToken(reqeustDto.getStore_id(), reqeustDto.getOwner_device_token());
             List<String> receiptIdList = orderDao.findReceiptIdsOfDoneOrders(reqeustDto);
             Iterator<String> receiptIdIterator = receiptIdList.iterator();
             jsonObject.put("result", true);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
             jsonObject.put("message", "완료/취소된 주문 내역 가져오기 성공");
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
             while(receiptIdIterator.hasNext()){
@@ -312,7 +312,7 @@ public class OrderService {
         }
         catch(Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
