@@ -478,19 +478,38 @@ public class OwnerDao {
 //            return list;
 //        }
 //    }
-    public boolean duplicateToken(int store_id, String owner_device_token){
-        List<String> list = jdbcTemplate.query(
-                SQL.Owner.FIND_DUPLICATE_TOKEN,
+
+
+//    public boolean duplicateToken(int store_id, String owner_device_token){
+//        List<String> list = jdbcTemplate.query(
+//                SQL.Owner.FIND_DUPLICATE_TOKEN,
+//                (resultSet, i) -> {
+//                    String phone = resultSet.getString("phone");
+//                    return phone;
+//                }
+//                ,store_id, owner_device_token);
+//        if(list.size() == 0){
+//            return false;
+//        }
+//        else{
+//            return true;
+//        }
+//    }
+
+    public List<MenuStatisticsVo> setMenuStatistics(OwnerSetStatisticsRequestDto requestDto) throws StatisticsNotFoundException{
+        List<MenuStatisticsVo> list = jdbcTemplate.query(
+                SQL.Owner.FIND_MENU_LIST_STATISTICS,
                 (resultSet, i) -> {
-                    String phone = resultSet.getString("phone");
-                    return phone;
+                    MenuStatisticsVo menuStatisticsVo = new MenuStatisticsVo();
+                    //추가하기
+                    return menuStatisticsVo;
                 }
-                ,store_id, owner_device_token);
-        if(list.size() == 0){
-            return false;
+                ,requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
+        if(list.size() == 0) {
+            throw new StatisticsNotFoundException();
         }
         else{
-            return true;
+            return list;
         }
     }
 }

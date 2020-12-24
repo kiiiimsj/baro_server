@@ -88,4 +88,11 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.setStatistics(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+
+    @PostMapping("/OwnerMenuStatistics.do")
+    public void setMenu(@RequestBody OwnerSetStatisticsRequestDto requestDto, HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.setMenuStatistics(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
 }

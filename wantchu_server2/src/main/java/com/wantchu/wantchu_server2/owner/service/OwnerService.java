@@ -304,11 +304,11 @@ public class OwnerService {
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject findPriceBetweenDate(OwnerPriceBetweenDateRequestDto requestDto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        Boolean device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+        //Boolean device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
         int sumOfExtras = ownerDao.findExtraOrderTotalPriceOfStore(requestDto);
         int sumOfMenuDefault = ownerDao.findMenuDefaultTotalPriceOfStore(requestDto);
         int couponTotalPrice = ownerDao.findCouponDiscountPriceOfStore(requestDto);
-        jsonObject.put("device_result", device_result);
+        //jsonObject.put("device_result", device_result);
         jsonObject.put("total_price", sumOfExtras + sumOfMenuDefault);
         jsonObject.put("coupon_total_price", couponTotalPrice);
         return jsonObject;
@@ -316,11 +316,11 @@ public class OwnerService {
 
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStoreOpenOrClosed(String is_open, int store_id, String owner_device_token){
-        Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
+        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
         ownerDao.setStoreOpenOrClosed(is_open, store_id);
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         jsonObject.put("result", true);
-        jsonObject.put("device_result", device_result);
+        //jsonObject.put("device_result", device_result);
         jsonObject.put("message", "정상 처리 되었습니다.");
         return jsonObject;
     }
@@ -330,54 +330,54 @@ public class OwnerService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         Boolean device_result = null;
         try {
-            device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+            //device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
             String device_token = ownerDao.getDeviceTokenByPhone(requestDto.getPhone());
             FcmUtil fcmUtil = new FcmUtil();
             fcmUtil.send_FCM(device_token, requestDto.getTitle(), requestDto.getContent(), jsonObject);
             jsonObject.put("result", true);
             jsonObject.put("message", "메시지 전송 성공");
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         } catch(MemberPhoneNotFoundException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         } catch(FirebaseMessagingException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         } catch(IOException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStatusToCustomer(String receipt_id, int store_id, String owner_device_token){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
+        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
         ownerDao.setStatusFirst(receipt_id);
         jsonObject.put("result", true);
         jsonObject.put("message", "정상 처리 되었습니다.");
-        jsonObject.put("device_result", device_result);
+        //jsonObject.put("device_result", device_result);
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStatusCompleteToCustomer(String receipt_id, int store_id, String owner_device_token){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
+        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
         ownerDao.setStatusComplete(receipt_id);
         jsonObject.put("result", true);
         jsonObject.put("message", "정상 처리 되었습니다.");
-        jsonObject.put("device_result", device_result);
+        //jsonObject.put("device_result", device_result);
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        Boolean device_result = null;
+        //Boolean device_result = null;
         try{
-            device_result = ownerDao.duplicateToken(requestDto.getStore_id(), requestDto.getOwner_device_token());
+            //device_result = ownerDao.duplicateToken(requestDto.getStore_id());
             List<PriceByDayVo> defaultPriceList = ownerDao.setStatistics(requestDto);
             jsonObject.put("result", true);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
             jsonObject.put("message", "통계내역 가져오기 성공");
 
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
@@ -402,8 +402,39 @@ public class OwnerService {
         }
         catch (StatisticsNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
-            jsonObject.put("device_result", device_result);
+            //jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject setMenuStatistics(OwnerSetStatisticsRequestDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+
+        try{
+            List<MenuStatisticsVo> menuList = ownerDao.setMenuStatistics(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "메뉴 통계 리스트 가져오기 성공");
+
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+
+            for(int i = 0; i< menuList.size(); i++) {
+                String menu_name = menuList.get(i).getMenu_name();
+                int menu_count = menuList.get(i).getMenu_count();
+                int menu_total_price = menuList.get(i).getMenu_total_price();
+
+                org.json.simple.JSONObject objectOfMenu = ObjectMaker.getSimpleJSONObject();
+                objectOfMenu.put("menu_name", menu_name);
+                objectOfMenu.put("menu_count", menu_count);
+                objectOfMenu.put("menu_total_price", menu_total_price);
+                jsonArray.add(objectOfMenu);
+            }
+            jsonObject.put("menuStatisticsList", jsonArray);
+        }
+        catch (StatisticsNotFoundException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
 }
