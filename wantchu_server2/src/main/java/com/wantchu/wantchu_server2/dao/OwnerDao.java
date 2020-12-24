@@ -48,14 +48,14 @@ public class OwnerDao {
         }
     }
 
-    public void updateDeviceToken(String phone, String owner_device_token){
-        jdbcTemplate.update(connection -> {
-           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_OWNER_DEVICE_TOKEN);
-           preparedStatement.setString(1, owner_device_token);
-           preparedStatement.setString(2, phone);
-           return preparedStatement;
-        });
-    }
+//    public void updateDeviceToken(String phone, String owner_device_token){
+//        jdbcTemplate.update(connection -> {
+//           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_OWNER_DEVICE_TOKEN);
+//           preparedStatement.setString(1, owner_device_token);
+//           preparedStatement.setString(2, phone);
+//           return preparedStatement;
+//        });
+//    }
 
     public void updatePassword(OwnerPassUpdateRequestDto requestDto) throws OwnerPassUpdateException {
         int result = jdbcTemplate.update(connection -> {
