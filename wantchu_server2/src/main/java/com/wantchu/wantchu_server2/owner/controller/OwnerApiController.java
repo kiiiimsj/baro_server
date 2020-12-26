@@ -6,11 +6,9 @@ import com.wantchu.wantchu_server2.owner.service.OwnerService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
@@ -92,6 +90,13 @@ public class OwnerApiController {
     @PostMapping("/OwnerMenuStatistics.do")
     public void setMenu(@RequestBody OwnerSetStatisticsRequestDto requestDto, HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = ownerService.setMenuStatistics(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    @GetMapping("/OwnerCalculate.do")
+    public void calculate(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int store_id = Integer.parseInt(request.getParameter("store_id"));
+        org.json.simple.JSONObject jsonObject = ownerService.getCalculate(store_id);
         WriteToServer.send(response, jsonObject);
     }
 

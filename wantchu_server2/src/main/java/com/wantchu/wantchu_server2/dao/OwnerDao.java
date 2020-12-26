@@ -404,6 +404,25 @@ public class OwnerDao {
         return couponDiscountTotalPrice;
     }
 
+    //정산쪽 계산( 위 3개와 비슷)
+    public int findCalculateDefault(int store_id){
+        Integer sumOfDefault = jdbcTemplate.queryForObject(
+                SQL.Order.CALCULATE_DEFAULT_PRICE, Integer.class);
+        return sumOfDefault;
+    }
+
+    public int findCalculateExtra(int store_id){
+        Integer sumOfExtra = jdbcTemplate.queryForObject(
+                SQL.ExtraOrder.CALCULATE_EXTRA_PRICE, Integer.class);
+        return sumOfExtra;
+    }
+
+    public int findCalculateCoupon(int store_id){
+        Integer sumOfCoupon = jdbcTemplate.queryForObject(
+                SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class);
+        return sumOfCoupon;
+    }
+
     public void setStoreOpenOrClosed(String is_open, int store_id) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Store.UPDATE_STORE_OPEN_STATUS);

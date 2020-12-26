@@ -438,4 +438,17 @@ public class OwnerService {
         return jsonObject;
     }
 
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject getCalculate(int store_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        int sumOfDefault = ownerDao.findCalculateDefault(store_id);
+        int sumOfExtra = ownerDao.findCalculateExtra(store_id);
+        int sumOfCoupon = ownerDao.findCalculateCoupon(store_id);
+        jsonObject.put("message", "이전 월요일까지의 정산 처리 완료");
+        jsonObject.put("result", true);
+        jsonObject.put("menu_total_price", sumOfDefault + sumOfExtra);
+        jsonObject.put("coupon_price", sumOfCoupon);
+        return jsonObject;
+    }
+
 }
