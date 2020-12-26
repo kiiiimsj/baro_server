@@ -501,10 +501,13 @@ public class OwnerDao {
                 SQL.Owner.FIND_MENU_LIST_STATISTICS,
                 (resultSet, i) -> {
                     MenuStatisticsVo menuStatisticsVo = new MenuStatisticsVo();
-                    //추가하기
+                    menuStatisticsVo.setMenu_name(resultSet.getString("menu_name"));
+                    menuStatisticsVo.setMenu_count(resultSet.getInt("menu_count"));
+                    menuStatisticsVo.setDefault_price(resultSet.getInt("default_total_price"));
+                    menuStatisticsVo.setExtra_price(resultSet.getInt("extra_total_price"));
                     return menuStatisticsVo;
                 }
-                ,requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
+                ,requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date(),requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
         if(list.size() == 0) {
             throw new StatisticsNotFoundException();
         }
