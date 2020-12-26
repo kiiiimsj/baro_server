@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OwnerPriceBetweenDateRequestDto {
-
     private int store_id;
     private String startDate;
     private String endDate;
