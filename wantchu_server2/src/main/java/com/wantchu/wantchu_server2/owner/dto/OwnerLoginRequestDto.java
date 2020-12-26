@@ -11,11 +11,9 @@ public class OwnerLoginRequestDto {
 
     private String phone;
     private String pass;
-    private String owner_device_token;
 
-    public OwnerLoginRequestDto(String phone, String pass, String owner_device_token) {
+    public OwnerLoginRequestDto(String phone, String pass) {
         this.phone = phone;
         this.pass = pass;
-        this.owner_device_token = owner_device_token;
     }
 }

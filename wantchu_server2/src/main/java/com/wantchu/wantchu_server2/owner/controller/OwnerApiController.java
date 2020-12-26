@@ -20,7 +20,7 @@ public class OwnerApiController {
 
     @PostMapping("/OwnerLogin.do")
     public void login(@RequestBody @NotNull OwnerLoginRequestDto requestDto, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = ownerService.login(requestDto.getPhone(), requestDto.getPass(), requestDto.getOwner_device_token());
+        org.json.simple.JSONObject jsonObject = ownerService.login(requestDto.getPhone(), requestDto.getPass());
         WriteToServer.send(response, jsonObject);
     }
 
@@ -62,7 +62,7 @@ public class OwnerApiController {
 
     @PutMapping("/OwnerSetStoreStatus.do")
     public void setStoreOpenOrClosed(@RequestBody OwnerStoreStatusUpdateRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStoreOpenOrClosed(requestDto.getIs_open(), requestDto.getStore_id(), requestDto.getOwner_device_token());
+        org.json.simple.JSONObject jsonObject = ownerService.setStoreOpenOrClosed(requestDto.getIs_open(), requestDto.getStore_id());
         WriteToServer.send(response, jsonObject);
     }
 
@@ -73,14 +73,17 @@ public class OwnerApiController {
     }
     @PutMapping("/OwnerSetOrderStatus.do")
     public void setOrderStatus(@RequestBody OwnerSetStatusRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id(), requestDto.getOwner_device_token());
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id());
         WriteToServer.send(response, jsonObject);
     }
+
+    //store_id필요?
     @PutMapping("/OwnerSetOrderStatusComplete.do")
     public void setOrderStatusComplete(@RequestBody OwnerSetStatusCompleteRequestDto requestDto, HttpServletResponse response){
-        org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id(), requestDto.getOwner_device_token());
+        org.json.simple.JSONObject jsonObject = ownerService.setStatusCompleteToCustomer(requestDto.getReceipt_id(), requestDto.getStore_id());
         WriteToServer.send(response, jsonObject);
     }
+
     @PostMapping("/OwnerSetstatistics.do")
     public void setStatistics(@RequestBody OwnerSetStatisticsRequestDto requestDto, HttpServletResponse response){
         org.json.simple.JSONObject jsonObject = ownerService.setStatistics(requestDto);
