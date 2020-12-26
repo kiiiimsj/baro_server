@@ -407,19 +407,19 @@ public class OwnerDao {
     //정산쪽 계산( 위 3개와 비슷)
     public int findCalculateDefault(int store_id){
         Integer sumOfDefault = jdbcTemplate.queryForObject(
-                SQL.Order.CALCULATE_DEFAULT_PRICE, Integer.class);
+                SQL.Order.CALCULATE_DEFAULT_PRICE, Integer.class, store_id);
         return sumOfDefault;
     }
 
     public int findCalculateExtra(int store_id){
         Integer sumOfExtra = jdbcTemplate.queryForObject(
-                SQL.ExtraOrder.CALCULATE_EXTRA_PRICE, Integer.class);
+                SQL.ExtraOrder.CALCULATE_EXTRA_PRICE, Integer.class, store_id);
         return sumOfExtra;
     }
 
     public int findCalculateCoupon(int store_id){
         Integer sumOfCoupon = jdbcTemplate.queryForObject(
-                SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class);
+                SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class, store_id);
         return sumOfCoupon;
     }
 
