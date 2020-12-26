@@ -155,6 +155,10 @@ public class SQL {
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
         public static final String FIND_ORDER_REQUESTS = "SELECT requests FROM orders WHERE receipt_id= ? LIMIT 1";
         public static final String FIND_ORDER_STATE = "SELECT order_state FROM orders WHERE receipt_id=?";
+        public static final String CALCULATE_DEFAULT_PRICE = "select ifnull(sum(menu_defaultprice*order_count),0) \n" +
+                "from orders\n" +
+                "where store_id=?\n" +
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 1 DAY)";
     }
 
     public static class ExtraOrder {
@@ -162,6 +166,9 @@ public class SQL {
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(extra_price*extra_count*order_count), 0) from extraorders natural join orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(extra_price*extra_count*order_count), 0) as extra_price from extraorders natural join orders where store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY)";
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders NATURAL JOIN extras WHERE order_id=?";
+        public static final String CALCULATE_EXTRA_PRICE = "select ifnull(sum(extra_price*extra_count*order_count), 0) as extra_price from extraorders natural join orders \n" +
+                "where store_id=?\n" +
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 1 DAY)";
     }
 
     public static class Coupon {
@@ -175,6 +182,10 @@ public class SQL {
         public static final String INSERT_COUPON_HISTORY = "INSERT INTO couponhistories VALUES(default, ?, ?, default, ?, ?, ?, ?)";
         public static final String TOTAL_DISCOUNT_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(discount_price),0) from couponhistories where store_id=? and use_date between ? and DATE_ADD(?,INTERVAL 1 DAY)";
         public static final String FIND_PRICE_INFO_BY_RECEIPT_ID = "select discount_price, total_price from couponhistories where receipt_id=?";
+        public static final String CALCULATE_COUPON_PRICE = "select ifnull(sum(discount_price),0) \n" +
+                "from couponhistories \n" +
+                "where store_id=?\n" +
+                "and use_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) and DATE_ADD(NOW(), INTERVAL 1 DAY)";
     }
 
     public static class CouponsByMembers {
