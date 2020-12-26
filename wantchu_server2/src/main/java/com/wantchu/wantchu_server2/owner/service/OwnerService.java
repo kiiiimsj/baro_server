@@ -27,11 +27,10 @@ public class OwnerService {
     private final OwnerDao ownerDao;
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject login(String phone, String pass, String owner_device_token) {
+    public org.json.simple.JSONObject login(String phone, String pass) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
             OwnerVo ownerVo = ownerDao.isValidAccount(phone, pass);
-            //ownerDao.updateDeviceToken(phone, owner_device_token);
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 점주 로그인이 되었습니다.");
             jsonObject.put("store_id", ownerVo.getStore_id());
@@ -314,8 +313,7 @@ public class OwnerService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject setStoreOpenOrClosed(String is_open, int store_id, String owner_device_token){
-        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
+    public org.json.simple.JSONObject setStoreOpenOrClosed(String is_open, int store_id){
         ownerDao.setStoreOpenOrClosed(is_open, store_id);
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         jsonObject.put("result", true);
@@ -349,34 +347,27 @@ public class OwnerService {
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject setStatusToCustomer(String receipt_id, int store_id, String owner_device_token){
+    public org.json.simple.JSONObject setStatusToCustomer(String receipt_id, int store_id){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
         ownerDao.setStatusFirst(receipt_id);
         jsonObject.put("result", true);
         jsonObject.put("message", "정상 처리 되었습니다.");
-        //jsonObject.put("device_result", device_result);
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject setStatusCompleteToCustomer(String receipt_id, int store_id, String owner_device_token){
+    public org.json.simple.JSONObject setStatusCompleteToCustomer(String receipt_id, int store_id){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        //Boolean device_result = ownerDao.duplicateToken(store_id, owner_device_token);
         ownerDao.setStatusComplete(receipt_id);
         jsonObject.put("result", true);
         jsonObject.put("message", "정상 처리 되었습니다.");
-        //jsonObject.put("device_result", device_result);
         return jsonObject;
     }
     @SuppressWarnings("unchecked")
     public org.json.simple.JSONObject setStatistics(OwnerSetStatisticsRequestDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        //Boolean device_result = null;
         try{
-            //device_result = ownerDao.duplicateToken(requestDto.getStore_id());
             List<PriceByDayVo> defaultPriceList = ownerDao.setStatistics(requestDto);
             jsonObject.put("result", true);
-            //jsonObject.put("device_result", device_result);
             jsonObject.put("message", "통계내역 가져오기 성공");
 
             org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
@@ -387,10 +378,6 @@ public class OwnerService {
                 int defaultPrice = defaultPriceList.get(i).getDefaultPrice();
                 int extraPrice = defaultPriceList.get(i).getExtraPrice();
                 int totalPrice = defaultPrice + extraPrice;
-                System.out.println(date);
-                System.out.println(defaultPrice+"");
-                System.out.println(extraPrice+"");
-                System.out.println(totalPrice+"");
                 org.json.simple.JSONObject objectOfOrder = ObjectMaker.getSimpleJSONObject();
                 objectOfOrder.put("date", date);
                 objectOfOrder.put("price", totalPrice);
@@ -401,7 +388,6 @@ public class OwnerService {
         }
         catch (StatisticsNotFoundException e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
-            //jsonObject.put("device_result", device_result);
         }
         return jsonObject;
     }
