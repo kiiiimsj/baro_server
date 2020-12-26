@@ -393,19 +393,19 @@ public class OwnerDao {
                     int extraOrderTotalPrice = Integer.parseInt(resultSet.getString("extra_price"));
                     return extraOrderTotalPrice;
                 }
-                , requestDto.getStore_id(), requestDto.getStartDate(), requestDto.getEndDate());
+                , requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
         return list.get(0);
     }
 
     public int findMenuDefaultTotalPriceOfStore(OwnerPriceBetweenDateRequestDto requestDto) {
         Integer menuDefaultTotalPrice = jdbcTemplate.queryForObject(
-                SQL.Order.TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE, Integer.class, requestDto.getStore_id(), requestDto.getStartDate(), requestDto.getEndDate());
+                SQL.Order.TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE, Integer.class, requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
         return menuDefaultTotalPrice;
     }
 
     public int findCouponDiscountPriceOfStore(OwnerPriceBetweenDateRequestDto requestDto) {
         Integer couponDiscountTotalPrice = jdbcTemplate.queryForObject(
-                SQL.CouponHistory.TOTAL_DISCOUNT_PRICE_OF_ORDERS_BETWEEN_DATE, Integer.class, requestDto.getStore_id(), requestDto.getStartDate(), requestDto.getEndDate());
+                SQL.CouponHistory.TOTAL_DISCOUNT_PRICE_OF_ORDERS_BETWEEN_DATE, Integer.class, requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
         return couponDiscountTotalPrice;
     }
 

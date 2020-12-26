@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class OwnerPriceBetweenDateRequestDto {
     private int store_id;
-    private String startDate;
-    private String endDate;
+    private String start_date;
+    private String end_date;
 }
