@@ -421,7 +421,9 @@ public class OwnerService {
             for(int i = 0; i< menuList.size(); i++) {
                 String menu_name = menuList.get(i).getMenu_name();
                 int menu_count = menuList.get(i).getMenu_count();
-                int menu_total_price = menuList.get(i).getMenu_total_price();
+                int menu_default_price = menuList.get(i).getDefault_price();
+                int menu_extra_price = menuList.get(i).getExtra_price();
+                int menu_total_price = menu_default_price + menu_extra_price;
 
                 org.json.simple.JSONObject objectOfMenu = ObjectMaker.getSimpleJSONObject();
                 objectOfMenu.put("menu_name", menu_name);

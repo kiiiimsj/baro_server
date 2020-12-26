@@ -92,7 +92,14 @@ public class SQL {
 
         //public static final String UPDATE_OWNER_DEVICE_TOKEN = "UPDATE owners SET owner_device_token = ? WHERE phone = ?";
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
-        public static final String FIND_MENU_LIST_STATISTICS = "";
+        public static final String FIND_MENU_LIST_STATISTICS = "SELECT * FROM (SELECT menu_name, count(*) as menu_count, IFNULL(sum(menu_defaultprice*order_count),0) AS default_total_price FROM orders\n" +
+                "where store_id=? AND order_state='DONE' AND order_date BETWEEN ? AND DATE_ADD(? ,INTERVAL 1 DAY)\n" +
+                "GROUP BY menu_name) AS A\n" +
+                "LEFT OUTER JOIN (SELECT menu_name ,ifnull(SUM(extra_price*extra_count),0) AS extra_total_price\n" +
+                "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(? ,INTERVAL 1 DAY)\n" +
+                "GROUP BY menu_name) AS B\n" +
+                "ON A.menu_name=B.menu_name";
     }
 
     public static class Extra {
