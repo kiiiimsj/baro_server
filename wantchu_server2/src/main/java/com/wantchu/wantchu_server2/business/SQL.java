@@ -99,7 +99,8 @@ public class SQL {
                 "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(? ,INTERVAL 1 DAY)\n" +
                 "GROUP BY menu_name) AS B\n" +
-                "ON A.menu_name=B.menu_name";
+                "ON A.menu_name=B.menu_name" +
+                "order by (default_total_price+extra_total_price) DESC ";
     }
 
     public static class Extra {
