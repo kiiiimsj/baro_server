@@ -308,8 +308,6 @@ public class OwnerService {
         int sumOfExtras = ownerDao.findExtraOrderTotalPriceOfStore(requestDto);
         int sumOfMenuDefault = ownerDao.findMenuDefaultTotalPriceOfStore(requestDto);
         int couponTotalPrice = ownerDao.findCouponDiscountPriceOfStore(requestDto);
-        System.out.println("sumof" + sumOfExtras);
-        //jsonObject.put("device_result", device_result);
         jsonObject.put("total_price", sumOfExtras + sumOfMenuDefault);
         jsonObject.put("coupon_total_price", couponTotalPrice);
         return jsonObject;
