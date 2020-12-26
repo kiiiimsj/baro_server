@@ -387,14 +387,9 @@ public class OwnerDao {
     }
 
     public int findExtraOrderTotalPriceOfStore(OwnerPriceBetweenDateRequestDto requestDto) {
-        List<Integer> list = jdbcTemplate.query(
-                SQL.ExtraOrder.TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE,
-                (resultSet, i) -> {
-                    int extraOrderTotalPrice = Integer.parseInt(resultSet.getString("extra_price"));
-                    return extraOrderTotalPrice;
-                }
-                , requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
-        return list.get(0);
+        Integer extraOrderTotalPrice = jdbcTemplate.queryForObject(
+                SQL.ExtraOrder.TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE, Integer.class, requestDto.getStore_id(), requestDto.getStart_date(), requestDto.getEnd_date());
+        return extraOrderTotalPrice;
     }
 
     public int findMenuDefaultTotalPriceOfStore(OwnerPriceBetweenDateRequestDto requestDto) {
