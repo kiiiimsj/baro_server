@@ -217,4 +217,8 @@ public class SQL {
         public static final String DELETE_FAVORITE = "DELETE FROM favorites WHERE phone=? AND store_id=?";
         public static final String CHECK_FAVORITE = "SELECT * FROM favorites WHERE phone=? AND store_id=?";
     }
+
+    public static class Manage {
+        public static final String INSERT_TYPE = "";
+    }
 }
