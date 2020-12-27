@@ -8,6 +8,7 @@ import com.wantchu.wantchu_server2.dao.*;
 import com.wantchu.wantchu_server2.event.service.EventService;
 import com.wantchu.wantchu_server2.extra.service.ExtraService;
 import com.wantchu.wantchu_server2.favorite.service.FavoriteService;
+import com.wantchu.wantchu_server2.manage.service.ManageService;
 import com.wantchu.wantchu_server2.member.service.MemberService;
 import com.wantchu.wantchu_server2.menu.service.MenuService;
 import com.wantchu.wantchu_server2.notice.service.NoticeService;
@@ -49,6 +50,8 @@ public class ControllerConfigure {
     private AlertService alertService;
     @Autowired
     private EventService eventService;
+    @Autowired
+    private ManageService manageService;
 
 
     @Autowired
@@ -77,6 +80,8 @@ public class ControllerConfigure {
     private AlertDao alertDao;
     @Autowired
     private EventDao eventDao;
+    @Autowired
+    private ManageDao manageDao;
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
@@ -119,7 +124,8 @@ public class ControllerConfigure {
     public AlertDao alertDao(){ return new AlertDao(dataSource());}
     @Bean
     public EventDao eventDao(){ return new EventDao(dataSource());}
-
+    @Bean
+    public ManageDao manageDao(){ return new ManageDao(dataSource());}
 
     @Bean
     public MemberService memberService() {
@@ -184,6 +190,11 @@ public class ControllerConfigure {
     @Bean
     public EventService eventService(){
         EventService service = new EventService(eventDao());
+        return service;
+    }
+    @Bean
+    public ManageService manageService(){
+        ManageService service = new ManageService(manageDao());
         return service;
     }
 
