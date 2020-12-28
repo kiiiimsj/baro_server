@@ -4,7 +4,9 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.ManageDao;
 import com.wantchu.wantchu_server2.manage.dto.TypeInsertDto;
+import com.wantchu.wantchu_server2.manage.dto.UltraInsertDto;
 import com.wantchu.wantchu_server2.vo.PrintTypeVo;
+import com.wantchu.wantchu_server2.vo.PrintUltraVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -68,6 +70,55 @@ public class ManageService {
         return jsonObject;
     }
 
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject insertUltra(@NotNull UltraInsertDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.insertUltra(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "정상적으로 ultra 등록이 완료되었습니다.");
+        }
+        catch (Exception e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject ultraDelete(int store_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.deleteUltra(store_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "해당 ultra를 정상적으로 제거하였습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    @SuppressWarnings("unchecked")
+    public org.json.simple.JSONObject ultraPrint() {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            List<PrintUltraVo> list = manageDao.printUltra();
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 ultra list 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintUltraVo ultra : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(ultra.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("ultra", jsonArray);
+        }
+        catch(Exception e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+
+    }
 
 
 }

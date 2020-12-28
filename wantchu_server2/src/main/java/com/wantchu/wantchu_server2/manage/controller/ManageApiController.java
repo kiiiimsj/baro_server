@@ -44,27 +44,27 @@ public class ManageApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-//    //ultra스토어 insert해주기
-//    @PostMapping("/UltraInsert.do")
-//    public void ultraInsert(@RequestBody @NotNull UltraInsertDto request, @NotNull HttpServletResponse response) {
-//        org.json.simple.JSONObject jsonObject = manageService.insertUltra(request);
-//        WriteToServer.send(response, jsonObject);
-//    }
-//
-//    //ultra 삭제하기
-//    @GetMapping("UltraDelete.do")
-//    public void ultraDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-//        int store_id = Integer.parseInt(request.getParameter("store_id"));
-//        org.json.simple.JSONObject jsonObject = manageService.ultraDelete(store_id);
-//        WriteToServer.send(response, jsonObject);
-//    }
-//
-//    //ultra스토어 리스트 가져오기
-//    @GetMapping("/UltraPrint.do")
-//    public void ultraPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-//        org.json.simple.JSONObject jsonObject = manageService.ultraPrint();
-//        WriteToServer.send(response, jsonObject);
-//    }
+    //ultra스토어 insert해주기
+    @PostMapping("/UltraInsert.do")
+    public void ultraInsert(@RequestBody @NotNull UltraInsertDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.insertUltra(request);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //ultra 삭제하기
+    @GetMapping("UltraDelete.do")
+    public void ultraDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int store_id = Integer.parseInt(request.getParameter("store_id"));
+        org.json.simple.JSONObject jsonObject = manageService.ultraDelete(store_id);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //ultra스토어 리스트 가져오기
+    @GetMapping("/UltraPrint.do")
+    public void ultraPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.ultraPrint();
+        WriteToServer.send(response, jsonObject);
+    }
 //
 //    //new스토어 insert해주기
 //    @PostMapping("/NewStoreInsert.do")

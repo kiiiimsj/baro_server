@@ -4,11 +4,15 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.favorite.exception.FavoriteDeleteException;
 import com.wantchu.wantchu_server2.manage.dto.TypeInsertDto;
+import com.wantchu.wantchu_server2.manage.dto.UltraInsertDto;
 import com.wantchu.wantchu_server2.manage.exception.DeleteTypeException;
+import com.wantchu.wantchu_server2.manage.exception.DeleteUltraException;
 import com.wantchu.wantchu_server2.manage.exception.NotFoundTypeException;
+import com.wantchu.wantchu_server2.manage.exception.NotFoundUltraException;
 import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
 import com.wantchu.wantchu_server2.vo.PrintTypeVo;
+import com.wantchu.wantchu_server2.vo.PrintUltraVo;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +33,6 @@ public class ManageDao {
     public void insertType(@NotNull TypeInsertDto requestDto) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_TYPE);
-            //기능 추가 preparedStatement.setString(1, registerRequestDto.getPhone()); 이런식
             preparedStatement.setString(1, requestDto.getType_code());
             preparedStatement.setString(2, requestDto.getType_name());
             preparedStatement.setString(3, requestDto.getType_image());
@@ -64,6 +67,44 @@ public class ManageDao {
             return list;
         }
     }
+
+    public void insertUltra(@NotNull UltraInsertDto requestDto) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_ULTRA);
+            preparedStatement.setInt(1, requestDto.getStore_id());
+            return preparedStatement;
+        });
+    }
+
+    public void deleteUltra(int store_id) throws DeleteUltraException {
+        try{
+            jdbcTemplate.update(connection -> {
+                PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.DELETE_ULTRA);
+                preparedStatement.setInt(1, store_id);
+                return preparedStatement;
+            });
+        }
+        catch (Exception e) {
+            throw new DeleteUltraException();
+        }
+    }
+
+    public List<PrintUltraVo> printUltra() throws NotFoundUltraException {
+        List<PrintUltraVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_ULTRA,
+                (resultSet, i) -> {
+                    PrintUltraVo vo = new PrintUltraVo(resultSet.getInt("store_id"), resultSet.getString("store_name"));
+                    return vo;
+                });
+        if(list.size() == 0) {
+            throw new NotFoundUltraException();
+        }
+        else{
+            return list;
+        }
+    }
+
+
 
 
 }
