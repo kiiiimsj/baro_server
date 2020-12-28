@@ -219,6 +219,8 @@ public class SQL {
     }
 
     public static class Manage {
-        public static final String INSERT_TYPE = "";
+        public static final String INSERT_TYPE = "INSERT INTO types VALUES(?, ?, ?)";
+        public static final String DELETE_TYPE = "DELETE FROM types WHERE type_code=?";
+        public static final String PRINT_TYPE = "SELECT type_code, type_name FROM types";
     }
 }
