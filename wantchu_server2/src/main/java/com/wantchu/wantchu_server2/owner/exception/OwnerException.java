@@ -12,6 +12,7 @@ public abstract class OwnerException extends Exception {
         this.errno = errno;
     }
 
+
     public int getErrno() {
         return errno;
     }
