@@ -222,5 +222,9 @@ public class SQL {
         public static final String INSERT_TYPE = "INSERT INTO types VALUES(?, ?, ?)";
         public static final String DELETE_TYPE = "DELETE FROM types WHERE type_code=?";
         public static final String PRINT_TYPE = "SELECT type_code, type_name FROM types";
+
+        public static final String INSERT_ULTRA = "INSERT INTO ultras VALUES(";
+        public static final String DELETE_ULTRA = "";
+        public static final String PRINT_ULTRA = "";
     }
 }
