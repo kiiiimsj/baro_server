@@ -62,7 +62,7 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.ultraPrint();
         WriteToServer.send(response, jsonObject);
     }
-//
+
 //    //new스토어 insert해주기
 //    @PostMapping("/NewStoreInsert.do")
 //    public void newStoreInsert(@RequestBody @NotNull NewStoreInsertDto request, @NotNull HttpServletResponse response) {
@@ -126,7 +126,7 @@ public class ManageApiController {
 //    @GetMapping("/StorePrintByStoreName.do")
 //    public void storePrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
 //        String store_name = request.getParameter("store_name");
-//        org.json.simple.JSONObject jsonObject = manageService.storePrint();
+//        org.json.simple.JSONObject jsonObject = manageService.storePrintByStoreName();
 //        WriteToServer.send(response, jsonObject);
 //    }
 //
@@ -149,7 +149,7 @@ public class ManageApiController {
 //    @GetMapping("/CategoryPrintByStoreId.do")
 //    public void menuPrintByStoreId(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
 //        int store_id = Integer.parseInt(request.getParameter("store_id"));
-//        org.json.simple.JSONObject jsonObject = manageService.menuPrintByStoreId(store_id);
+//        org.json.simple.JSONObject jsonObject = manageService.categoryPrintByStoreId(store_id);
 //        WriteToServer.send(response, jsonObject);
 //    }
 //
@@ -160,7 +160,7 @@ public class ManageApiController {
 //        WriteToServer.send(response, jsonObject);
 //    }
 //
-//    //해당 가게의 해당 category의 해당 메뉴 삭제
+//    //해당 가게의 해당 category의 해당 menu 삭제
 //    @GetMapping("/MenuDelete.do")
 //    public void menuDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
 //        int menu_id = Integer.parseInt(request.getParameter("menu_id"));
@@ -200,8 +200,8 @@ public class ManageApiController {
 //
 //    //쿠폰 추가
 //    @PostMapping("/CouponInsert.do")
-//    public void couponInsert(@RequestBody @NotNull CounponInsertDto request, @NotNull HttpServletResponse response) {
-//        org.json.simple.JSONObject jsonObject = manageService.eventInsert(request);
+//    public void couponInsert(@RequestBody @NotNull CouponInsertDto request, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = manageService.couponInsert(request);
 //        WriteToServer.send(response, jsonObject);
 //    }
 //
