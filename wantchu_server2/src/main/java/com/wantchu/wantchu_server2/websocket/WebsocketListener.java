@@ -24,6 +24,8 @@ public class WebsocketListener {
             // message:::USER:::JSONObject
         } else if(tokens[0].equals("message")) {
             WebSocketSessionManager.sendMessageToOnePerson(tokens[1], tokens[2]);
+        } else if(tokens[0].equals("ping")) {
+            WebSocketSessionManager.sendMessageToOnePerson(tokens[1]);
         }
     }
 

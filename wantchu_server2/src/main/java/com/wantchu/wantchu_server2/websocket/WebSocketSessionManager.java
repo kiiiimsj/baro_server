@@ -79,4 +79,20 @@ public class WebSocketSessionManager {
             e.printStackTrace();
         }
     }
+
+    public static void sendMessageToOnePerson(String user) {
+        try {
+            ArrayList<Session> sessionArrayList = sessions.get(user);
+            Iterator<Session> sessionIterator = sessionArrayList.iterator();
+            while(sessionIterator.hasNext()) {
+                System.out.println("들어옴");
+                Session session = sessionIterator.next();
+                session.getBasicRemote().sendText("pong");
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        } catch(NullPointerException e){
+            e.printStackTrace();
+        }
+    }
 }
