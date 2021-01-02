@@ -247,6 +247,19 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
+* 해당 알림 클릭했을때 상세 페이지 정보
+  * URL : http://3.35.180.57:8080/GetAlertDetail.do?alert_id=1
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __alert_id__
+  * 응답 형식
+
+```json
+{
+    "result": true,
+    "message": "상세 알림 내용 출력 성공",
+    "content": "9월이벤트로 인한 새로운 쿠폰이 지급되었으니 쿠폰창에서 확인해주세요!"
+}
+```
 
 <hr>
 
@@ -1080,6 +1093,60 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
+* 주문 현황 리스트 가져오기
+  *  URL : http://3.35.180.57:8080/OrderProgressing.do?phone=전화번호
+  *  Http Method : GET
+  *  제공해야하는 JSON 형식 : __전화번호__
+  *  응답 형식
+
+```json
+{
+    "result": true,
+    "message": "전화번호로 주문 정보 가져오기 성공",
+    "order": [
+        {
+            "store_id": 0,
+            "order_date": "15:15 PM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 2500,
+            "total_count": 2,
+            "store_longitude": "126.9565",
+            "receipt_id": "5f45fe04878a560047fa69e2",
+            "store_name": "test cafe",
+            "order_state": "ACCEPT",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 0,
+            "order_date": "13:55 PM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 3500,
+            "total_count": 1,
+            "store_longitude": "126.9565",
+            "receipt_id": "5fbe622e878a56002ff99207",
+            "store_name": "test cafe",
+            "order_state": "PREPARING",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 0,
+            "order_date": "7:51 AM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 1500,
+            "total_count": 1,
+            "store_longitude": "126.9565",
+            "receipt_id": "5fed82fc5b29480047975961",
+            "store_name": "test cafe",
+            "order_state": "PREPARING",
+            "store_image": "test_cafe1.png"
+        }
+    ]
+}
+```
+
 <hr/>
 
 <h1>즐겨찾기 관련 API</h1>
@@ -1328,6 +1395,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "쿠폰 개수 가져오기 성공"
 }
 ```
+
+* 쿠폰 등록
+ * URL :  
 
 <hr/>
 
