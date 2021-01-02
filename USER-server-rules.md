@@ -46,16 +46,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 
 <hr/>
 
-<h1>신규 API</h1>
-
-* `CouponHistoryFindByPhone.do`
-* `StoreCheckIsOpen.do`
-<hr/>
-
 <h1>회원 관련 API</h1>
 
 * 회원의 로그인 처리
-  * URL : http://15.165.22.64:8080/MemberLogin.do
+  * URL : http://3.35.180.57:8080/MemberLogin.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -81,7 +75,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 전화번호 중복 체크
-  * URL : http://15.165.22.64:8080/MemberPhoneCheck.do?phone=전화번호
+  * URL : http://3.35.180.57:8080/MemberPhoneCheck.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=중복체크할전화번호` 형식으로 전달__
   * 응답 형식
@@ -93,11 +87,16 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 등록 처리
-  * URL : http://15.165.22.64:8080/MemberRegister.do
+  * URL : http://3.35.180.57:8080/MemberRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
-{"phone":"전화번호", "email":"이메일주소", "nick":"사용자명", "pass":"비밀번호"}
+{
+    "phone":"전화번호", 
+    "email":"이메일주소",
+    "nick":"사용자명", 
+    "pass":"비밀번호"
+}
 ```
   * 응답 형식
 ```json
@@ -120,7 +119,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 회원 비밀번호 변경 처리
-  * URL : http://15.165.22.64:8080/MemberPassUpdate.do
+  * URL : http://3.35.180.57:8080/MemberPassUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -129,13 +128,19 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   * 응답 형식
 ```json
 // 비밀번호 변경 처리 시
-{"result":true, "message":"비밀번호가 정상적으로 변경되었습니다."}
+{
+    "result":true, 
+    "message":"비밀번호가 정상적으로 변경되었습니다."
+}
 // 비밀번호 변경 실패 시
-{"result":false, "message":"등록되지 않은 전화번호 입니다."}
+{
+    "result":false, 
+    "message":"등록되지 않은 전화번호 입니다."
+}
 ```
 
 * 회원 이메일 변경 처리
-  * URL : http://15.165.22.64:8080/MemberEmailUpdate.do
+  * URL : http://3.35.180.57:8080/MemberEmailUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -144,146 +149,28 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   * 응답 형식
 ```json
 // 이메일 변경 처리 시
-{"result":true, "message":"이메일이 정상적으로 변경되었습니다."}
+{
+    "result":true, 
+    "message":"이메일이 정상적으로 변경되었습니다."
+}
 // 이메일 변경 실패 시
-{"result":false, "message":"등록되지 않은 전화번호 입니다."} // 또는
-{"result":false, "message":"이미 사용중인 이메일 입니다."}
-```
-<hr/>
-
-<h1>공지 관련 API</h1>
-
-* 모든 공지 읽어오기
-  * URL : http://15.165.22.64:8080/NoticeFindAll.do
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음__
-  * 응답 형식
-```json
-// 공지사항이 1개도 존재하지 않을 때
-{"result":false, "message":"등록된 알림, 공지사항 또는 이벤트가 존재하지 않습니다."}
-
-// 공지사항이 존재할 때 (4개의 공지사항이 존재하는 예시)
 {
-    "result": true,
-    "message": "notice 가져오기 성공.",
-    "notice": [
-        {
-            "notice_code": "NOTICE",
-            "notice_date": "2020년 8월 8일 10시 2분 36초",
-            "title": "공지사항 제목",
-            "notice_id": 1,
-            "content": "공지사항 내용"
-        },
-        {
-            "notice_code": "EVENT",
-            "notice_date": "2020년 8월 8일 10시 3분 9초",
-            "title": "이벤트 제목",
-            "notice_id": 2,
-            "content": "이벤트 내용"
-        },
-        {
-            "notice_code": "ALERT",
-            "notice_date": "2020년 8월 8일 10시 3분 30초",
-            "title": "알림사항 제목",
-            "notice_id": 3,
-            "content": "알림사항 내용"
-        },
-        {
-            "notice_code": "NOTICE",
-            "notice_date": "2020년 8월 8일 11시 16분 41초",
-            "title": "test title",
-            "notice_id": 4,
-            "content": "test content"
-        }
-    ]
-}
-```
-
-* 특정 공지 읽어오기
-  * URL : http://15.165.22.64:8080/NoticeFindById.do?notice_id=id값
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `notice_id=id값` 형태로 전달
-  * 응답 형식
-```json
-// 해당 notice_id = 1로 공지를 가져오는데 성공했을 시 (주소 : http://15.165.22.64:8080/NoticeFindById.do?notice_id=1)
+    "result":false, 
+    "message":"등록되지 않은 전화번호 입니다."
+} // 또는
 {
-    "result": true,
-    "notice_code": "NOTICE",
-    "notice_date": "2020년 8월 8일 10시 2분 36초",
-    "message": "해당 id로 공지 가져오기 성공",
-    "title": "공지사항 제목",
-    "notice_id": 1,
-    "content": "공지사항 내용"
-}
-
-// 해당 notice_id가 존재하지 않을 시
-{
-    "result": false,
-    "message": "해당 notice_id로 존재하는 공지사항이 없습니다."
-}
-```
-
-* 공지사항 등록 처리
-  * URL : http://15.165.22.64:8080/NoticeSave.do
-  * Http Method : POST
-  * 제공해야하는 JSON 형식
-```json
-{
-    "title":"제목", 
-    "content":"내용", 
-    "notice_code":"공지 코드"
-}
-```
-  * __`notice_code`에 해당하는 부분은 반드시 `NOTICE`, `ALERT` 중 하나여야 함__.
-
-  * 응답 형식
-```json
-// 등록 성공 시
-{"result":true, "message":"notice 등록 성공"}
-// 등록 실패 시
-{"result":false, "message":"catch되는 예외에 따라 메시지 달라짐(알 수 없음)"}
-```
-
-* 공지사항 notice_code 별로 가져오기
-  * URL : http:15.165.22.64:8080/NoticeFindByCode.do?notice_code=공지코드
-  * HTTP Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 보내는 `notice_code`는 반드시 `EVENT`, `ALERT`, `NOTICE` 중 하나__
-  * 응답 형식
-```json
-// 공지 코드별로 가져오기 성공 시 (URL : http://localhost:8080/NoticeFindByCode.do?notice_code=EVENT)
-{
-    "result": true,
-    "message": "notice_code 별로 가져오기 성공",
-    "notice": [
-        {
-            "notice_code": "EVENT",
-            "notice_date": "2020년 8월 8일 ",
-            "title": "이벤트 제목",
-            "notice_id": 2,
-            "content": "이벤트 내용"
-        },
-        {
-            "notice_code": "EVENT",
-            "notice_date": "2020년 8월 10일 ",
-            "title": "EVENT TITLE2",
-            "notice_id": 5,
-            "content": "EVENT CONTENT2"
-        }
-    ]
-}
-
-// 공지 코드가 잘못되었을 때
-{
-    "result": false,
-    "message": "notice_code가 잘못되었습니다."
+    "result":false, 
+    "message":"이미 사용중인 이메일 입니다."
 }
 ```
 <hr/>
+
+<h1>알림 관련 API</h1>
 
 * 메인페이지 오른쪽 위 종모양 클릭시 알림(Alert) 내용 가져오기
-  * URL : http://15.165.22.64:8080/AlertFindAll.do
+  * URL : http://3.35.180.57:8080/AlertFindAll.do?phone=휴대폰번호
   * Http Method : GET
-  * 제공해야 하는 JSON 형식 : __없음__
+  * 제공해야 하는 JSON 형식 : __phone__
   * 응답 형식
 ```json
 //성공시
@@ -291,10 +178,39 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "result": true,
     "alert": [
         {
-            "alert_title": "새로운 쿠폰을 받으세요!",
-            "alert_content": "9월이벤트로 인한 새로운 쿠폰이 지급되었으니 쿠폰창에서 확인해주세요!",
+            "is_read": "Y",
+            "alert_title": "2020/11월 이벤트",
+            "id": 58,
+            "alert_startdate": "2020년 9월 16일 ",
+            "alert_id": 8
+        },
+        {
+            "is_read": "Y",
+            "alert_title": "2020/12월 이벤트",
+            "id": 59,
+            "alert_startdate": "2020년 9월 16일 ",
+            "alert_id": 7
+        },
+        {
+            "is_read": "Y",
+            "alert_title": "3",
+            "id": 60,
+            "alert_startdate": "2030년 9월 16일 ",
+            "alert_id": 6
+        },
+        {
+            "is_read": "Y",
+            "alert_title": "12월 이벤트",
+            "id": 61,
             "alert_startdate": "2020년 9월 12일 ",
-            "alert_id": 1
+            "alert_id": 4
+        },
+        {
+            "is_read": "Y",
+            "alert_title": "sadfa",
+            "id": 132,
+            "alert_startdate": "2021년 12월 14일 ",
+            "alert_id": 9
         }
     ],
     "message": "알림 가져오기 성공"
@@ -305,6 +221,50 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "현재 DB에 알림 등록된게 없습니다."
 }
 ```
+
+* 회원이 로그인했을때 안읽은 알림의 갯수 가져오기
+  * URL : http://3.35.180.57:8080/GetNewAlertCount.do?phone=01093756927
+  * Http Method : GET
+  * 제공해야 하는 JSON 형식 : __없음__
+  * 응답 형식
+```json
+{
+    "result": true,
+    "recentlyAlertId": 9,
+    "message": "최신의 alert정보 가져오기 성공"
+}
+```
+
+* 클릭한 알림 읽음처리로 바꾸기
+  * URL : http://3.35.180.57:8080/AlertReadCheck.do?alert_id=알림아이디
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __alert_id__
+  * 응답 형식
+```json
+{
+    "result": true,
+    "message": "안읽은 메세지 읽음 처리로 바꾸기 성공"
+}
+```
+
+* 해당 알림 클릭했을때 상세 페이지 정보
+  * URL : http://3.35.180.57:8080/GetAlertDetail.do?alert_id=1
+  * Http Method : GET
+  * 제공해야하는 JSON 형식 : __alert_id__
+  * 응답 형식
+
+```json
+{
+    "result": true,
+    "message": "상세 알림 내용 출력 성공",
+    "content": "9월이벤트로 인한 새로운 쿠폰이 지급되었으니 쿠폰창에서 확인해주세요!"
+}
+```
+
+<hr>
+
+
+<h1> 이벤트 API </h1>
 
 * 광고배너 이벤트에 대한 정보 가져오기
   * URL : http://15.165.22.64:8080/EventFindAll.do
@@ -328,6 +288,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "result": false,
     "message": "등록된 이벤트가 없습니다."
 }
+
 
 ```
 * 광고배너 이벤트중 하나를 클릭했을때 세부정보 가져오기
@@ -354,26 +315,11 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-<h1>Alert 관련 API</h1>
-
-* 새로운 알림을 DB에서 넣어줬을때 자신이 가지고 있는 최신의 alert_id와 비교하여 내가 가지고 있는 알림이 최신 버전이 아니면 메인페이지 오른쪽 위 알림 종모양옆에 new를 띄워주기 위한 용도
-* URL :  http://15.165.22.64:8080/GetLatestAlertWhenMemberLogin.do
-* Http Method : GET
-* 제공해야하는 JSON 형식 : __없음__
-* 응답 형식
-
-```json
-{
-    "result": true,
-    "recentlyAlertId": 8,
-    "message": "최신의 alert정보 가져오기 성공"
-}
-```
 
 <h1>가게 종류 관련 API</h1>
 
 * 가게 종류 목록 가져오기
-  * URL : http://15.165.22.64:8080/TypeFindAll.do
+  * URL : http://3.35.180.57:8080/TypeFindAll.do
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
   * 응답 형식
@@ -416,7 +362,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1> 메인페이지에서 ultra / new 가게 관련 API </h1>
 
 * ultra가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
-  * URL : http://15.165.22.64:8080/StoreFindByUltra.do
+  * URL : http://3.35.180.57:8080/StoreFindByUltra.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
 ```json
@@ -522,7 +468,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>가게 관련 API</h1>
 
 * 특정 가게의 정보 가져오기
-  * URL : http://15.165.22.64:8080/StoreFindById.do?store_id=가게id값
+  * URL : http://3.35.180.57:8080/StoreFindById.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 전송__
   * 응답 형식
@@ -552,101 +498,64 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 특정 이름의 가게 id만 가져오기
-  * URL : http://15.165.22.64:8080/StoreFindIdByStoreName.do?store_name=가게명
-  * Http Method : GET
-  * 제공해야 하는 형식 : __없음, 파라미터로 `store_name=가게명` 전송, 만약 가게명에 공백이 있을 경우 `%20`을 공백 자리에 넣어준다.__   
-    예시 : 가게명이 `TEST CAFE2` 인 경우의 파라미터 : `store_name=TEST%20CAFE2`
-  * 응답 형식
+
+* 가게명 검색 API
+  * URL :  http://3.35.180.57:8080/StoreSearchByKeyword.do
+  * HTTP Method : POST
+  * 제공해야하는 형식
+
 ```json
-// 해당 store_name으로 store_id를 가져오기 성공 시
 {
-    "result": true,
-    "store_id": 3,
-    "message": "가게 id 가져오기 성공"
-}
-
-
-// 해당 store_name이 존재하지 않는 경우
-{
-    "result": false,
-    "message": "해당 가게 이름으로 조회된 가게 정보가 없습니다."
+    "latitude" : 10.00,
+    "logitude" : 10.00,
+    "startPoint" : 0,
+    "keyword" : "test"
 }
 ```
 
-
-* 가게명 검색 API
-  * URL :  http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0
-  * HTTP Method : GET
-  * 제공해야하는 형식 : __없음, 파라미터로 `keyword=검색어&startPoint=시작점` 지정__
   * 응답 형식
 ```json
-// 검색 결과가 존재하는 경우 (예시 : http://15.165.22.64:8080/StoreSearch.do?keyword=test&startPoint=0)
 {
     "result": true,
     "store": [
         {
             "store_id": 1,
-            "store_opentime": "10:30",
             "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
-            "store_latitude": 37.4952,
-            "store_closetime": "22:00",
+            "distance": 1.238149898597209E7,
             "is_open": "Y",
-            "store_daysoff": "매주 월, 화 휴무",
-            "store_phone": "0212345678",
-            "store_longitude": 126.9565,
             "store_name": "test cafe",
             "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
-            "type_code": "CAFE",
             "store_image": "test_cafe1.png"
         },
         {
             "store_id": 3,
-            "store_opentime": "10:00",
             "store_info": "CAFE2 의 정보 입니다.",
-            "store_latitude": 0.1,
-            "store_closetime": "23:00",
+            "distance": 1100885.3543243657,
             "is_open": "Y",
-            "store_daysoff": "매주 월 휴무",
-            "store_phone": "0211112222",
-            "store_longitude": 0.1,
             "store_name": "TEST CAFE2",
             "store_location": "테스트시 테스트동",
-            "type_code": "CAFE",
             "store_image": "test_cafe2.png"
         },
         {
             "store_id": 4,
-            "store_opentime": "9:00",
             "store_info": "CAFE3 의 정보 입니다.",
-            "store_latitude": 0.2,
-            "store_closetime": "21:00",
+            "distance": 1089934.8308830792,
             "is_open": "N",
-            "store_daysoff": "매주 일 휴무",
-            "store_phone": "0211113333",
-            "store_longitude": 0.2,
             "store_name": "TEST CAFE3",
             "store_location": "테스트시 테스트2동",
-            "type_code": "CAFE",
             "store_image": "test_cafe3.png"
         },
         {
             "store_id": 5,
-            "store_opentime": "8:00",
             "store_info": "CAFE4 의 정보 입니다.",
-            "store_latitude": 0.3,
-            "store_closetime": "22:00",
+            "distance": 1079101.111392734,
             "is_open": "N",
-            "store_daysoff": "연중 휴무",
-            "store_phone": "0211114444",
-            "store_longitude": 0.3,
             "store_name": "TEST CAFE4",
             "store_location": "테스트시 테스트3동",
-            "type_code": "CAFE",
             "store_image": "test_cafe4.png"
         }
     ],
-    "message": "검색 성공"
+    "message": "type_code별로 가게 정보 가져오기 성공"
 }
 
 // 검색 결과가 존재하지 않는 경우
@@ -657,7 +566,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * type_code로 가게 정보 가져오기
-  * URL : http://15.165.22.64:8080/StoreInfoFindByType.do
+  * URL : http://3.35.180.57:8080/StoreInfoFindByType.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
 유저의 위도/경도 보내줘야한다.
@@ -693,51 +602,6 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_image": "default.png"
         },
         {
-            "store_id": 21,
-            "store_info": "가게정보",
-            "distance": 1.3079049541561143E7,
-            "is_open": "N",
-            "store_name": "테스트 카페6",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 22,
-            "store_info": "가게정보",
-            "distance": 1.3079049541561143E7,
-            "is_open": "N",
-            "store_name": "테스트 카페7",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 23,
-            "store_info": "가게정보",
-            "distance": 1.3079049541561143E7,
-            "is_open": "N",
-            "store_name": "테스트 카페8",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 24,
-            "store_info": "가게정보",
-            "distance": 1.3079049541561143E7,
-            "is_open": "N",
-            "store_name": "테스트 카페9",
-            "store_location": "가게위치",
-            "store_image": "default.png"
-        },
-        {
-            "store_id": 5,
-            "store_info": "CAFE4 의 정보 입니다.",
-            "distance": 1.3128058525327127E7,
-            "is_open": "N",
-            "store_name": "TEST CAFE4",
-            "store_location": "테스트시 테스트3동",
-            "store_image": "test_cafe4.png"
-        },
-        {
             "store_id": 4,
             "store_info": "CAFE3 의 정보 입니다.",
             "distance": 1.314378056359232E7,
@@ -766,7 +630,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 모든 가게의 위치 정보와 이름 가져오기
-  * URL : http://15.165.22.64:8080/StoreAllLocation.do
+  * URL : http://3.35.180.57:8080/StoreAllLocation.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -804,7 +668,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>카테고리 관련 API</h1>
 
 * store_id별로 카테고리 가져오기
-  * URL : http://15.165.22.64:8080/CategoryFindByStoreId.do?store_id=가게id값
+  * URL : http://3.35.180.57:8080/CategoryFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 형식으로 전송__
   * 응답 형식
@@ -867,7 +731,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>메뉴 관련 API</h1>
 
 * 가게의 모든 메뉴 목록 가져오기
-  * URL : http://15.165.22.64:8080/MenuFindByStoreId.do?store_id=가게id값
+  * URL : http://3.35.180.57:8080/MenuFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -917,14 +781,12 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-
-
 <hr/>
 
 <h1>Extra 관련 API</h1>
 
 * menu_id 별로 extra 목록 가져오기
-  * URL : http://15.165.22.64:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
+  * URL : http://3.35.180.57:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `menu_id=메뉴id값` 전송__
   * 응답 형식
@@ -989,10 +851,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>사진 관련 API</h1>
 
 * 이벤트 사진 가져오기
-  * URL(1, 이벤트 사진 가져오기) : http://15.165.22.64:8080/ImageEvent.do?image_name=이미지명
-  * URL(2, 가게 사진 가져오기) : http://15.165.22.64:8080/ImageStore.do?image_name=이미지명
-  * URL(3, 타입 사진 가져오기) : http://15.165.22.64:8080/ImageType.do?image_name=이미지명
-  * URL(4, 가게에 해당하는 메뉴 사진 가져오기) : http://15.165.22.64:8080/ImageMenu.do?store_id=가게id&image_name=이미지명
+  * URL(1, 이벤트 사진 가져오기) : http://3.35.180.57:8080/ImageEvent.do?image_name=이미지명
+  * URL(2, 가게 사진 가져오기) : http://3.35.180.57:8080/ImageStore.do?image_name=이미지명
+  * URL(3, 타입 사진 가져오기) : http://3.35.180.57:8080/ImageType.do?image_name=이미지명
+  * URL(4, 가게에 해당하는 메뉴 사진 가져오기) : http://3.35.180.57:8080/ImageMenu.do?store_id=가게id&image_name=이미지명
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터에 `image_name=이미지명`으로 전달
   * 응답 형식 : JSON이 아닌 byte[] 배열, slack에 올린 `MainActivity.java` 참고
@@ -1000,7 +862,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>주문 관련 API</h1>
 
 * 주문 내역 저장 처리
-  * URL : http://15.165.22.64:8080/OrderInsert.do
+  * URL : http://3.35.180.57:8080/OrderInsert.do
   * Http Method : POST
   * 제공해야 하는 JSON형식
     * __`discount_price`와 `coupon_id`는 사용자가 쿠폰을 사용하지 않으면 둘 다 `-1`로 넣어주시면 됩니다__. 
@@ -1120,7 +982,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 내역 리스트 가져오기
-  * URL : http://15.165.22.64:8080/OrderListFindByPhone.do?phone=01093756927&startPoint=0
+  * URL : http://3.35.180.57:8080/OrderListFindByPhone.do?phone=01093756927&startPoint=0
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호&startPoint=시작점` 형식으로 전달__
   * 응답 형식
@@ -1131,29 +993,31 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "전화번호로 주문 정보 가져오기 성공",
     "order": [
         {
-            "order_date": "2020년 8월 24일 16시 17분 59초",
-            "receipt_id": "5f43699f878a560047f9fea0",
+            "store_id": 1,
+            "order_date": "2020년 11월 14일 5시 10분 56초",
+            "store_phone": null,
+            "store_latitude": null,
+            "total_price": 57400,
+            "total_count": 24,
+            "store_longitude": null,
+            "receipt_id": "",
             "store_name": "test cafe",
-            "total_price": 2900,
             "order_state": "DONE",
-            "total_count": 1
+            "store_image": "test_cafe1.png"
         },
         {
-            "order_date": "2020년 8월 25일 20시 48분 59초",
-            "receipt_id": "5f44faa018e1ae0025e41da0",
+            "store_id": 1,
+            "order_date": "2020년 12월 31일 5시 43분 23초",
+            "store_phone": null,
+            "store_latitude": null,
+            "total_price": 1000,
+            "total_count": 1,
+            "store_longitude": null,
+            "receipt_id": "5fed64ea5b2948003297567a",
             "store_name": "test cafe",
-            "total_price": 2000,
             "order_state": "DONE",
-            "total_count": 1
-        },
-        {
-            "order_date": "2020년 8월 26일 11시 7분 2초",
-            "receipt_id": "5f45c3bc2fa5c200399c3dc6",
-            "store_name": "test cafe",
-            "total_price": 2000,
-            "order_state": "DONE",
-            "total_count": 1
-        } // 20개를 원래 가져와야하는데 너무 길어서 짜름..
+            "store_image": "test_cafe1.png"
+        }
     ]
 }
 // 주문 내역 정보가 없을 때
@@ -1164,7 +1028,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 상세 정보 가져오기
-  * URL : http://15.165.22.64:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
+  * URL : http://3.35.180.57:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=?`형식으로 전달__
   * 응답 형식
@@ -1218,7 +1082,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 주문 횟수 가져오기
-  * URL : http://15.165.22.64:8080/OrderTotalCountByPhone.do?phone=?
+  * URL : http://3.35.180.57:8080/OrderTotalCountByPhone.do?phone=?
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
   * 응답 형식
@@ -1229,12 +1093,66 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
+* 주문 현황 리스트 가져오기
+  *  URL : http://3.35.180.57:8080/OrderProgressing.do?phone=전화번호
+  *  Http Method : GET
+  *  제공해야하는 JSON 형식 : __전화번호__
+  *  응답 형식
+
+```json
+{
+    "result": true,
+    "message": "전화번호로 주문 정보 가져오기 성공",
+    "order": [
+        {
+            "store_id": 0,
+            "order_date": "15:15 PM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 2500,
+            "total_count": 2,
+            "store_longitude": "126.9565",
+            "receipt_id": "5f45fe04878a560047fa69e2",
+            "store_name": "test cafe",
+            "order_state": "ACCEPT",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 0,
+            "order_date": "13:55 PM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 3500,
+            "total_count": 1,
+            "store_longitude": "126.9565",
+            "receipt_id": "5fbe622e878a56002ff99207",
+            "store_name": "test cafe",
+            "order_state": "PREPARING",
+            "store_image": "test_cafe1.png"
+        },
+        {
+            "store_id": 0,
+            "order_date": "7:51 AM",
+            "store_phone": "0212345678",
+            "store_latitude": "37.4952",
+            "total_price": 1500,
+            "total_count": 1,
+            "store_longitude": "126.9565",
+            "receipt_id": "5fed82fc5b29480047975961",
+            "store_name": "test cafe",
+            "order_state": "PREPARING",
+            "store_image": "test_cafe1.png"
+        }
+    ]
+}
+```
+
 <hr/>
 
 <h1>즐겨찾기 관련 API</h1>
 
 * 즐겨찾기 정보 가져오기
-  * URL : http://15.165.22.64:8080/FavoriteList.do
+  * URL : http://3.35.180.57:8080/FavoriteList.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
   * 유저의 위도/경도 보내줘야한다.
@@ -1260,24 +1178,6 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
             "store_name": "test cafe",
             "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
             "store_image": "test_cafe1.png"
-        },
-        {
-            "store_id": 3,
-            "store_info": "CAFE2 의 정보 입니다.",
-            "distance": 6.387430017715164,
-            "is_open": "Y",
-            "store_name": "TEST CAFE2",
-            "store_location": "테스트시 테스트동",
-            "store_image": "test_cafe2.png"
-        },
-        {
-            "store_id": 18,
-            "store_info": "소고기가 더 맛있음",
-            "distance": 6.387430017715164,
-            "is_open": "N",
-            "store_name": "삼겹살집",
-            "store_location": "테스트시 테스트13동",
-            "store_image": "default.png"
         },
         {
             "store_id": 23,
@@ -1307,7 +1207,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 즐겨찾기 등록 처리
-  * URL : http://15.165.22.64:8080/FavoriteSave.do
+  * URL : http://3.35.180.57:8080/FavoriteSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -1331,7 +1231,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 즐겨찾기 삭제 처리
-  * URL : http://15.165.22.64:8080/FavoriteDelete.do
+  * URL : http://3.35.180.57:8080/FavoriteDelete.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -1356,7 +1256,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 가게 클릭시 즐겨찾기의 유무 처리
-  * URL : http://15.165.22.64:8080/FavoriteExist.do
+  * URL : http://3.35.180.57:8080/FavoriteExist.do
   * Http Method : POST
 ```json
 {
@@ -1383,7 +1283,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <h1>쿠폰 관련 API</h1>
 
 * 쿠폰 리스트 가져오기
-  * URL : http://15.165.22.64:8080/CouponFindByPhone.do?phone=전화번호
+  * URL : http://3.35.180.57:8080/CouponFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 응답 형식
@@ -1437,7 +1337,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 장바구니에서 결제 전에 사용 가능한 쿠폰 목록 가져오기
-  * URL : http://15.165.22.64:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
+  * URL : http://3.35.180.57:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`와 `price=전체금액` 의 총 2개 전달__
   * 응답 형식
@@ -1475,7 +1375,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 * 쿠폰 개수 가져오기
-  * URL : http://15.165.22.64:8080/CouponCountByPhone.do?phone=전화번호
+  * URL : http://3.35.180.57:8080/CouponCountByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
   * 주의 사항 : 응답 형식에서 `result`는 무조건 `true`가 온다. 쿠폰이 없는 경우에는 `coupon_count`값이 `0`이 온다.
@@ -1496,37 +1396,15 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 쿠폰 사용 내역 가져오기
-  * URL : http://15.165.22.64:8080/CouponHistoryByPhone.do?phone=전화번호
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달
-  * 응답 형식
-```json
-// 쿠폰 사용 내역이 존재할 경우
-{
-    "result": true,
-    "history": [
-        {
-            "store_name": "test cafe",
-            "total_price": 9500,
-            "discount_price": 1000
-        }
-    ],
-    "message": "쿠폰 사용 내역 가져오기 성공"
-}
+* 쿠폰 등록
+ * URL :  
 
-// 쿠폰 사용 내역이 존재하지 않을 경우
-{
-    "result": false,
-    "message": "쿠폰 사용 내역이 존재하지 않습니다."
-}
-```
 <hr/>
 
 <h1>결제 관련 API</h1>
 
 * User Token 발급받는 API
-  * URL : http://15.165.22.64:8080/BillingGetUserToken.do
+  * URL : http://3.35.180.57:8080/BillingGetUserToken.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
     __`user_id`는 사용자 고유값이나, 우리의 경우 전화번호로 사용자 고유값을 사용하므로 `user_id`와 `phone`이 동일하다__
@@ -1544,138 +1422,6 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 <hr/>
 
-<h1>1:1 문의 내역 관련 API</h1>
-
-* 문의 내역 리스트 가져오기
-  * URL : http://15.165.22.64:8080/InquiryListFindByEmail.do?email=이메일
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `email=사용자이메일` 전달__
-  * 응답 형식
-```json
-// 문의 내역이 존재할 경우
-{
-    "result": true,
-    "inquiry": [
-        {
-            "inquiry_id": 1,
-            "title": "문의 제목 1번 제목",
-            "is_replied": "N",
-            "inquiry_date": "2020년 8월 20일 11시 36분 41초"
-        },
-        {
-            "inquiry_id": 2,
-            "title": "문의 제목 2번 제목",
-            "is_replied": "Y",
-            "inquiry_date": "2020년 8월 20일 11시 36분 42초"
-        },
-        {
-            "inquiry_id": 3,
-            "title": "문의 제목 3번 제목",
-            "is_replied": "N",
-            "inquiry_date": "2020년 8월 20일 11시 36분 43초"
-        },
-        {
-            "inquiry_id": 4,
-            "title": "테스트 문의 제목",
-            "is_replied": "N",
-            "inquiry_date": "2020년 8월 20일 12시 20분 30초"
-        },
-        {
-            "inquiry_id": 5,
-            "title": "테스트 문의 제목2",
-            "is_replied": "N",
-            "inquiry_date": "2020년 8월 20일 12시 22분 25초"
-        }
-    ],
-    "message": "email로 문의 내역 가져오기 성공"
-}
-
-// 문의 내역이 존재하지 않을 경우
-{
-    "result": false,
-    "message": "1:1 문의 내역이 존재하지 않습니다."
-}
-```
-
-* 문의 내역 상세 정보 가져오기
-  * URL : http://15.165.22.64:8080/InquiryFindById.do?inquiry_id=문의내역id값
-  * Http Method : GET
-  * 제공해야하는 JSON 형식 : __없음, 파라미터로 `inquiry_id=문의내역id값` 전달__
-  * 응답 형식
-```json
-// 성공했을 시
-{
-    "result": true,
-    "inquiry_id": 1,
-    "message": "inquiry_id로 문의 내역 정보 가져오기 성공",
-    "title": "문의 제목 1번 제목",
-    "is_replied": "N",
-    "email": "sky_battle@naver.com",
-    "content": "문의 내용 1번 내용",
-    "inquiry_date": "2020년 8월 20일 "
-}
-
-// 해당 문의내역 id가 존재하지 않을 경우
-{
-    "result": false,
-    "message": "해당 id의 문의 내역이 존재하지 않습니다."
-}
-```
-
-* 1:1 문의 등록 하기
-  * URL : http://15.165.22.64:8080/InquirySave.do
-  * Http Method : POST
-  * 제공해야하는 JSON 형식   
-    __주의 : `title`, `content`는 반드시 공백이 아니여야 한다.__
-```json
-{
-    "email":"문의자의 이메일",
-    "title":"문의 제목",
-    "content":"문의 내용"
-}
-```
-  * 응답 형식
-```json
-// 문의 등록 성공 시
-{
-    "result": true,
-    "message": "1:1 문의가 정상적으로 등록되었습니다."
-}
-
-// 등록 실패 시 (ex. 잘못된 이메일)
-{
-    "result": false,
-    "message": "알 수 없는 원인으로 문의 등록에 실패했습니다."
-}
-```
-
-* 결제 검증 처리
-  * URL : http://15.165.22.64:8080/BillingVerify.do
-  * Http Method : POST
-  * 제공해야하는 JSON 형식
-```json
-{
-    "phone":"전화번호",
-    "receipt_id":"receipt_id"
-}
-```
-  * 응답 형식
-```json
-// 검증 결과 올바른 결제이면
-{
-    "result": true,
-    "code": 0,
-    "message": ""
-}
-
-// 검증 결과 올바르지 않은 결제이면
-{
-    "result":false,
-    "code":"0이 아닌 다른 값, bootpay에서 지정",
-    "message":"비어있지 않은 값, bootpay에서 지정"
-}
-```
-<hr/>
 
 <h1>Socket Protocol</h1>
 
@@ -1740,11 +1486,11 @@ webSocketClient.send("connect:::" + store_id);
 
 ex) 안드로이드 예제
 `USER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
+uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + phone);
 webSocketClient.send("message:::" + store_id + ":::" + message);
 `OWNER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
+uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + store_id);
 
 아래 예제와 같은 json방식으로 message를 웹소켓으로 보내주면된다.
