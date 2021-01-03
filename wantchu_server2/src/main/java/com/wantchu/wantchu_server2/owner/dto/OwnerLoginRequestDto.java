@@ -9,11 +9,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OwnerLoginRequestDto {
 
-    private String phone;
+    private String id;
     private String pass;
 
-    public OwnerLoginRequestDto(String phone, String pass) {
-        this.phone = phone;
+    public OwnerLoginRequestDto(String id, String pass) {
+        this.id = id;
         this.pass = pass;
     }
 }

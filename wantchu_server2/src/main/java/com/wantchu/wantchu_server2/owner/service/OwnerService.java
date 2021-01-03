@@ -11,6 +11,7 @@ import com.wantchu.wantchu_server2.owner.exception.*;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,14 @@ public class OwnerService {
     private final OwnerDao ownerDao;
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject login(String phone, String pass) {
+    public org.json.simple.JSONObject login(@NotNull OwnerLoginRequestDto requestDto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            OwnerVo ownerVo = ownerDao.isValidAccount(phone, pass);
+            OwnerVo ownerVo = ownerDao.isValidAccount(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 점주 로그인이 되었습니다.");
             jsonObject.put("store_id", ownerVo.getStore_id());
-            jsonObject.put("nick", ownerVo.getNick());
+            jsonObject.put("phone", ownerVo.getPhone());
             jsonObject.put("store_name", ownerVo.getStore_name());
             jsonObject.put("email", ownerVo.getEmail());
             jsonObject.put("is_open", ownerVo.getIs_open());
