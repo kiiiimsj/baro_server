@@ -8,6 +8,7 @@ import com.wantchu.wantchu_server2.owner.exception.OwnerPassUpdateException;
 import com.wantchu.wantchu_server2.owner.exception.StatisticsNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -27,7 +28,7 @@ public class OwnerDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public OwnerVo isValidAccount(String phone, String pass) throws OwnerLoginException {
+    public OwnerVo isValidAccount(@NotNull OwnerLoginRequestDto requestDto) throws OwnerLoginException {
         List<OwnerVo> list = jdbcTemplate.query(
                 SQL.Owner.IS_VALID_ACCOUNT,
                 (resultSet, i) -> {
@@ -35,12 +36,12 @@ public class OwnerDao {
                         .store_id(resultSet.getInt("store_id"))
                         .store_name(resultSet.getString("store_name"))
                         .email(resultSet.getString("email"))
-                        .nick(resultSet.getString("nick"))
+                        .phone(resultSet.getString("phone"))
                         .is_open(resultSet.getString("is_open"))
                         .build();
                     return ownerVo;
                 }
-                , phone, pass);
+                , requestDto.getId(), requestDto.getPass());
         if(list.size() == 0) {
             throw new OwnerLoginException();
         } else {
