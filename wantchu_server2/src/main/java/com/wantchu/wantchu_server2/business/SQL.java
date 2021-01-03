@@ -109,7 +109,7 @@ public class SQL {
         public static final String UPDATE_EXTRA_NAME = "UPDATE extras SET extra_name=? WHERE extra_id=?";
         public static final String INSERT_EXTRA_REQUIRED = "INSERT INTO extras VALUES(DEFAULT, ?, ?, ?, ?, 'Y')";
         public static final String INSERT_EXTRA_NOT_REQUIRED = "INSERT INTO extras VALUES(DEFAULT, ?, ?, ?, ?, 'N')";
-        public static final String FIND_LIST_BY_MENU_ID = "select e.extra_id, e.extra_price, e.extra_name, r.extra_group, e.extra_maxcount from extras e left outer join requiredextras r using(extra_id) WHERE menu_id=? order by extra_group DESC, extra_price ASC";
+        public static final String FIND_LIST_BY_MENU_ID = "select em.extra_id, e.extra_price, e.extra_name, r.extra_group, em.extra_maxcount FROM extrasbymenus em NATURAL JOIN extras e NATURAL JOIN menus m left outer join requiredextras r using(extra_id) WHERE menu_id=? order by extra_group DESC, extra_price ASC";
     }
 
     public static class RequiredExtra {
