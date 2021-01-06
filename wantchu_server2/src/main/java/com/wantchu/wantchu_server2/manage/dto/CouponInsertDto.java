@@ -14,4 +14,5 @@ public class CouponInsertDto {
     private String counpon_discount;
     private String coupon_type;
     private String coupon_enddate;
+    private String coupon_number;
 }
