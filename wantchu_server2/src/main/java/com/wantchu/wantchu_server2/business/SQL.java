@@ -223,8 +223,36 @@ public class SQL {
         public static final String DELETE_TYPE = "DELETE FROM types WHERE type_code=?";
         public static final String PRINT_TYPE = "SELECT type_code, type_name FROM types";
 
-        public static final String INSERT_ULTRA = "INSERT INTO ultras VALUES(";
-        public static final String DELETE_ULTRA = "";
-        public static final String PRINT_ULTRA = "";
+        public static final String INSERT_ULTRA = "INSERT INTO ultra_stores values(NULL,?)";
+        public static final String DELETE_ULTRA = "DELETE FROM ultra_stores WHERE store_id = ?";
+        public static final String PRINT_ULTRA = "SELECT * FROM ultra_stores ORDER BY ultra_store_id";
+
+        public static final String INSERT_NEW_STORE = "INSERT INTO new_stores values(NULL,?)";
+        public static final String DELETE_NEW_STORE = "DELETE FROM new_stores WHERE store_id = ?";
+        public static final String PRINT_NEW_STORE = "SELECT * FROM new_stores ORDER BY new_store_id";
+
+        public static final String INSERT_ALERT = "INSERT INTO alert VALUES (NULL,?,?,CURRENT_TIME)" ;
+        public static final String DELETE_ALERT = "DELETE FROM alert WHERE alert_id = ?";
+        public static final String PRINT_ALERT = "SELECT alert_id,alert_title FROM alert";
+
+        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,default,?)";
+        public static final String DELETE_STORES = "DELETE FROM stores WHERE store_id=?";
+        public static final String PRINT_STORES = "SELECT store_id,store_name FROM stores";
+
+        public static final String INSERT_CATEGORIES = "INSERT INTO categories VALUES(DEFAULT,?,?)";
+        public static final String DELETE_CATEGORY = "DELETE FROM categories WHERE category_id=?";
+        public static final String PRINT_CATEGORIES = "SELECT category_name FROM categories WHERE store_id =";
+
+        public static final String INSERT_MENUS = "INSERT INTO menus VALUES(DEFAULT,?,?,?,?,?,?,DEFAULT)";
+        public static final String DELETE_MENUS = "DELETE FROM menus WHERE menu_id=?";
+        public static final String PRINT_MENUS = "SELECT menu_id,menu_name,menu_defaultprice FROM menus WHERE category_id=";
+
+        public static final String INSERT_EVENTS = "INSERT INTO events VALUES(DEFAULT,?,?,?,now(),Date_add(NOW(),INTERVAL 1 MONTH),DEFAULT)";
+        public static final String DELETE_EVENTS = "DELETE FROM events WHERE event_id=?";
+        public static final String PRINT_EVENTS = "SELECT event_id,event_title FROM events";
+
+        public static final String INSERT_COUPONS = "INSERT INTO coupons VALUES(DEFAULT,?,?,?,?,?,Date_add(NOW(),INTERVAL 1 YEAR),?)";
+        public static final String DELETE_COUPONS = "DELETE FROM coupons WHERE coupon_id=?";
+        public static final String PRINT_COUPONS = "SELECT coupon_id,coupon_title FROM coupons";
     }
 }
