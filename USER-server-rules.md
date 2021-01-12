@@ -480,16 +480,18 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "store_info": "안녕하세요 이 카페는 테스트용 카페입니다.",
     "store_latitude": 37.4952,
     "store_closetime": "22:00",
+    "is_open": "N",
     "store_daysoff": "매주 월, 화 휴무",
+    "business_number": "00-0000-000",
+    "representative_name": "aaa",
     "message": "가게 정보 가져오기 성공.",
     "result": true,
     "store_phone": "0212345678",
     "store_longitude": 126.9565,
-    "store_name": "test cafe",
+    "store_name": "메인 카페",
     "store_location": "서울특별시 테스트구 테스트동 테스트로 111 테스트빌딩 2층",
     "type_code": "CAFE",
-    "store_image": "test_cafe1.png",
-    "is_open":"Y"
+    "store_image": "test_cafe1.png"
 }
 // 해당 store_id를 가진 가게가 존재하지 않을 때
 {
