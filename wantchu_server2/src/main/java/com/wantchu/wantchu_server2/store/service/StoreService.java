@@ -44,6 +44,8 @@ public class StoreService {
             jsonObject.put("store_info", storeVo.getStore_info());
             jsonObject.put("store_image", storeVo.getStore_image());
             jsonObject.put("is_open", storeVo.getIs_open());
+            jsonObject.put("representative_name", storeVo.getRepresentative_name());
+            jsonObject.put("business_number", storeVo.getBusiness_number());
         } catch(StoreIdNotFoundException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
         }
