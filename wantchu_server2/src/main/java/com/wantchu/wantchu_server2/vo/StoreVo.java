@@ -24,8 +24,10 @@ public class StoreVo {
     private String store_image;
     private String store_info;
     private String is_open;
+    private String representative_name;
+    private String business_number;
 
-    public StoreVo(int store_id, String type_code, String store_name, double store_latitude, double store_longitude, String store_opentime, String store_closetime, String store_phone, String store_daysoff, String store_location, String store_image, String store_info) {
+    public StoreVo(int store_id, String type_code, String store_name, double store_latitude, double store_longitude, String store_opentime, String store_closetime, String store_phone, String store_daysoff, String store_location, String store_image, String store_info, String representative_name, String business_number) {
         this.store_id = store_id;
         this.type_code = type_code;
         this.store_name = store_name;
@@ -38,6 +40,8 @@ public class StoreVo {
         this.store_location = store_location;
         this.store_image = store_image;
         this.store_info = store_info;
+        this.representative_name = representative_name;
+        this.business_number = business_number;
     }
 
     public HashMap<String, Object> convertMap() {
@@ -55,6 +59,8 @@ public class StoreVo {
         map.put("store_image", store_image);
         map.put("store_info", store_info);
         map.put("is_open", is_open);
+        map.put("representative_name", representative_name);
+        map.put("business_number", business_number);
         return map;
     }
 }
