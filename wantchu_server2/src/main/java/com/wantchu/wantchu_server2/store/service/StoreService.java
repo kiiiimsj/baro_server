@@ -6,10 +6,7 @@ import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByKeywordDto;
 import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
 import com.wantchu.wantchu_server2.store.exception.*;
-import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
-import com.wantchu.wantchu_server2.vo.StoreInfoVo;
-import com.wantchu.wantchu_server2.vo.StoreLocationVo;
-import com.wantchu.wantchu_server2.vo.StoreVo;
+import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -56,11 +53,11 @@ public class StoreService {
     public org.json.simple.JSONObject findByUltra(@NotNull StoreLocationDto requestDto){
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<StoreInfoFindByTypeVo> list = storeDao.storeSearchByUltra(requestDto);
+            List<StoreInfoUltraNewVo> list = storeDao.storeSearchByUltra(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "울트라가게 출력 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(StoreInfoFindByTypeVo store: list){
+            for(StoreInfoUltraNewVo store: list){
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
                 jTemp.putAll(store.convertMap());
                 jsonArray.add(jTemp);
@@ -187,11 +184,11 @@ public class StoreService {
     public org.json.simple.JSONObject findByNew(@NotNull StoreLocationDto requestDto) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<StoreInfoFindByTypeVo> list = storeDao.storeSearchByNew(requestDto);
+            List<StoreInfoUltraNewVo> list = storeDao.storeSearchByNew(requestDto);
             jsonObject.put("result", true);
             jsonObject.put("message", "신규가게 출력 성공");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(StoreInfoFindByTypeVo store : list){
+            for(StoreInfoUltraNewVo store : list){
                 org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
                 jTemp.putAll(store.convertMap());
                 jsonArray.add(jTemp);

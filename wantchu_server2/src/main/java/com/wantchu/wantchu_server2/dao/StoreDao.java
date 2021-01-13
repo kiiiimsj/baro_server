@@ -8,10 +8,7 @@ import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreKeywordNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
 import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
-import com.wantchu.wantchu_server2.vo.StoreInfoFindByTypeVo;
-import com.wantchu.wantchu_server2.vo.StoreInfoVo;
-import com.wantchu.wantchu_server2.vo.StoreLocationVo;
-import com.wantchu.wantchu_server2.vo.StoreVo;
+import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -66,21 +63,6 @@ public class StoreDao {
 //            return list;
 //        }
 //    }
-
-    public List<StoreInfoFindByTypeVo> storeSearchByUltra(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
-        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
-                SQL.Store.STORE_SEARCH_BY_ULTRA,
-                (resultSet, i) -> {
-                    StoreInfoFindByTypeVo storeInfoFindByTypeVo = new StoreInfoFindByTypeVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("is_open"));
-                    return storeInfoFindByTypeVo;
-                }, requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getLatitude());
-        if(list.size() == 0){
-            throw new StoreSearchException();
-        }
-        else{
-            return list;
-        }
-    }
 
     public List<StoreInfoFindByTypeVo> findInfoByTypeCode(@NotNull StoreInfoFindByTypeDto dto) throws StoreTypeNotFoundException {
         List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
@@ -170,12 +152,27 @@ public class StoreDao {
         return is_open;
     }
 
-    public List<StoreInfoFindByTypeVo> storeSearchByNew(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
-        List<StoreInfoFindByTypeVo> list = jdbcTemplate.query(
+    public List<StoreInfoUltraNewVo> storeSearchByUltra(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
+        List<StoreInfoUltraNewVo> list = jdbcTemplate.query(
+                SQL.Store.STORE_SEARCH_BY_ULTRA,
+                (resultSet, i) -> {
+                    StoreInfoUltraNewVo storeInfoUltraNewVo = new StoreInfoUltraNewVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_large_image"), resultSet.getString("is_open"));
+                    return storeInfoUltraNewVo;
+                }, requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getLatitude());
+        if(list.size() == 0){
+            throw new StoreSearchException();
+        }
+        else{
+            return list;
+        }
+    }
+
+    public List<StoreInfoUltraNewVo> storeSearchByNew(@NotNull StoreLocationDto requestDto) throws StoreSearchException {
+        List<StoreInfoUltraNewVo> list = jdbcTemplate.query(
                 SQL.Store.STORE_SEARCH_BY_NEW,
                 (resultSet, i) -> {
-                    StoreInfoFindByTypeVo storeInfoFindByTypeVo = new StoreInfoFindByTypeVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_image"), resultSet.getString("is_open"));
-                    return storeInfoFindByTypeVo;
+                    StoreInfoUltraNewVo storeInfoUltraNewVo = new StoreInfoUltraNewVo(resultSet.getInt("store_id"), resultSet.getString("store_name"), resultSet.getString("store_info"), resultSet.getDouble("distance"), resultSet.getString("store_location"), resultSet.getString("store_large_image"), resultSet.getString("is_open"));
+                    return storeInfoUltraNewVo;
                 }, requestDto.getLatitude(), requestDto.getLongitude(), requestDto.getLatitude());
         if(list.size() == 0){
             throw new StoreSearchException();
