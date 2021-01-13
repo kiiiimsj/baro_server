@@ -27,12 +27,6 @@ public class StoreApiController {
         WriteToServer.send(response, jsonObject);
     }
 
-    @PostMapping("/StoreFindByUltra.do")
-    public void findByUltra(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
-        org.json.simple.JSONObject jsonObject = storeService.findByUltra(requestDto);
-        WriteToServer.send(response, jsonObject);
-    }
-
     @PostMapping("/StoreSearchByKeyword.do")
     public void searchStore(@RequestBody @NotNull StoreInfoFindByKeywordDto requestDto, @NotNull HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = storeService.findInfoByKeyword(requestDto);
@@ -64,6 +58,13 @@ public class StoreApiController {
         org.json.simple.JSONObject jsonObject = storeService.isStoreOpen(store_id);
         WriteToServer.send(response, jsonObject);
     }
+
+    @PostMapping("/StoreFindByUltra.do")
+    public void findByUltra(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.findByUltra(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
     @PostMapping("/StoreFindByNew.do")
     public void findByNew(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
         org.json.simple.JSONObject jsonObject = storeService.findByNew(requestDto);
