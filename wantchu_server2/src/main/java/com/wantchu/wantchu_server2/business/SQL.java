@@ -225,11 +225,11 @@ public class SQL {
 
         public static final String INSERT_ULTRA = "INSERT INTO ultra_stores values(NULL,?)";
         public static final String DELETE_ULTRA = "DELETE FROM ultra_stores WHERE store_id = ?";
-        public static final String PRINT_ULTRA = "SELECT * FROM ultra_stores ORDER BY ultra_store_id";
+        public static final String PRINT_ULTRA = "select ultra_store_id, store_id, store_name from ultra_stores natural join stores order by ultra_store_id;";
 
         public static final String INSERT_NEW_STORE = "INSERT INTO new_stores values(NULL,?)";
         public static final String DELETE_NEW_STORE = "DELETE FROM new_stores WHERE store_id = ?";
-        public static final String PRINT_NEW_STORE = "SELECT * FROM new_stores ORDER BY new_store_id";
+        public static final String PRINT_NEW_STORE = "select new_store_id, store_id, store_name from new_stores ns natural join stores order by new_store_id; ";
 
         public static final String INSERT_ALERT = "INSERT INTO alert VALUES (NULL,?,?,CURRENT_TIME)" ;
         public static final String DELETE_ALERT = "DELETE FROM alert WHERE alert_id = ?";

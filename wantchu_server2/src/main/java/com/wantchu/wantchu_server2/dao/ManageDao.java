@@ -85,7 +85,7 @@ public class ManageDao {
         List<PrintUltraVo> list = jdbcTemplate.query(
                 SQL.Manage.PRINT_ULTRA,
                 (resultSet, i) -> {
-                    PrintUltraVo vo = new PrintUltraVo(resultSet.getInt("store_id"), resultSet.getInt("ultra_store_id"));
+                    PrintUltraVo vo = new PrintUltraVo(resultSet.getInt("store_id"), resultSet.getInt("ultra_store_id"), resultSet.getString("store_name"));
                     return vo;
                 });
         if(list.size() == 0) {
@@ -122,7 +122,7 @@ public class ManageDao {
         List<PrintNewStoreVo> list = jdbcTemplate.query(
                 SQL.Manage.PRINT_NEW_STORE,
                 (resultSet, i) -> {
-                    PrintNewStoreVo vo = new PrintNewStoreVo(resultSet.getInt("store_id"), resultSet.getInt("new_store_id"));
+                    PrintNewStoreVo vo = new PrintNewStoreVo(resultSet.getInt("store_id"), resultSet.getInt("new_store_id"), resultSet.getString("store_name"));
                     return vo;
                 });
         if(list.size() == 0) {
