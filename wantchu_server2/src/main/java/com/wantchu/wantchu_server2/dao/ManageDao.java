@@ -64,6 +64,7 @@ public class ManageDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_ULTRA);
             preparedStatement.setInt(1, requestDto.getStore_id());
+            preparedStatement.setString(2, requestDto.getStore_large_image());
             return preparedStatement;
         });
     }
@@ -101,6 +102,7 @@ public class ManageDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_NEW_STORE);
             preparedStatement.setInt(1, requestDto.getStore_id());
+            preparedStatement.setString(2, requestDto.getStore_large_image());
             return preparedStatement;
         });
     }
