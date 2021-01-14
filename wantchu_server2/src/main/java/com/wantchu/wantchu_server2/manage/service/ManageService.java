@@ -6,6 +6,7 @@ import com.wantchu.wantchu_server2.dao.ManageDao;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -454,6 +455,20 @@ public class ManageService {
                 jsonArray.add(jTemp);
             }
             jsonObject.put("coupon", jsonArray);
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject findOwnerByPhone(String ownerPhone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            String phone = manageDao.findOwner(ownerPhone);
+            jsonObject.put("phone",phone);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "해당 번호를 가진 점주가 존재합니다.");
         }
         catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
