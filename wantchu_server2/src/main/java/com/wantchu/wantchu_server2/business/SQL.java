@@ -241,7 +241,7 @@ public class SQL {
 
         public static final String INSERT_CATEGORIES = "INSERT INTO categories VALUES(DEFAULT,?,?)";
         public static final String DELETE_CATEGORY = "DELETE FROM categories WHERE category_id=?";
-        public static final String PRINT_CATEGORIES = "SELECT category_name FROM categories WHERE store_id =";
+        public static final String PRINT_CATEGORIES = "SELECT category_id, category_name FROM categories WHERE store_id =";
 
         public static final String INSERT_MENUS = "INSERT INTO menus VALUES(DEFAULT,?,?,?,?,?,?,DEFAULT)";
         public static final String DELETE_MENUS = "DELETE FROM menus WHERE menu_id=?";

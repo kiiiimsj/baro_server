@@ -242,7 +242,7 @@ public class ManageDao {
         List<PrintCategoryVo> list = jdbcTemplate.query(
                 SQL.Manage.PRINT_CATEGORIES+store_id,
                 (resultSet, i) -> {
-                    PrintCategoryVo vo = new PrintCategoryVo(resultSet.getString("category_name"));
+                    PrintCategoryVo vo = new PrintCategoryVo(resultSet.getInt("category_id"), resultSet.getString("category_name"));
                     return vo;
                 });
         if(list.size() == 0) {
