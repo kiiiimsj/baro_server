@@ -202,9 +202,9 @@ public class ManageDao {
         }
     }
 
-    public List<PrintStoreVo> printStore() throws NotFoundStoreException {
+    public List<PrintStoreVo> printStore(String store_name) throws NotFoundStoreException {
         List<PrintStoreVo> list = jdbcTemplate.query(
-                SQL.Manage.PRINT_STORES,
+                SQL.Manage.PRINT_STORES+"'%"+store_name+"%'",
                 (resultSet, i) -> {
                     PrintStoreVo vo = new PrintStoreVo(resultSet.getInt("store_id"), resultSet.getString("store_name"));
                     return vo;

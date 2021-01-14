@@ -126,7 +126,7 @@ public class ManageApiController {
     @GetMapping("/StorePrintByStoreName.do")
     public void storePrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String store_name = request.getParameter("store_name");
-        org.json.simple.JSONObject jsonObject = manageService.storePrintByStoreName();
+        org.json.simple.JSONObject jsonObject = manageService.storePrintByStoreName(store_name);
         WriteToServer.send(response, jsonObject);
     }
 
