@@ -245,10 +245,10 @@ public class ManageService {
     }
 
     @SuppressWarnings("unchecked")
-    public org.json.simple.JSONObject storePrintByStoreName() {
+    public org.json.simple.JSONObject storePrintByStoreName(String store_name) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
-            List<PrintStoreVo> list = manageDao.printStore();
+            List<PrintStoreVo> list = manageDao.printStore(store_name);
             jsonObject.put("result", true);
             jsonObject.put("message", "성공적으로 store list 출력");
             org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
