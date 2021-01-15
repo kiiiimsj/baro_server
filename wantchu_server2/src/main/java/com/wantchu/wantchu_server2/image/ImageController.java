@@ -67,16 +67,26 @@ public class ImageController {
         }
         baos.flush();
         return baos.toByteArray();
-//        String image_name = getImageName(request);
-//        InputStream inputStream = null;
-//        try {
-//            inputStream = new ClassPathResource("http://3.35.180.57:8080/images/stores/" + image_name).getInputStream();
-//        }
-//        catch(FileNotFoundException e) {
-//            e.printStackTrace();
-//            inputStream = new ClassPathResource("http://3.35.180.57:8080/images/stores/default.png").getInputStream();
-//        }
-//        return IOUtils.toByteArray(inputStream);
+    }
+
+    @GetMapping(value = "/UltraNewImageStore.do", produces = MediaType.IMAGE_PNG_VALUE)
+    public @ResponseBody byte[] getUltraNewStoreImage(@NotNull HttpServletRequest request) throws IOException {
+        String image_name = getImageName(request);
+        ByteArrayOutputStream baos = null;
+        BufferedImage image = null;
+        try{
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/ultranewstores/" + image_name));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
+            baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+        }
+        baos.flush();
+        return baos.toByteArray();
     }
 
     @GetMapping(value = "/ImageType.do", produces = MediaType.IMAGE_PNG_VALUE)
