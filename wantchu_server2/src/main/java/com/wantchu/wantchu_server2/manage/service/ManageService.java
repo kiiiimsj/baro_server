@@ -466,7 +466,7 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             String phone = manageDao.findOwner(ownerPhone);
-            jsonObject.put("phone",phone);
+            jsonObject.put("owner_id",phone);
             jsonObject.put("result", true);
             jsonObject.put("message", "해당 번호를 가진 점주가 존재합니다.");
         }
