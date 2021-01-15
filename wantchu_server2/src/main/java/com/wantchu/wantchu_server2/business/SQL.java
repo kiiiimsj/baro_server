@@ -256,7 +256,7 @@ public class SQL {
         public static final String DELETE_COUPONS = "DELETE FROM coupons WHERE coupon_id=?";
         public static final String PRINT_COUPONS = "SELECT coupon_id,coupon_title FROM coupons";
 
-        public static final String FIND_OWNER_BY_PHONE = "SELECT phone FROM owners WHERE phone = ?";
+        public static final String FIND_OWNER_BY_PHONE = "SELECT id FROM owners WHERE phone = ?";
 
 
     }
