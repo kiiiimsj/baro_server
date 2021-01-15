@@ -208,7 +208,7 @@ public class ManageDao {
         List<PrintStoreVo> list = jdbcTemplate.query(
                 SQL.Manage.PRINT_STORES+"'%"+store_name+"%'",
                 (resultSet, i) -> {
-                    PrintStoreVo vo = new PrintStoreVo(resultSet.getInt("store_id"), resultSet.getString("store_name"));
+                    PrintStoreVo vo = new PrintStoreVo(resultSet.getInt("store_id"), resultSet.getString("type_code"), resultSet.getString("store_name"));
                     return vo;
                 });
         if(list.size() == 0) {

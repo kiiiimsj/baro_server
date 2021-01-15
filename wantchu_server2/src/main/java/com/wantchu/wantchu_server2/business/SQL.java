@@ -237,7 +237,7 @@ public class SQL {
 
         public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,default,?,?,?)";
         public static final String DELETE_STORES = "DELETE FROM stores WHERE store_id=?";
-        public static final String PRINT_STORES = "SELECT store_id,store_name FROM stores WHERE store_name LIKE";
+        public static final String PRINT_STORES = "SELECT store_id,type_code,store_name FROM stores WHERE store_name LIKE";
 
 
         public static final String INSERT_CATEGORIES = "INSERT INTO categories VALUES(DEFAULT,?,?)";
