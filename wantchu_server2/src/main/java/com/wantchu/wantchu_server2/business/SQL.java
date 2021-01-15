@@ -235,7 +235,7 @@ public class SQL {
         public static final String DELETE_ALERT = "DELETE FROM alert WHERE alert_id = ?";
         public static final String PRINT_ALERT = "SELECT alert_id,alert_title FROM alert";
 
-        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,default,?)";
+        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,default,?,?,?)";
         public static final String DELETE_STORES = "DELETE FROM stores WHERE store_id=?";
         public static final String PRINT_STORES = "SELECT store_id,store_name FROM stores WHERE store_name LIKE";
 

@@ -186,6 +186,8 @@ public class ManageDao {
             preparedStatement.setString(10,requestDto.getStore_info());
             preparedStatement.setString(11,requestDto.getStore_image());
             preparedStatement.setString(12,requestDto.getOwner_id());
+            preparedStatement.setString(13,requestDto.getRepresentative_name());
+            preparedStatement.setString(14,requestDto.getBusiness_number());
             return  preparedStatement;
         });
     }
