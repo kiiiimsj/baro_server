@@ -336,9 +336,9 @@ public class ManageDao {
             preparedStatement.setString(1,requestDto.getCoupon_title());
             preparedStatement.setString(2,requestDto.getCoupon_content());
             preparedStatement.setInt(3,requestDto.getCoupon_condition());
-            preparedStatement.setString(4,requestDto.getCounpon_discount());
+            preparedStatement.setInt(4,requestDto.getCounpon_discount());
             preparedStatement.setString(5,requestDto.getCoupon_type());
-            preparedStatement.setString(6,requestDto.getCoupon_number());
+            preparedStatement.setInt(6,requestDto.getCoupon_number());
             return  preparedStatement;
         });
     }
