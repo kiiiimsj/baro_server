@@ -369,4 +369,9 @@ public class ManageDao {
             return list;
         }
     }
+
+    public String findOwner(String ownerPhone)  {
+        String result = jdbcTemplate.queryForObject(SQL.Manage.FIND_OWNER_BY_PHONE, String.class, ownerPhone);
+        return result;
+    }
 }

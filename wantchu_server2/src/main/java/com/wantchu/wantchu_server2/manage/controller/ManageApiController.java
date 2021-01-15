@@ -219,4 +219,11 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.couponPrint();
         WriteToServer.send(response, jsonObject);
     }
+    //쿠폰 리스트 출력
+    @GetMapping("/FindOwnerByPhone.do")
+    public void findOwnerByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String ownerPhone = request.getParameter("owner_phone");
+        org.json.simple.JSONObject jsonObject = manageService.findOwnerByPhone(ownerPhone);
+        WriteToServer.send(response, jsonObject);
+    }
 }
