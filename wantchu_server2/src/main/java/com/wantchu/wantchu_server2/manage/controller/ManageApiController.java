@@ -219,11 +219,53 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.couponPrint();
         WriteToServer.send(response, jsonObject);
     }
-    //쿠폰 리스트 출력
+    //휴대폰으로 점주아이디 찾기
     @GetMapping("/FindOwnerByPhone.do")
     public void findOwnerByPhone(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
         String ownerPhone = request.getParameter("owner_phone");
         org.json.simple.JSONObject jsonObject = manageService.findOwnerByPhone(ownerPhone);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //엑스트라 추가
+    @PostMapping("/ExtraInsert.do")
+    public void extraInsert(@RequestBody @NotNull ExtraInsertDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.extraInsert(request);
+        WriteToServer.send(response, jsonObject);
+    }
+    //엑스트라 제거
+    @GetMapping("/ExtraDelete.do")
+    public void extraDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int extra_id = Integer.parseInt(request.getParameter("extra_id"));
+        org.json.simple.JSONObject jsonObject = manageService.extraDelete(extra_id);
+        WriteToServer.send(response, jsonObject);
+    }
+    //엑스트라 리스트 출력
+    @GetMapping("/ExtraPrint.do")
+    public void extraPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int store_id = Integer.parseInt(request.getParameter("store_id"));
+        org.json.simple.JSONObject jsonObject = manageService.extraPrint(store_id);
+        WriteToServer.send(response, jsonObject);
+    }
+
+    //엑스트라 & 메뉴 매칭 추가
+    @PostMapping("/InsertExtraByMenu.do")
+    public void insertExtraByMenu(@RequestBody @NotNull ExtraByMenuInsertDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.insertExtraByMenu(request);
+        WriteToServer.send(response, jsonObject);
+    }
+    //엑스트라 & 메뉴 매칭 삭제
+    @GetMapping("/DeleteExtraByMenu.do")
+    public void deleteExtraByMenu(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        org.json.simple.JSONObject jsonObject = manageService.deleteExtraByMenu(id);
+        WriteToServer.send(response, jsonObject);
+    }
+    //엑스트라 & 메뉴 리스트 출력
+    @GetMapping("/ExtraByMenuPrint.do")
+    public void extraByMenuPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        int menu_id = Integer.parseInt(request.getParameter("menu_id"));
+        org.json.simple.JSONObject jsonObject = manageService.extraByMenuPrint(menu_id);
         WriteToServer.send(response, jsonObject);
     }
 }
