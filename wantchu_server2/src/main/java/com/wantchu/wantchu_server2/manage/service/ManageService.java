@@ -475,4 +475,96 @@ public class ManageService {
         }
         return jsonObject;
     }
+
+    public JSONObject extraInsert(@NotNull ExtraInsertDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.insertExtra(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "정상적으로 extra 등록이 완료되었습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject extraDelete(int extra_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.deleteExtra(extra_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "해당 extra를 정상적으로 제거하였습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject extraPrint(int store_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            List<PrintExtraVo> list = manageDao.printExtra(store_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 extra list 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintExtraVo extra : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(extra.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("coupon", jsonArray);
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject insertExtraByMenu(ExtraByMenuInsertDto request) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.insertExtraByMenu(request);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "정상적으로 extraByMenus 등록이 완료되었습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject deleteExtraByMenu(int id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.deleteExtraByMenu(id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "해당 extraByMenus 를 정상적으로 제거하였습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject extraByMenuPrint(int menu_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            List<PrintExtraByMenuVo> list = manageDao.extraByMenuPrint(menu_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 ExtraByMenu list 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintExtraByMenuVo data : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("coupon", jsonArray);
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }

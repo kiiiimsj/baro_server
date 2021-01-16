@@ -258,6 +258,12 @@ public class SQL {
 
         public static final String FIND_OWNER_BY_PHONE = "SELECT id FROM owners WHERE phone = ?";
 
+        public static final String INSERT_EXTRAS = "INSERT INTO extras VALUES(DEFAULT,?,?,?)";
+        public static final String DELETE_EXTRAS = "DELETE FROM extras WHERE extra_id=?";
+        public static final String PRINT_EXTRAS = "SELECT extra_id,extra_price,extra_name FROM extras WHERE store_id = ?";
 
+        public static final String INSERT_EXTRA_BY_MENU = "INSERT INTO extrasbymenus VALUES(DEFAULT,?,?,?)";
+        public static final String DELETE_EXTRA_BY_MENU = "DELETE FROM extrasbymenus WHERE id=?";
+        public static final String PRINT_EXTRA_BY_MENU = "SELECT id,extra_maxcount,extra_name,extra_price FROM extrasbymenus NATURAL JOIN extras WHERE menu_id = ?";
     }
 }

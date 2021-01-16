@@ -376,4 +376,80 @@ public class ManageDao {
         String result = jdbcTemplate.queryForObject(SQL.Manage.FIND_OWNER_BY_PHONE, String.class, ownerPhone);
         return result;
     }
+
+    public void insertExtra(ExtraInsertDto requestDto) {
+        jdbcTemplate.update(con -> {
+            PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.INSERT_EXTRAS);
+            preparedStatement.setInt(1,requestDto.getExtra_price());
+            preparedStatement.setString(2,requestDto.getExtra_name());
+            preparedStatement.setInt(3,requestDto.getStore_id());
+            return  preparedStatement;
+        });
+    }
+
+    public void deleteExtra(int extra_id) throws DeleteExtraException {
+        try {
+            jdbcTemplate.update(con -> {
+                PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.DELETE_EXTRAS);
+                preparedStatement.setInt(1, extra_id);
+                return preparedStatement;
+            });
+        }catch (Exception e) {
+            throw new DeleteExtraException();
+        }
+    }
+
+    public List<PrintExtraVo> printExtra(int store_id) throws NotFoundExtraException {
+        List<PrintExtraVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_EXTRAS,
+                (resultSet, i) -> {
+                    PrintExtraVo vo = new PrintExtraVo(resultSet.getInt("extra_id"),resultSet.getInt("extra_price"),
+                            resultSet.getString("extra_name"));
+                    return vo;
+                },store_id);
+        if(list.size() == 0) {
+            throw new NotFoundExtraException();
+        }
+        else{
+            return list;
+        }
+    }
+
+    public void insertExtraByMenu(ExtraByMenuInsertDto request) {
+        jdbcTemplate.update(con -> {
+            PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.INSERT_EXTRA_BY_MENU);
+            preparedStatement.setInt(1,request.getExtra_id());
+            preparedStatement.setInt(2,request.getMenu_id());
+            preparedStatement.setInt(3,request.getExtra_maxcount());
+            return  preparedStatement;
+        });
+    }
+
+    public void deleteExtraByMenu(int id) throws DeleteExtraByMenuException {
+        try {
+            jdbcTemplate.update(con -> {
+                PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.DELETE_EXTRA_BY_MENU);
+                preparedStatement.setInt(1, id);
+                return preparedStatement;
+            });
+        }catch (Exception e) {
+            throw new DeleteExtraByMenuException();
+        }
+    }
+
+    public List<PrintExtraByMenuVo> extraByMenuPrint(int menu_id) throws NotFoundExtraException {
+        List<PrintExtraByMenuVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_EXTRA_BY_MENU,
+                (resultSet, i) -> {
+                    PrintExtraByMenuVo vo = new PrintExtraByMenuVo(resultSet.getInt("id"),resultSet.getInt("extra_maxcount"),
+                            resultSet.getString("extra_name"),resultSet.getInt("extra_price"));
+                    return vo;
+                },menu_id);
+        if(list.size() == 0) {
+            throw new NotFoundExtraException();
+        }
+        else{
+            return list;
+        }
+    }
 }
