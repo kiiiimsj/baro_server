@@ -514,7 +514,7 @@ public class ManageService {
                 jTemp.putAll(extra.convertMap());
                 jsonArray.add(jTemp);
             }
-            jsonObject.put("coupon", jsonArray);
+            jsonObject.put("extras", jsonArray);
         }
         catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
@@ -560,7 +560,7 @@ public class ManageService {
                 jTemp.putAll(data.convertMap());
                 jsonArray.add(jTemp);
             }
-            jsonObject.put("coupon", jsonArray);
+            jsonObject.put("extraByMenus", jsonArray);
         }
         catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
