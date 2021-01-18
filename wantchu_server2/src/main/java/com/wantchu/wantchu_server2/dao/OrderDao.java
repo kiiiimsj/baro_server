@@ -286,7 +286,7 @@ public class OrderDao {
         List<String> list = jdbcTemplate.query(
                 SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS,
                 (resultSet, i) -> resultSet.getString("receipt_id")
-                , reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date(), reqeustDto.getStart());
+                , reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date());
         if (list.size() == 0) {
             throw new OrderNotFoundException();
         } else {
