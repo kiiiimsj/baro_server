@@ -43,12 +43,17 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 * StoreFindByUltra.do - 메인페이지에서 울트라가게 띄워주기 위해 해당 가게 정보 가져오는 api
 * StoreFindByNew.do - 메인페이지에서 신규가입가게 띄워주기위해 해당 가게 정보 가져오는 api
 
+---
+- [회원관련](#회원관련) 
+    - [로그인](#회원의-로그인-처리)
+    - [전화번호 중복체크](#회원-전화번호-중복-체크)
+    - [등록 처리](#회원-등록-처리)
+    - [비밀번호 변경 처리](#회원-비밀번호-변경-처리)
+    - 
+---
+#회원 관련 API
 
-<hr/>
-
-<h1>회원 관련 API</h1>
-
-* 회원의 로그인 처리
+## 회원의 로그인 처리
   * URL : http://3.35.180.57:8080/MemberLogin.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
@@ -58,23 +63,24 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   "device_token":"firebase device token"
 }
 ```
-  * 응답 형식
+ - 응답 형식
 ```json
 // 로그인 성공 시
 {
     "result": true,
-    "nick": "sangwoo",
-    "phone": "01029093199",
+    "nick": "user1",
+    "phone": "01023452345",
     "created_date": "2020년 8월 12일 ",
     "message": "Login success.",
-    "email": "robbyra@gmail.com"
+    "email": "baro@gmail.com"
 }
 
 // 로그인 실패 시
 {"result":false, "message":"등록되지 않은 회원이거나 비밀번호가 일치하지 않습니다."}
 ```
+<br/>
 
-* 회원 전화번호 중복 체크
+## 회원 전화번호 중복 체크
   * URL : http://3.35.180.57:8080/MemberPhoneCheck.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=중복체크할전화번호` 형식으로 전달__
@@ -85,8 +91,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 // 이미 가입된 전화번호일 때
 {"result":false, "message":"이미 가입된 전화번호 입니다."}
 ```
+<br/>
 
-* 회원 등록 처리
+## 회원 등록 처리
   * URL : http://3.35.180.57:8080/MemberRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
@@ -118,7 +125,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 회원 비밀번호 변경 처리
+<br/>
+
+## 회원 비밀번호 변경 처리
   * URL : http://3.35.180.57:8080/MemberPassUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
@@ -139,7 +148,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 회원 이메일 변경 처리
+<br/>
+
+## 회원 이메일 변경 처리
   * URL : http://3.35.180.57:8080/MemberEmailUpdate.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
@@ -165,9 +176,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 <hr/>
 
-<h1>알림 관련 API</h1>
+# 알림 관련 API
 
-* 메인페이지 오른쪽 위 종모양 클릭시 알림(Alert) 내용 가져오기
+## 메인페이지 오른쪽 위 종모양 클릭시 알림(Alert) 내용 가져오기
   * URL : http://3.35.180.57:8080/AlertFindAll.do?phone=휴대폰번호
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __phone__
@@ -221,8 +232,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "현재 DB에 알림 등록된게 없습니다."
 }
 ```
+<br/>
 
-* 회원이 로그인했을때 안읽은 알림의 갯수 가져오기
+## 회원이 로그인했을때 안읽은 알림의 갯수 가져오기
   * URL : http://3.35.180.57:8080/GetNewAlertCount.do?phone=01093756927
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
@@ -235,7 +247,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 클릭한 알림 읽음처리로 바꾸기
+<br/>
+
+## 클릭한 알림 읽음처리로 바꾸기
   * URL : http://3.35.180.57:8080/AlertReadCheck.do?alert_id=알림아이디
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __alert_id__
@@ -264,10 +278,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 <hr>
 
 
-<h1> 이벤트 API </h1>
+# 이벤트 API
 
-* 광고배너 이벤트에 대한 정보 가져오기
-  * URL : http://15.165.22.64:8080/EventFindAll.do
+## 광고배너 이벤트에 대한 정보 가져오기
+  * URL : http://3.35.180.57:8080/EventFindAll.do
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
   * 응답 형식
@@ -291,8 +305,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 
 
 ```
-* 광고배너 이벤트중 하나를 클릭했을때 세부정보 가져오기
-  * URL : http://15.165.22.64:8080/EventDetail.do?event_id=이벤트아이디
+<br/>
+
+## 광고배너 이벤트중 하나를 클릭했을때 세부정보 가져오기
+  * URL : http://3.35.180.57:8080/EventDetail.do?event_id=이벤트아이디
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __URL에 이벤트 아이디 넣어주기__
   * 응답형식
@@ -316,9 +332,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 
-<h1>가게 종류 관련 API</h1>
+# 가게 종류 관련 API
 
-* 가게 종류 목록 가져오기
+## 가게 종류 목록 가져오기
   * URL : http://3.35.180.57:8080/TypeFindAll.do
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음__
@@ -359,9 +375,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     ]
 }
 ```
-<h1> 메인페이지에서 ultra / new 가게 관련 API </h1>
+<br/>
+# 메인페이지에서 ultra / new 가게 관련 API
 
-* ultra가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
+## ultra가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
   * URL : http://3.35.180.57:8080/StoreFindByUltra.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
@@ -425,9 +442,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "울트라가게 출력 성공"
 }
 ```
+<br/>
 
-* new 가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
-  * URL : http://15.165.22.64:8080/StoreFindByNew.do
+## new 가게의 정보 가져오기 (원래 이미지/가게이름/info만을 사용하지만 나중을 위해 필요할거 같은거 다 가져옴)
+  * URL : http://3.35.180.57:8080/StoreFindByNew.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
 ```json
@@ -465,9 +483,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 
-<h1>가게 관련 API</h1>
+# 가게 관련 API
 
-* 특정 가게의 정보 가져오기
+## 특정 가게의 정보 가져오기
   * URL : http://3.35.180.57:8080/StoreFindById.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 전송__
@@ -499,9 +517,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "해당 store_id를 가진 가게 정보가 존재하지 않습니다."
 }
 ```
+<br/>
 
-
-* 가게명 검색 API
+## 가게명 검색 API
   * URL :  http://3.35.180.57:8080/StoreSearchByKeyword.do
   * HTTP Method : POST
   * 제공해야하는 형식
@@ -567,7 +585,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* type_code로 가게 정보 가져오기
+## type_code로 가게 정보 가져오기
   * URL : http://3.35.180.57:8080/StoreInfoFindByType.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
@@ -631,7 +649,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 모든 가게의 위치 정보와 이름 가져오기
+## 모든 가게의 위치 정보와 이름 가져오기
   * URL : http://3.35.180.57:8080/StoreAllLocation.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
@@ -667,9 +685,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 <hr/>
 
-<h1>카테고리 관련 API</h1>
+# 카테고리 관련 API
 
-* store_id별로 카테고리 가져오기
+## store_id별로 카테고리 가져오기
   * URL : http://3.35.180.57:8080/CategoryFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야 하는 JSON 형식 : __없음, 파라미터로 `store_id=?` 형식으로 전송__
@@ -710,8 +728,8 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 결제하기 클릭 직전, 마지막으로 해당 매장의 영업 유무 확인하기
-  * URL : http://15.165.22.64:8080/StoreCheckIsOpen.do?store_id=가게id값
+## 결제하기 클릭 직전, 마지막으로 해당 매장의 영업 유무 확인하기
+  * URL : http://3.35.180.57:8080/StoreCheckIsOpen.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -729,10 +747,10 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 <hr/>
+<br/>
+# 메뉴 관련 API
 
-<h1>메뉴 관련 API</h1>
-
-* 가게의 모든 메뉴 목록 가져오기
+## 가게의 모든 메뉴 목록 가져오기
   * URL : http://3.35.180.57:8080/MenuFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
@@ -785,9 +803,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 
 <hr/>
 
-<h1>Extra 관련 API</h1>
+# Extra 관련 API
 
-* menu_id 별로 extra 목록 가져오기
+## menu_id 별로 extra 목록 가져오기
   * URL : http://3.35.180.57:8080/ExtraFindByMenuId.do?menu_id=메뉴id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `menu_id=메뉴id값` 전송__
@@ -850,9 +868,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 <hr/>
 
-<h1>사진 관련 API</h1>
+# 사진 관련 API
 
-* 이벤트 사진 가져오기
+## 이벤트 사진 가져오기
   * URL(1, 이벤트 사진 가져오기) : http://3.35.180.57:8080/ImageEvent.do?image_name=이미지명
   * URL(2, 가게 사진 가져오기) : http://3.35.180.57:8080/ImageStore.do?image_name=이미지명
   * URL(3, 타입 사진 가져오기) : http://3.35.180.57:8080/ImageType.do?image_name=이미지명
@@ -860,10 +878,13 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터에 `image_name=이미지명`으로 전달
   * 응답 형식 : JSON이 아닌 byte[] 배열, slack에 올린 `MainActivity.java` 참고
+  
+---
+<br/>
 
-<h1>주문 관련 API</h1>
+# 주문 관련 API
 
-* 주문 내역 저장 처리
+## 주문 내역 저장 처리
   * URL : http://3.35.180.57:8080/OrderInsert.do
   * Http Method : POST
   * 제공해야 하는 JSON형식
@@ -897,7 +918,7 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
   "requests" : "aaaaa"
 }
 ```
-  * 기본 틀은 위 형식이고 아래는 예시입니다.
+### 기본 틀은 위 형식이고 아래는 예시입니다.
 ```json
 {
     "orders": [
@@ -982,8 +1003,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```json
 {"result":"true", "message":"주문 내역이 정상적으로 저장되었습니다."}
 ```
+<br/>
 
-* 주문 내역 리스트 가져오기
+## 주문 내역 리스트 가져오기
   * URL : http://3.35.180.57:8080/OrderListFindByPhone.do?phone=01093756927&startPoint=0
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호&startPoint=시작점` 형식으로 전달__
@@ -1028,8 +1050,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "주문 내역이 존재하지 않습니다."
 }
 ```
+<br/>
 
-* 주문 상세 정보 가져오기
+## 주문 상세 정보 가져오기
   * URL : http://3.35.180.57:8080/OrderFindByReceiptId.do?receipt_id=고유영수증값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=?`형식으로 전달__
@@ -1082,8 +1105,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 //requests에 아무 요청사항이 없어서 null로 뜬것이고 고객이 요청사항에 글을 쓰면 내용이 있을것
 ```
+<br/>
 
-* 주문 횟수 가져오기
+## 주문 횟수 가져오기
   * URL : http://3.35.180.57:8080/OrderTotalCountByPhone.do?phone=?
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 형식으로 전달__
@@ -1094,8 +1118,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "total_orders": 2
 }
 ```
+<br/>
 
-* 주문 현황 리스트 가져오기
+## 주문 현황 리스트 가져오기
   *  URL : http://3.35.180.57:8080/OrderProgressing.do?phone=전화번호
   *  Http Method : GET
   *  제공해야하는 JSON 형식 : __전화번호__
@@ -1150,10 +1175,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 <hr/>
+# 즐겨찾기 관련 API
 
-<h1>즐겨찾기 관련 API</h1>
-
-* 즐겨찾기 정보 가져오기
+## 즐겨찾기 정보 가져오기
   * URL : http://3.35.180.57:8080/FavoriteList.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
@@ -1207,8 +1231,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "등록된 즐겨찾기 정보가 없습니다."
 }
 ```
+<br/>
 
-* 즐겨찾기 등록 처리
+## 즐겨찾기 등록 처리
   * URL : http://3.35.180.57:8080/FavoriteSave.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
@@ -1231,8 +1256,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "이미 즐겨찾기로 등록된 가게 입니다."
 }
 ```
+<br/>
 
-* 즐겨찾기 삭제 처리
+## 즐겨찾기 삭제 처리
   * URL : http://3.35.180.57:8080/FavoriteDelete.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
@@ -1256,8 +1282,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "즐겨찾기 삭제에 실패했습니다."
 }
 ```
+<br/>
 
-* 가게 클릭시 즐겨찾기의 유무 처리
+## 가게 클릭시 즐겨찾기의 유무 처리
   * URL : http://3.35.180.57:8080/FavoriteExist.do
   * Http Method : POST
 ```json
@@ -1281,10 +1308,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 ```
 
 <hr/>
+# 쿠폰 관련 API
 
-<h1>쿠폰 관련 API</h1>
-
-* 쿠폰 리스트 가져오기
+## 쿠폰 리스트 가져오기
   * URL : http://3.35.180.57:8080/CouponFindByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
@@ -1337,8 +1363,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "message": "사용 가능한 쿠폰이 없습니다."
 }
 ```
+<br/>
 
-* 장바구니에서 결제 전에 사용 가능한 쿠폰 목록 가져오기
+## 장바구니에서 결제 전에 사용 가능한 쿠폰 목록 가져오기
   * URL : http://3.35.180.57:8080/CouponFindUsable.do?phone=전화번호&price=결제전총금액
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호`와 `price=전체금액` 의 총 2개 전달__
@@ -1375,8 +1402,9 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
     "result": false,
     "message": "적용 가능한 쿠폰이 없습니다."
 ```
+<br/>
 
-* 쿠폰 개수 가져오기
+## 쿠폰 개수 가져오기
   * URL : http://3.35.180.57:8080/CouponCountByPhone.do?phone=전화번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `phone=전화번호` 전달__
@@ -1398,14 +1426,14 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 
-* 쿠폰 등록
+## 쿠폰 등록
  * URL :  
 
 <hr/>
 
-<h1>결제 관련 API</h1>
+# 결제 관련 API
 
-* User Token 발급받는 API
+## User Token 발급받는 API
   * URL : http://3.35.180.57:8080/BillingGetUserToken.do
   * Http Method : POST
   * 제공해야하는 JSON 형식   
@@ -1423,74 +1451,20 @@ cf. 원래는 리스트들을 전부 다 가져왔지만 앞으로는 20개 씩�
 }
 ```
 <hr/>
-
-
-<h1>Socket Protocol</h1>
+# Socket Protocol
 
 * Web Socket 메시지 방식은 아래의 규칙을 따른다.
   * (1) 서버에 고유id값 등록 (ex. 점주라면 가게id값) : `connect:::가게id값`
   * (2) 특정 가게id에 메시지 보내기 : `message:::가게id값:::보낼메시지`
   * __connect, message는 고정으로 보내야 하는 것임__
 
-ex) 안드로이드 예제
-`USER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
-webSocketClient.send("connect:::" + phone);
-webSocketClient.send("message:::" + store_id + ":::" + message);
-
-`OWNER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
-webSocketClient.send("connect:::" + store_id);
-
-아래 예제와 같은 json방식으로 message를 웹소켓으로 보내주면된다.
-```json
-{
-    "coupon_id":-1,
-    "discount_price":-1,
-    "each_count":1,
-    "order_date":"2020/09/09 10:31:21",
-    "orders":
-    [
-        {
-            "extras":
-            [
-                {
-                    "extra_count":1,
-                    "extra_id":1,
-                    "extra_name":"HOT",
-                    "extra_price":0
-                },
-                {
-                    "extra_count":1,
-                    "extra_id":66,
-                    "extra_name":"기본 크기",
-                    "extra_price":0
-                }
-            ],
-            "menu_defaultprice":1500,
-            "menu_id":4,
-            "menu_name":"아메리카노",
-            "order_count":1
-        }
-    ],
-    "phone":"01093756927","receipt_id":"5f58aef2878a5600247386b5",
-    "store_id":1,
-    "total_price":1500
-}
-```
-
-<h1>Socket Protocol</h1>
-
-* Web Socket 메시지 방식은 아래의 규칙을 따른다.
-  * (1) 서버에 고유id값 등록 (ex. 점주라면 가게id값) : `connect:::가게id값`
-  * (2) 특정 가게id에 메시지 보내기 : `message:::가게id값:::보낼메시지`
-  * __connect, message는 고정으로 보내야 하는 것임__
-
-ex) 안드로이드 예제
+- Android
+  
 `USER`
 uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + phone);
 webSocketClient.send("message:::" + store_id + ":::" + message);
+
 `OWNER`
 uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + store_id);
