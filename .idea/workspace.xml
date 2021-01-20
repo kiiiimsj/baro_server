@@ -26,12 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/unnamed.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Spring_5_2_3_RELEASE.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/yeoyoo_server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/yeoyoo_server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/USER-server-rules.md" beforeDir="false" afterPath="$PROJECT_DIR$/USER-server-rules.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,6 +224,7 @@
       <workItem from="1600159373298" duration="9000" />
       <workItem from="1600332156696" duration="304000" />
       <workItem from="1600769761286" duration="19000" />
+      <workItem from="1611059393154" duration="18000" />
     </task>
     <servers />
   </component>
@@ -245,6 +241,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="248" y="0" key="#Project_Structure" timestamp="1609394945331">
