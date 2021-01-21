@@ -224,7 +224,7 @@ public class SQL {
         public static final String PRINT_TYPE = "SELECT type_code, type_name FROM types";
 
         public static final String INSERT_ULTRA = "INSERT INTO ultra_stores values(NULL,?, ?)";
-        public static final String DELETE_ULTRA = "DELETE FROM ultra_stores WHERE store_id = ?";
+        public static final String DELETE_ULTRA = "DELETE FROM ultra_stores WHERE ultra_store_id = ?";
         public static final String PRINT_ULTRA = "select ultra_store_id, store_id, store_name from ultra_stores natural join stores order by ultra_store_id;";
 
         public static final String INSERT_NEW_STORE = "INSERT INTO new_stores values(NULL,?, ?)";
