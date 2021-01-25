@@ -4,6 +4,7 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.ManageDao;
 import com.wantchu.wantchu_server2.manage.dto.*;
+import com.wantchu.wantchu_server2.manage.exception.NotFoundRequiredExtrasException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -480,6 +481,10 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertExtra(requestDto);
+            if (new Boolean(requestDto.getIs_required())){
+                int id = manageDao.getLastInsertRequiredExtra();
+                manageDao.insertRequiredExtra(requestDto,id);
+            }
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 extra 등록이 완료되었습니다.");
         }
@@ -561,6 +566,38 @@ public class ManageService {
                 jsonArray.add(jTemp);
             }
             jsonObject.put("extraByMenus", jsonArray);
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject requiredExtrasPrint(int store_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<PrintRequiredExtrasVo> list = manageDao.requiredExtrasPrint(store_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 RequiredExtra list 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintRequiredExtrasVo data : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("requiredExtras", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject requiredExtrasDelete(int extra_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            manageDao.requiredExtrasDelete(extra_id);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "해당 extraByMenus 를 정상적으로 제거하였습니다.");
         }
         catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
