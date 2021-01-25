@@ -265,5 +265,10 @@ public class SQL {
         public static final String INSERT_EXTRA_BY_MENU = "INSERT INTO extrasbymenus VALUES(DEFAULT,?,?,?)";
         public static final String DELETE_EXTRA_BY_MENU = "DELETE FROM extrasbymenus WHERE id=?";
         public static final String PRINT_EXTRA_BY_MENU = "SELECT id,extra_maxcount,extra_name,extra_price FROM extrasbymenus NATURAL JOIN extras WHERE menu_id = ?";
+
+        public static final String SELECT_LAST_INSERT_ID = "SELECT LAST_INSERT_ID() AS extra_id";
+        public static final String INSERT_REQUIRED_EXTRAS =  "INSERT INTO requiredextras VALUES(?,?)";
+        public static final String PRINT_REQUIRED_EXTRAS = "SELECT extra_id,extra_group,store_id,extra_name,extra_price FROM requiredextras NATURAL JOIN extras WHERE store_id = ?";
+        public static final String DELETE_REQUIRED_EXTRAS = "DELETE FROM requiredextras where extra_id = ?";
     }
 }

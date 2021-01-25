@@ -452,4 +452,53 @@ public class ManageDao {
             return list;
         }
     }
+    public int getLastInsertRequiredExtra() throws NotFoundRecentInsertException {
+        List<Integer> ids = jdbcTemplate.query(
+                SQL.Manage.SELECT_LAST_INSERT_ID,
+                (resultSet, i) -> {
+                    int id = resultSet.getInt("extra_id");
+                    return id;
+                });
+        if(ids.size() == 0 || ids.get(0) == 0) { // 리스트에 아무것도없거나 마지막으로 삽입한 id가 0 일때 (없었을때)
+            throw new NotFoundRecentInsertException();
+        }else{
+            return ids.get(0);
+        }
+    }
+    public void insertRequiredExtra(ExtraInsertDto dto,int extra_id){
+        jdbcTemplate.update( con -> {
+            PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.INSERT_REQUIRED_EXTRAS);
+            preparedStatement.setInt(1,extra_id);
+            preparedStatement.setString(2,dto.getRequired_group_name());
+            return  preparedStatement;
+        });
+    }
+
+    public List<PrintRequiredExtrasVo> requiredExtrasPrint(int store_id) throws NotFoundRequiredExtrasException {
+        List<PrintRequiredExtrasVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_REQUIRED_EXTRAS,
+                (resultSet, i) -> {
+                    PrintRequiredExtrasVo vo = new PrintRequiredExtrasVo(resultSet.getInt("extra_id"),resultSet.getString("extra_group"),resultSet.getInt("store_id"),
+                            resultSet.getString("extra_name"),resultSet.getInt("extra_price"));
+                    return vo;
+                },store_id);
+        if(list.size() == 0) {
+            throw new NotFoundRequiredExtrasException();
+        }
+        else{
+            return list;
+        }
+    }
+
+    public void requiredExtrasDelete(int extra_id) throws DeleteRequiredExtrasException {
+        try {
+            jdbcTemplate.update(con -> {
+                PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.DELETE_REQUIRED_EXTRAS);
+                preparedStatement.setInt(1, extra_id);
+                return preparedStatement;
+            });
+        }catch (Exception e) {
+            throw new DeleteRequiredExtrasException();
+        }
+    }
 }
