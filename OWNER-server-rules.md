@@ -17,7 +17,7 @@
 <h2>로그인/등록/변경 관련</h2>
 
 * 점주 로그인 처리
-  * URL : http://15.165.22.64:8080/OwnerLogin.do
+  * URL : http://3.35.180.57:8080/OwnerLogin.do
   * Http Method : POST
   * 제공해야 하는 JSON 형식
 ```json
@@ -44,7 +44,7 @@
 ```
 
 * 점주 비밀번호 변경 처리
-  * URL : http://15.165.22.64:8080/OwnerPassUpdate.do
+  * URL : http://3.35.180.57:8080/OwnerPassUpdate.do
   * Http Method : PUT
   * 제공해야 하는 JSON 형식
 ```json
@@ -66,7 +66,7 @@
 ```
 
 * 점주 이메일 변경 처리
-  * URL : http://15.165.22.64:8080/OwnerEmailUpdate.do
+  * URL : http://3.35.180.57:8080/OwnerEmailUpdate.do
   * Http Method : PUT
   * 제공해야 하는 JSON 형식
 ```json
@@ -89,7 +89,7 @@
 ```
 
 * 점주 회원가입 처리(안씀)
-  * URL : http://15.165.22.64:8080/OwnerRegister.do
+  * URL : http://3.35.180.57:8080/OwnerRegister.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -119,7 +119,7 @@
 ```
 
 * 점주 가게 등록 처리(이미 등록하는 가게일 경우)(안씀)
-  * URL : http://15.165.22.64:8080/OwnerSetStore.do
+  * URL : http://3.35.180.57:8080/OwnerSetStore.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -140,7 +140,7 @@
 ```
 
 * 점주 가게 영업중, 준비중 변경 처리
-  * URL : http://15.165.22.64:8080/OwnerSetStoreStatus.do
+  * URL : http://3.35.180.57:8080/OwnerSetStoreStatus.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -162,7 +162,7 @@
 <h2>메뉴 변경 관련(우선은 안씀)</h2>
 
 * 점주 가게, 메뉴, 엑스트라 변경 처리
-  * URL : http://15.165.22.64:8080/OwnerUpdates.do
+  * URL : http://3.35.180.57:8080/OwnerUpdates.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식 __(update_type은 반드시 아래 지정한 것들 중 하나여야함)__
 ```json
@@ -257,7 +257,7 @@
 ```
 
 * 특정 기간의 매출 가져오기
-  * URL : http://15.165.22.64:8080/OwnerFindPriceBetweenDate.do
+  * URL : http://3.35.180.57:8080/OwnerFindPriceBetweenDate.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -279,7 +279,7 @@
 
 
 * 처리해야할 주문들의 목록 가져오기
-  * URL : http://15.165.22.64:8080/OrderFindByStoreId.do?store_id=가게id값
+  * URL : http://3.35.180.57:8080/OrderFindByStoreId.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -316,7 +316,7 @@
 ```
 
 * 처리해야할 주문 내역의 상세 정보 보기(기존에 처리해야할 주문들이 남아있고 다시 로그인시에 보여져야하는 주문내역들)
-  * URL : http://15.165.22.64:8080/OrderFindByReceiptId.do?receipt_id=영수증번호
+  * URL : http://3.35.180.57:8080/OrderFindByReceiptId.do?receipt_id=영수증번호
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=영수증id값` 전달__
   * 응답 형식
@@ -363,7 +363,7 @@
 ```
 
 * 주문 들어온 내역 클릭시에 상세정보
-  * URL :  http://15.165.22.64:8080/OrderListDoneOrCancelForOwner.do?receipt_id=receipt_id값
+  * URL :  http://3.35.180.57:8080/OrderListDoneOrCancelForOwner.do?receipt_id=receipt_id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `receipt_id=영수증id값` 전달__
   * 응답형식
@@ -396,7 +396,7 @@
 ```
 
 * 들어온 주문을 시간 설정후에 PREPARING상태를 ACCEPT상태로 바꿔주기
-  * URL : http://15.165.22.64:8080/OwnerSetOrderStatus.do
+  * URL : http://3.35.180.57:8080/OwnerSetOrderStatus.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -416,7 +416,7 @@
 ```
 
 * 들어온 주문을 제조완료 버튼을 눌렀을때 ACCEPT상태를 DONE상태로 바꿔주기
-  * URL : http://15.165.22.64:8080/OwnerSetOrderStatusComplete.do
+  * URL : http://3.35.180.57:8080/OwnerSetOrderStatusComplete.do
   * Http Method : PUT
   * 제공해야하는 JSON 형식
 ```json
@@ -437,7 +437,7 @@
 
 
 * 주문 결제 취소 처리
-  * URL : http://15.165.22.64:8080/BillingCancel.do
+  * URL : http://3.35.180.57:8080/BillingCancel.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -470,7 +470,7 @@
 
 
 * 주문한 고객에게 메시지 보내기
-  * URL : http://15.165.22.64:8080/OwnerSendMessage.do
+  * URL : http://3.35.180.57:8080/OwnerSendMessage.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -515,7 +515,7 @@
 ```
 
 * 날짜별로 해당 점포의 주문 내역 가져오기(최신순부터 20개를 가져온다)
-  * URL : http://15.165.22.64:8080/OrderCompleteListByDate.do
+  * URL : http://3.35.180.57:8080/OrderCompleteListByDate.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 한꺼번에 가져오는것이 아닌 20개씩 가져오므로 스크롤을 내려 마지막으로 내려가면
@@ -572,7 +572,7 @@
 }
 ```
 * 휴대폰번호 검색을 통해 해당점포의 주문내역 가져오기(최신순부터 20개)
-  * URL : http://15.165.22.64:8080/OrderCompleteListByPhone.do 
+  * URL : http://3.35.180.57:8080/OrderCompleteListByPhone.do 
   * Http Method : POST
   * 제공해야하는 JSON 형식
 ```json
@@ -626,7 +626,7 @@
 ```
 
 * 모든 주문 내역의 총 개수 구하기
-  * URL : http://15.165.22.64:8080/OrderFindCount.do?store_id=가게id값
+  * URL : http://3.35.180.57:8080/OrderFindCount.do?store_id=가게id값
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __없음, 파라미터로 `store_id=가게id값` 전달__
   * 응답 형식
@@ -639,7 +639,7 @@
 ```
 ### 재고 관리 API
 * 해당 메뉴에 대해 매진상태로 바꿔주기 위해 is_soldout을 Y로 바꿔주는 api
-  * URL : http://15.165.22.64:8080/MenuUpdateSaveSoldOut.do?menu_id=메뉴ID
+  * URL : http://3.35.180.57:8080/MenuUpdateSaveSoldOut.do?menu_id=메뉴ID
   * Http Method : GET
   * 제공해야하는 JSON 형식 : __파라미터로 `menu_id=메뉴ID` 전달__
   * 응답 형식
@@ -650,7 +650,7 @@
 }
 ```
 *  해당 메뉴에 대해 다시 재고가 들어와서 고객에게 보여지게 하기위한 api
-*  URL : http://15.165.22.64:8080/MenuUpdateDeleteSoldOut.do?menu_id=메뉴ID
+*  URL : http://3.35.180.57:8080/MenuUpdateDeleteSoldOut.do?menu_id=메뉴ID
 *  Http Method : GET
 *  제공해야하는 JSON 형식 : __파라미터로 `menu_id=메뉴ID` 전달__
 *  응답 형식
@@ -671,12 +671,12 @@
 
 ex) 안드로이드 예제
 `USER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
+uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + phone);
 webSocketClient.send("message:::" + store_id + ":::" + message);
 
 `OWNER`
-uri = new URI("ws://15.165.22.64:8080/websocket");
+uri = new URI("ws://3.35.180.57:8080/websocket");
 webSocketClient.send("connect:::" + store_id);
 
 아래 예제와 같은 json방식으로 message를 웹소켓으로 보내주면된다.
@@ -717,7 +717,7 @@ webSocketClient.send("connect:::" + store_id);
 ```
 
 * 그래프 통계를 위한 날짜사이의 하루별 매출 가져오기
-  * URL : http://15.165.22.64:8080//OwnerSetstatistics.do
+  * URL : http://3.35.180.57:8080//OwnerSetstatistics.do
   * Http Method : POST
   * 제공해야하는 JSON 형식
 
