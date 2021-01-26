@@ -68,7 +68,7 @@ public class SQL {
     }
 
     public static class Owner {
-        public static final String IS_VALID_ACCOUNT = "SELECT store_id, store_name, email,phone, is_open FROM owners NATURAL JOIN stores WHERE owner_id=? AND pass=sha2(?, 256)";
+        public static final String IS_VALID_ACCOUNT = "SELECT store_id, store_name, email,phone, is_open FROM owners LEFT outer join stores on owners.id = stores.owner_id WHERE owner_id=? AND pass=sha2(?, 256)";
         public static final String UPDATE_PASS = "UPDATE owners SET pass=PASSWORD(?) WHERE phone=?";
         public static final String CHECK_PHONE = "SELECT * FROM owners WHERE phone = ?";
         public static final String CHECK_EMAIL = "SELECT * FROM owners WHERE email=?";
