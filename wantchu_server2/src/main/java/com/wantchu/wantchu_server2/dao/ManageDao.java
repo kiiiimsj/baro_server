@@ -501,4 +501,19 @@ public class ManageDao {
             throw new DeleteRequiredExtrasException();
         }
     }
+
+    public List<FindOrderListByPhoneForManageVo> findOrderList(String phone) throws NotFoundManageOrderListException {
+        List<FindOrderListByPhoneForManageVo> list = jdbcTemplate.query(
+                SQL.Manage.FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE,
+                (resultSet, i) -> {
+                    FindOrderListByPhoneForManageVo vo = new FindOrderListByPhoneForManageVo(resultSet.getString("order_date"),resultSet.getString("receipt_id"), resultSet.getString("order_state"));
+                    return vo;
+                },phone);
+        if(list.size() == 0) {
+            throw new NotFoundManageOrderListException();
+        }
+        else{
+            return list;
+        }
+    }
 }

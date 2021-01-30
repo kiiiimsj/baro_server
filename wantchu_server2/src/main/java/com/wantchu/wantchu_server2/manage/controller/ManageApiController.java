@@ -283,4 +283,13 @@ public class ManageApiController {
         WriteToServer.send(response, jsonObject);
     }
 
+    //해당 번호의 주문 정보 가져오기
+    @GetMapping("/FindOrderListByPhoneForManage.do")
+    public void findOrderListByPhoneForManage(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = manageService.findOrderListByPhoneForManage(phone);
+        WriteToServer.send(response, jsonObject);
+    }
+
+
 }
