@@ -506,7 +506,7 @@ public class ManageDao {
         List<FindOrderListByPhoneForManageVo> list = jdbcTemplate.query(
                 SQL.Manage.FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE,
                 (resultSet, i) -> {
-                    FindOrderListByPhoneForManageVo vo = new FindOrderListByPhoneForManageVo(resultSet.getString("order_date"),resultSet.getString("receipt_id"), resultSet.getString("order_state"));
+                    FindOrderListByPhoneForManageVo vo = new FindOrderListByPhoneForManageVo(resultSet.getString("order_date"),resultSet.getString("receipt_id"), resultSet.getString("order_state"),resultSet.getString("store_name"),resultSet.getInt("store_id"));
                     return vo;
                 },phone);
         if(list.size() == 0) {
