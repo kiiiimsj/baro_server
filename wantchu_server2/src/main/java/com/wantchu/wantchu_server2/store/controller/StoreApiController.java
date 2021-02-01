@@ -70,4 +70,9 @@ public class StoreApiController {
         org.json.simple.JSONObject jsonObject = storeService.findByNew(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("/StoreFindAll.do")
+    public void storeFindAll(@RequestBody @NotNull StoreLocationDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = storeService.storeFindAll(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
 }

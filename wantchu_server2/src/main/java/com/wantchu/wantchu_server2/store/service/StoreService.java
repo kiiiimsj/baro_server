@@ -9,6 +9,7 @@ import com.wantchu.wantchu_server2.store.exception.*;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -196,6 +197,25 @@ public class StoreService {
             jsonObject.put("store", jsonArray);
         }
         catch (StoreSearchException e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject storeFindAll(@NotNull StoreLocationDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<StoreFindAllVo> list = storeDao.findAllStore(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "type_code별로 가게 정보 가져오기 성공");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(StoreFindAllVo all : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(all.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("store", jsonArray);
+        } catch(StoreAllNotFoundException e) {
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
         return jsonObject;

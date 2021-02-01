@@ -54,6 +54,10 @@ public class SQL {
         public static final String UPDATE_STORE_LOCATION = "UPDATE stores SET store_location=? WHERE store_id=?";
         public static final String UPDATE_STORE_INFO = "UPDATE stores SET store_info=? WHERE store_id=?";
         public static final String UPDATE_STORE_OPEN_STATUS = "UPDATE stores SET is_open=? WHERE store_id=?";
+        public static final String FIND_All = "SELECT store_id, store_name, " +
+                "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores"
+                +" ORDER BY is_open='N'";
     }
 
     public static class Member {
