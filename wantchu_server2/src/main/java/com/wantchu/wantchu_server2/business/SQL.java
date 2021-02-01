@@ -271,6 +271,6 @@ public class SQL {
         public static final String PRINT_REQUIRED_EXTRAS = "SELECT extra_id,extra_group,store_id,extra_name,extra_price FROM requiredextras NATURAL JOIN extras WHERE store_id = ?";
         public static final String DELETE_REQUIRED_EXTRAS = "DELETE FROM requiredextras where extra_id = ?";
 
-        public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,store_id FROM orders WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC \n";
+        public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,store_id FROM orders natural join stores WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC \n";
     }
 }
