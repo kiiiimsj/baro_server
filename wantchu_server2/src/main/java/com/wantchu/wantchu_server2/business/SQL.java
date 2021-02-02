@@ -9,6 +9,7 @@ public class SQL {
         public static final String FIND_NEW_ALERT_COUNT = "SELECT COUNT(*) FROM alertsbymembers WHERE phone = ? AND is_read = 'N'";
         public static final String GET_ALERT_DETAIL_CONTENT = "SELECT alert_content FROM alert WHERE alert_id=?";
         public static final String ALERT_READ_CHECK = "UPDATE alertsbymembers SET is_read = 'Y' where alert_id=? AND phone=?";
+        public static final String INSERT_ALL_FOR_NEW = "INSERT INTO alertsbymembers (phone,alert_id) SELECT phone,alert_id FROM members NATURAL JOIN alert WHERE phone = ?";
     }
 
     public static class Type {
