@@ -34,8 +34,8 @@ public class FcmUtil {
                         .setTtl(3600 * 1000)
                         .setPriority(AndroidConfig.Priority.HIGH)
                         .build())
-                    .putData("title", "awsdf")
-                    .putData("body", "sssss")
+                    .putData("title", title)
+                    .putData("body", content)
                     .setToken(registrationToken)
                     .build();
 
