@@ -24,7 +24,7 @@ public class FcmUtil {
                 FirebaseApp.initializeApp(options);
             }
 
-             Notification notification = new Notification("test_title", "test_body");
+             Notification notification = new Notification(title, content);
             String registrationToken = tokenId;
 
             Message message = Message.builder()
