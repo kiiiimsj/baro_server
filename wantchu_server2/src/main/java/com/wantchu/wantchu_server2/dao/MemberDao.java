@@ -112,4 +112,6 @@ public class MemberDao {
            return preparedStatement;
         });
     }
+
+
 }
