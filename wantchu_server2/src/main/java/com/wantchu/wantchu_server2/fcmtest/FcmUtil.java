@@ -23,20 +23,22 @@ public class FcmUtil {
             if(FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
             }
-
              Notification notification = new Notification(title, content);
             String registrationToken = tokenId;
-
             Message message = Message.builder()
-//                    .setAndroidConfig(AndroidConfig.builder()
-//                        .setTtl(3600 * 1000)
-//                        .setPriority(AndroidConfig.Priority.HIGH)
-//                        .build())
+                    .setAndroidConfig(AndroidConfig.builder()
+                        .setTtl(3600 * 1000)
+                        .setPriority(AndroidConfig.Priority.HIGH)
+                        .build())
+                    .setApnsConfig(ApnsConfig.builder()
+                            .setAps(Aps.builder().setSound("default").build())
+                            .build())
                     .setNotification(notification)
                     .putData("title", title)
                     .putData("body", content)
                     .setToken(registrationToken)
                     .build();
+
 
             String response = FirebaseMessaging.getInstance().send(message);
             jsonObject.put("response", response);
