@@ -3,10 +3,7 @@ package com.wantchu.wantchu_server2.fcmtest;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.AndroidConfig;
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +24,7 @@ public class FcmUtil {
                 FirebaseApp.initializeApp(options);
             }
 
+             Notification notification = new Notification("test_title", "test_body");
             String registrationToken = tokenId;
 
             Message message = Message.builder()
@@ -34,6 +32,7 @@ public class FcmUtil {
 //                        .setTtl(3600 * 1000)
 //                        .setPriority(AndroidConfig.Priority.HIGH)
 //                        .build())
+                    .setNotification(notification)
                     .putData("title", title)
                     .putData("body", content)
                     .setToken(registrationToken)
