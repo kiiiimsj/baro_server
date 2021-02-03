@@ -30,10 +30,10 @@ public class FcmUtil {
             String registrationToken = tokenId;
 
             Message message = Message.builder()
-                    .setAndroidConfig(AndroidConfig.builder()
-                        .setTtl(3600 * 1000)
-                        .setPriority(AndroidConfig.Priority.HIGH)
-                        .build())
+//                    .setAndroidConfig(AndroidConfig.builder()
+//                        .setTtl(3600 * 1000)
+//                        .setPriority(AndroidConfig.Priority.HIGH)
+//                        .build())
                     .putData("title", title)
                     .putData("body", content)
                     .setToken(registrationToken)
