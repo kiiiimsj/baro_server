@@ -52,6 +52,12 @@ public class MemberApiController {
         org.json.simple.JSONObject jsonObject = memberService.updateEmail(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("/UpdateToken.do")
+    public void updateToken(@RequestBody @NotNull MemberLoginRequestDto requestDto, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = memberService.updateToken(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
+
 
 
 }

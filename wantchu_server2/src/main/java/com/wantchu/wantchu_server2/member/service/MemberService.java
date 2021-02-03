@@ -120,4 +120,15 @@ public class MemberService {
     }
 
 
+    public JSONObject updateToken(MemberLoginRequestDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            memberDao.updateDeviceToken(requestDto);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "토큰이 정상적으로 변경되었습니다.");
+        } catch(Exception e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }
