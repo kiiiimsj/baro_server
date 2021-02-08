@@ -185,6 +185,7 @@ public class StoreDao {
                 (resultSet, i) -> {
                     StoreFindAllVo storeInfoVo = StoreFindAllVo.builder()
                             .store_id(resultSet.getInt("store_id"))
+                            .discount_rate(resultSet.getInt("discount_rate"))
                             .store_name(resultSet.getString("store_name"))
                             .store_info(resultSet.getString("store_info"))
                             .store_location(resultSet.getString("store_location"))

@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class OrderVo {
 
     private int order_id;
+    private int discount_rate;
     private LocalDateTime order_date;
     private String phone;
     private int store_id;
@@ -25,8 +26,9 @@ public class OrderVo {
     private String order_state;
     private String requests;
 
-    public OrderVo(int order_id, LocalDateTime order_date, String phone, int store_id, int menu_id, int menu_defaultprice, String requests) {
+    public OrderVo(int order_id,int discount_rate, LocalDateTime order_date, String phone, int store_id, int menu_id, int menu_defaultprice, String requests) {
         this.order_id = order_id;
+        this.discount_rate = discount_rate;
         this.order_date = order_date;
         this.phone = phone;
         this.store_id = store_id;
@@ -38,6 +40,7 @@ public class OrderVo {
     public HashMap<String, Object> convertMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("order_id", order_id);
+        map.put("discount_rate", discount_rate);
         map.put("order_date", DateConverter.convertDateWithTime(order_date));
         map.put("phone", phone);
         map.put("store_id", store_id);
