@@ -163,6 +163,13 @@ public class SQL {
                 "from orders\n" +
                 "where store_id=?\n" +
                 "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)";
+        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT A.ds_total_prices + B.ds_extra_prices FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate),0) AS ds_total_prices FROM orders\n" +
+                "   where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                "    GROUP BY menu_name) AS A\n" +
+                "    natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*discount_rate),0) AS ds_extra_prices\n" +
+                "    FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                "    where store_id= ? AND order_state='DONE' and order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                "    GROUP BY menu_name) AS B ";
         public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
 
@@ -213,7 +220,7 @@ public class SQL {
 
     public static class Favorite {
         public static final String FIND_FAVORITES_BY_PHONE
-                = "SELECT store_id, (6371*acos(cos(radians(?))*cos(radians(store_latitude))*cos(radians(store_longitude)\n" +
+                = "SELECT store_id,discount_rate, (6371*acos(cos(radians(?))*cos(radians(store_latitude))*cos(radians(store_longitude)\n" +
                 "\n" +
                 "\t-radians(?))+sin(radians(?))*sin(radians(store_latitude))))*1000\n" +
                 "\n" +
