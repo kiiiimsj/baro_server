@@ -45,6 +45,7 @@ public class OrderService {
         int discount_price = jsonObject.getInt("discount_price");
         int coupon_id = jsonObject.getInt("coupon_id");
         String requests = jsonObject.getString("requests");
+        int discount_rate = jsonObject.getInt("discount_rate");
 
         if((discount_price != -1) && (coupon_id != -1)) {
             CouponHistoryVo historyVo = new CouponHistoryVo();
@@ -71,6 +72,7 @@ public class OrderService {
             orderVo.setReceipt_id(receipt_id);
             orderVo.setOrder_state("PREPARING");
             orderVo.setRequests(requests);
+            orderVo.setDiscount_rate(discount_rate);
             int order_id = orderDao.orderInsert(orderVo);
             JSONArray extraOrders = order.getJSONArray("extras");
             for(int j = 0; j < extraOrders.length(); j++) {
@@ -104,7 +106,9 @@ public class OrderService {
                 jTemp.putAll(info.convertMap());
                 int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
                 int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
+                int discount_rate = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
                 jTemp.put("total_price", extraSum + orderSum);
+                jTemp.put("discount_rate", discount_rate);
                 jsonArray.add(jTemp);
             }
             jsonObject.put("order", jsonArray);
@@ -119,10 +123,12 @@ public class OrderService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         String requests = orderDao.getRequests(receipt_id);
         List<Integer> orderIdList = orderDao.findOrderIdsByReceiptId(receipt_id);
+        int discount_rate = orderDao.getDiscount_rate_by_receipt_id(receipt_id);
         Iterator<Integer> iterator = orderIdList.iterator();
         jsonObject.put("result", true);
         jsonObject.put("message", "상세 주문 내역 가져오기 성공");
         jsonObject.put("requests", requests);
+        jsonObject.put("discount_rate", discount_rate);
         org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
 
         while(iterator.hasNext()) {
@@ -188,6 +194,7 @@ public class OrderService {
                 objectOfOrder.put("phone", orderVo.getPhone());
                 objectOfOrder.put("order_count", orderVo.getOrder_count());
                 objectOfOrder.put("order_date", DateConverter.convertDateWithTime(orderVo.getOrder_date()));
+                objectOfOrder.put("discount_rate",orderDao.getDiscount_rate_by_receipt_id(receipt_id));
                 int extraOrderSum = orderDao.findExtraOrderTotalPrice(receipt_id);
                 int menuDefaultPriceSum = orderDao.findOrderTotalPrice(receipt_id);
                 objectOfOrder.put("total_price", extraOrderSum + menuDefaultPriceSum);
@@ -267,7 +274,9 @@ public class OrderService {
                 jTemp.putAll(info.convertMapOnlyHour());
                 int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
                 int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
+                int discount_rate = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
                 jTemp.put("total_price", extraSum + orderSum);
+                jTemp.put("discount_rate", discount_rate);
                 jsonArray.add(jTemp);
             }
             jsonObject.put("order", jsonArray);

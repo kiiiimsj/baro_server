@@ -33,14 +33,15 @@ public class OrderDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Order.INSERT_ORDER, new String[] {"order_id"});
             preparedStatement.setString(1, orderVo.getPhone());
-            preparedStatement.setInt(2, orderVo.getStore_id());
-            preparedStatement.setInt(3, orderVo.getMenu_id());
-            preparedStatement.setString(4, orderVo.getMenu_name());
-            preparedStatement.setInt(5, orderVo.getMenu_defaultprice());
-            preparedStatement.setInt(6, orderVo.getOrder_count());
-            preparedStatement.setString(7, orderVo.getReceipt_id());
-            preparedStatement.setString(8, orderVo.getOrder_state());
-            preparedStatement.setString(9, orderVo.getRequests());
+            preparedStatement.setInt(2, orderVo.getDiscount_rate());
+            preparedStatement.setInt(3, orderVo.getStore_id());
+            preparedStatement.setInt(4, orderVo.getMenu_id());
+            preparedStatement.setString(5, orderVo.getMenu_name());
+            preparedStatement.setInt(6, orderVo.getMenu_defaultprice());
+            preparedStatement.setInt(7, orderVo.getOrder_count());
+            preparedStatement.setString(8, orderVo.getReceipt_id());
+            preparedStatement.setString(9, orderVo.getOrder_state());
+            preparedStatement.setString(10, orderVo.getRequests());
             return preparedStatement;
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
@@ -353,5 +354,14 @@ public class OrderDao {
                 }
                 ,receipt_id);
         return list.get(0);
+    }
+    public int getDiscount_rate_by_receipt_id(String receipt_id){
+        List<Integer> rate = jdbcTemplate.query(SQL.Order.GET_DISCOUNT_RATE_BY_RECEIPT_ID,
+                (resultSet,i) -> {
+            int discount_rate = resultSet.getInt("discount_rate");
+            return discount_rate;
+
+                },receipt_id);
+        return rate.get(0);
     }
 }

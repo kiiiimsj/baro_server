@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class StoreFindAllVo {
 
     private int store_id;
+    private int discount_rate;
     private String store_name;
     private String store_location;
     private String store_info;
@@ -21,8 +22,9 @@ public class StoreFindAllVo {
     private double distance;
 
     @Builder
-    public StoreFindAllVo(int store_id, String store_name, String store_info, double distance, String store_location, String store_image, String is_open) {
+    public StoreFindAllVo(int store_id ,int discount_rate, String store_name, String store_info, double distance, String store_location, String store_image, String is_open) {
         this.store_id = store_id;
+        this.discount_rate = discount_rate;
         this.store_name = store_name;
         this.store_info = store_info;
         this.store_location = store_location;
@@ -34,6 +36,7 @@ public class StoreFindAllVo {
     public HashMap<String, Object> convertMap() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("store_id", store_id);
+        map.put("discount_rate", discount_rate);
         map.put("store_name", store_name);
         map.put("distance",distance);
         map.put("store_info", store_info);
