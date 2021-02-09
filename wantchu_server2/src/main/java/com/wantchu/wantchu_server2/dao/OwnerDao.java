@@ -548,4 +548,12 @@ public class OwnerDao {
     }
 
 
+    public void setStoreDiscount(OwnerSetStoreDiscountDto requestDto) {
+        jdbcTemplate.update(connection -> {
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STORE_DISCOUNT_RATE);
+           preparedStatement.setInt(2, requestDto.getStore_id());
+           preparedStatement.setInt(1, requestDto.getDiscount_rate());
+           return preparedStatement;
+        });
+    }
 }

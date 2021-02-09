@@ -12,6 +12,7 @@ import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -440,4 +441,11 @@ public class OwnerService {
         return jsonObject;
     }
 
+    public JSONObject setStoreDiscount(OwnerSetStoreDiscountDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStoreDiscount(requestDto);
+        jsonObject.put("message", "할인율 변경 완료");
+        jsonObject.put("result", true);
+        return jsonObject;
+    }
 }
