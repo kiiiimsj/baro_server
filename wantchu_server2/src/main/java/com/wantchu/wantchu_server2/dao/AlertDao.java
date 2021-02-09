@@ -97,6 +97,14 @@ public class AlertDao {
                 }
         );
     }
+
+    public void insertExtraByMenu(String phone) {
+        jdbcTemplate.update( con -> {
+            PreparedStatement preparedStatement = con.prepareStatement(SQL.Alert.INSERT_ALL_FOR_NEW);
+            preparedStatement.setString(1,phone);
+            return  preparedStatement;
+        });
+    }
 }
 
 //    public void deleteFavorite(FavoriteVo favoriteVo) throws FavoriteDeleteException {

@@ -9,6 +9,7 @@ import com.wantchu.wantchu_server2.owner.exception.StatisticsNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -423,6 +424,16 @@ public class OwnerDao {
                 SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class, store_id);
         return sumOfCoupon;
     }
+    public int findCalculateDiscount(int store_id) {
+        try {
+            Integer sumOfDiscount = jdbcTemplate.queryForObject(
+                    SQL.Order.CALCULATE_DISCOUNT_PRICE, Integer.class, store_id, store_id);
+            return sumOfDiscount;
+        }catch (EmptyResultDataAccessException e){
+            return 0;
+        }
+
+    }
 
     public void setStoreOpenOrClosed(String is_open, int store_id) {
         jdbcTemplate.update(connection -> {
@@ -535,4 +546,6 @@ public class OwnerDao {
             return list;
         }
     }
+
+
 }

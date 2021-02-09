@@ -95,4 +95,16 @@ public class AlertService {
         return jsonObject;
     }
 
+    public JSONObject insertAllForNew(String phone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try{
+            alertDao.insertExtraByMenu(phone);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "정상적으로 alertsbymembers 등록이 완료되었습니다.");
+        }
+        catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }

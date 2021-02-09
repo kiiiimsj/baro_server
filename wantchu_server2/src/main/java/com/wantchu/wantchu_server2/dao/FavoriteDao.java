@@ -32,6 +32,7 @@ public class FavoriteDao {
                 (resultSet, i) -> {
                     FavoriteInfoDistanceVo infoVo = new FavoriteInfoDistanceVo();
                      infoVo.setStore_id(resultSet.getInt("store_id"));
+                     infoVo.setDiscount_rate(resultSet.getInt("discount_rate"));
                      infoVo.setDistance(resultSet.getDouble("distance"));
                      infoVo.setStore_name(resultSet.getString("store_name"));
                      infoVo.setStore_location(resultSet.getString("store_location"));

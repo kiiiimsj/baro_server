@@ -4,10 +4,7 @@ import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByKeywordDto;
 import com.wantchu.wantchu_server2.store.dto.StoreInfoFindByTypeDto;
 import com.wantchu.wantchu_server2.store.dto.StoreLocationDto;
-import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
-import com.wantchu.wantchu_server2.store.exception.StoreKeywordNotFoundException;
-import com.wantchu.wantchu_server2.store.exception.StoreSearchException;
-import com.wantchu.wantchu_server2.store.exception.StoreTypeNotFoundException;
+import com.wantchu.wantchu_server2.store.exception.*;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.jetbrains.annotations.NotNull;
@@ -178,6 +175,30 @@ public class StoreDao {
             throw new StoreSearchException();
         }
         else{
+            return list;
+        }
+    }
+
+    public List<StoreFindAllVo> findAllStore(@NotNull StoreLocationDto dto) throws StoreAllNotFoundException {
+        List<StoreFindAllVo> list = jdbcTemplate.query(
+                SQL.Store.FIND_All,
+                (resultSet, i) -> {
+                    StoreFindAllVo storeInfoVo = StoreFindAllVo.builder()
+                            .store_id(resultSet.getInt("store_id"))
+                            .discount_rate(resultSet.getInt("discount_rate"))
+                            .store_name(resultSet.getString("store_name"))
+                            .store_info(resultSet.getString("store_info"))
+                            .store_location(resultSet.getString("store_location"))
+                            .is_open(resultSet.getString("is_open"))
+                            .store_image(resultSet.getString("store_image") == null ? "default.png" : resultSet.getString("store_image"))
+                            .distance(resultSet.getDouble("distance"))
+                            .build();
+                    return storeInfoVo;
+                }
+                , dto.getLatitude(),dto.getLongitude(),dto.getLatitude());
+        if(list.size() == 0) {
+            throw new StoreAllNotFoundException();
+        } else {
             return list;
         }
     }

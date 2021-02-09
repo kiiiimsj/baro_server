@@ -93,6 +93,9 @@ public class ControllerConfigure {
         dataSource.setInitialSize(2);
         dataSource.setMaxIdle(10);
         dataSource.setMaxActive(10);
+        dataSource.setValidationQuery("select 1");
+        dataSource.setTestWhileIdle(true);
+        dataSource.setTimeBetweenEvictionRunsMillis(7200000);
         return dataSource;
     }
 

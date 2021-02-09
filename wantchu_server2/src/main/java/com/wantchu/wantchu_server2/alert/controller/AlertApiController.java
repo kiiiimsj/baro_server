@@ -58,4 +58,11 @@ public class AlertApiController {
         org.json.simple.JSONObject jsonObject = alertService.alertReadCheck(alert_id, phone);
         WriteToServer.send(response, jsonObject);
     }
+    @GetMapping("/InsertAllForNew.do")
+    public void insertAllForNew(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String phone = request.getParameter("phone");
+        org.json.simple.JSONObject jsonObject = alertService.insertAllForNew(phone);
+        WriteToServer.send(response, jsonObject);
+    }
+
 }

@@ -9,6 +9,7 @@ public class SQL {
         public static final String FIND_NEW_ALERT_COUNT = "SELECT COUNT(*) FROM alertsbymembers WHERE phone = ? AND is_read = 'N'";
         public static final String GET_ALERT_DETAIL_CONTENT = "SELECT alert_content FROM alert WHERE alert_id=?";
         public static final String ALERT_READ_CHECK = "UPDATE alertsbymembers SET is_read = 'Y' where alert_id=? AND phone=?";
+        public static final String INSERT_ALL_FOR_NEW = "INSERT INTO alertsbymembers (phone,alert_id) SELECT phone,alert_id FROM members NATURAL JOIN alert WHERE phone = ?";
     }
 
     public static class Type {
@@ -54,6 +55,10 @@ public class SQL {
         public static final String UPDATE_STORE_LOCATION = "UPDATE stores SET store_location=? WHERE store_id=?";
         public static final String UPDATE_STORE_INFO = "UPDATE stores SET store_info=? WHERE store_id=?";
         public static final String UPDATE_STORE_OPEN_STATUS = "UPDATE stores SET is_open=? WHERE store_id=?";
+        public static final String FIND_All = "SELECT store_id,discount_rate, store_name, " +
+                "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores"
+                +" ORDER BY is_open='N'";
     }
 
     public static class Member {
@@ -78,10 +83,10 @@ public class SQL {
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
         public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
         public static final String UPDATE_STATUS_COMPLETE="UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
-        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(sum(menu_defaultprice*order_count),0) AS default_total_price FROM orders\n" +
+        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(sum(menu_defaultprice*order_count*(1-discount_rate)),0) AS default_total_price FROM orders\n" +
                 "where store_id=? AND order_state='DONE' AND order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS A\n" +
-                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,ifnull(SUM(extra_price*extra_count),0) AS extra_total_price\n" +
+                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,ifnull(SUM(extra_price*extra_count*(1-discount_rate)),0) AS extra_total_price\n" +
                 "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS B\n" +
@@ -92,10 +97,10 @@ public class SQL {
 
         //public static final String UPDATE_OWNER_DEVICE_TOKEN = "UPDATE owners SET owner_device_token = ? WHERE phone = ?";
         public static final String FIND_DUPLICATE_TOKEN = "SELECT phone FROM owners WHERE store_id=? AND owner_device_token=?";
-        public static final String FIND_MENU_LIST_STATISTICS = "SELECT * FROM (SELECT menu_name, count(*) as menu_count, IFNULL(sum(menu_defaultprice*order_count),0) AS default_total_price FROM orders\n" +
+        public static final String FIND_MENU_LIST_STATISTICS = "SELECT * FROM (SELECT menu_name, SUM(order_count) as menu_count, IFNULL(sum(menu_defaultprice*order_count*(1-discount_rate)),0) AS default_total_price FROM orders\n" +
                 "where store_id=? AND order_state='DONE' AND order_date BETWEEN ? AND DATE_ADD(? ,INTERVAL 1 DAY)\n" +
                 "GROUP BY menu_name) AS A\n" +
-                "LEFT OUTER JOIN (SELECT menu_name as menu_name2, ifnull(SUM(extra_price*extra_count),0) AS extra_total_price\n" +
+                "LEFT OUTER JOIN (SELECT menu_name as menu_name2, ifnull(SUM(extra_price*extra_count*(1-discount_rate)),0) AS extra_total_price\n" +
                 "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(? ,INTERVAL 1 DAY)\n" +
                 "GROUP BY menu_name) AS B\n" +
@@ -134,9 +139,9 @@ public class SQL {
     }
 
     public static class Order {
-        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state, store_image, store_id FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id Limit ?,?;";
-        public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT, store_image, store_latitude, store_longitude, store_phone FROM orders NATURAL JOIN stores WHERE (phone =? AND order_state ='PREPARING' OR order_state ='ACCEPT') GROUP BY receipt_id;";
+        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default,?, default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state, store_image, store_id FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id ORDER BY order_date DESC Limit ?,?";
+        public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT, store_image, store_latitude, store_longitude, store_phone FROM orders NATURAL JOIN stores WHERE phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT') GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(menu_defaultprice*order_count),0) from orders where store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY)";
         public static final String FIND_ORDER_IDS_BY_RECEIPT_ID = "SELECT order_id FROM orders WHERE receipt_id=?";
@@ -157,7 +162,15 @@ public class SQL {
         public static final String CALCULATE_DEFAULT_PRICE = "select ifnull(sum(menu_defaultprice*order_count),0) \n" +
                 "from orders\n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 1 DAY)";
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)";
+        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT A.ds_total_prices + B.ds_extra_prices FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate),0) AS ds_total_prices FROM orders\n" +
+                "   where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                "    GROUP BY menu_name) AS A\n" +
+                "    natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*discount_rate),0) AS ds_extra_prices\n" +
+                "    FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                "    where store_id= ? AND order_state='DONE' and order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                "    GROUP BY menu_name) AS B ";
+        public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
 
     public static class ExtraOrder {
@@ -167,7 +180,7 @@ public class SQL {
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders WHERE order_id=?";
         public static final String CALCULATE_EXTRA_PRICE = "select ifnull(sum(extra_price*extra_count*order_count), 0) as extra_price from extraorders natural join orders \n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 1 DAY)";
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)";
     }
 
     public static class Coupon {
@@ -184,7 +197,7 @@ public class SQL {
         public static final String CALCULATE_COUPON_PRICE = "select ifnull(sum(discount_price),0) \n" +
                 "from couponhistories \n" +
                 "where store_id=?\n" +
-                "and use_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) and DATE_ADD(NOW(), INTERVAL 1 DAY)";
+                "and use_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) and DATE_ADD(NOW(), INTERVAL 7 DAY)";
     }
 
     public static class CouponsByMembers {
@@ -207,7 +220,7 @@ public class SQL {
 
     public static class Favorite {
         public static final String FIND_FAVORITES_BY_PHONE
-                = "SELECT store_id, (6371*acos(cos(radians(?))*cos(radians(store_latitude))*cos(radians(store_longitude)\n" +
+                = "SELECT store_id,discount_rate, (6371*acos(cos(radians(?))*cos(radians(store_latitude))*cos(radians(store_longitude)\n" +
                 "\n" +
                 "\t-radians(?))+sin(radians(?))*sin(radians(store_latitude))))*1000\n" +
                 "\n" +
@@ -270,5 +283,7 @@ public class SQL {
         public static final String INSERT_REQUIRED_EXTRAS =  "INSERT INTO requiredextras VALUES(?,?)";
         public static final String PRINT_REQUIRED_EXTRAS = "SELECT extra_id,extra_group,store_id,extra_name,extra_price FROM requiredextras NATURAL JOIN extras WHERE store_id = ?";
         public static final String DELETE_REQUIRED_EXTRAS = "DELETE FROM requiredextras where extra_id = ?";
+
+        public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,store_id,representative_name FROM orders natural join stores WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC \n";
     }
 }

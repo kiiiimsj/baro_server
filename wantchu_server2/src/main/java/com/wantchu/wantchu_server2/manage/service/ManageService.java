@@ -604,4 +604,23 @@ public class ManageService {
         }
         return jsonObject;
     }
+
+    public JSONObject findOrderListByPhoneForManage(String phone) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<FindOrderListByPhoneForManageVo> list = manageDao.findOrderList(phone);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 order list 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(FindOrderListByPhoneForManageVo data : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("requiredExtras", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
 }
