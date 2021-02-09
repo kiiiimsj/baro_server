@@ -124,11 +124,13 @@ public class OrderService {
         String requests = orderDao.getRequests(receipt_id);
         List<Integer> orderIdList = orderDao.findOrderIdsByReceiptId(receipt_id);
         int discount_rate = orderDao.getDiscount_rate_by_receipt_id(receipt_id);
+        int coupon_discount = orderDao.getCoupon_Discount_by_receipt_id(receipt_id);
         Iterator<Integer> iterator = orderIdList.iterator();
         jsonObject.put("result", true);
         jsonObject.put("message", "상세 주문 내역 가져오기 성공");
         jsonObject.put("requests", requests);
         jsonObject.put("discount_rate", discount_rate);
+        jsonObject.put("coupon_discount", coupon_discount);
         org.json.simple.JSONArray arrayOfOrders = ObjectMaker.getSimpleJSONArray();
 
         while(iterator.hasNext()) {
@@ -275,8 +277,10 @@ public class OrderService {
                 int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
                 int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
                 int discount_rate = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
+                int coupon_discount = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
                 jTemp.put("total_price", extraSum + orderSum);
                 jTemp.put("discount_rate", discount_rate);
+                jTemp.put("coupon_discount", coupon_discount);
                 jsonArray.add(jTemp);
             }
             jsonObject.put("order", jsonArray);

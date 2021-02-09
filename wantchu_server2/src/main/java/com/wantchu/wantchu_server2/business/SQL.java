@@ -91,6 +91,7 @@ public class SQL {
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS B\n" +
                 "ON A.dater1=B.dater2";
+        public static final String UPDATE_STORE_DISCOUNT_RATE = "UPDATE stores SET discount_rate = ? WHERE store_id = ?";
 
 
         //public static final String FIND_STORE_STATISTICS_EXTRA="SELECT DATE(order_date),IFNULL(SUM(extra_price),0) as extra_total_price FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id where store_id=? and order_date BETWEEN ? AND ? GROUP BY DATE(order_date)";
@@ -139,8 +140,10 @@ public class SQL {
     }
 
     public static class Order {
-        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default,?, default, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT receipt_id, store_name, order_date, sum(order_count) as CNT,order_state, store_image,orders.discount_rate ,orders.store_id FROM orders inner JOIN stores ON orders.store_id = stores.store_id WHERE phone =? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id ORDER BY order_date DESC Limit ?,?";
+        public static final String INSERT_ORDER = "INSERT INTO orders VALUES(default, default, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        public static final String FIND_ORDER_LIST_BY_PHONE = "SELECT orders.receipt_id, store_name, order_date, sum(order_count) as CNT,order_state, store_image,orders.discount_rate ,orders.store_id,discount_price AS coupon_discount\n" +
+                " FROM orders inner JOIN stores ON orders.store_id = stores.store_id left outer JOIN couponhistories ON couponhistories.receipt_id = orders.receipt_id\n" +
+                " WHERE orders.phone = ? AND (order_state='CANCEL' OR order_state='DONE') GROUP BY receipt_id ORDER BY order_date DESC Limit ?,?";
         public static final String FIND_ORDER_LIST_BY_PHONE_PREPARING_OR_ACCEPT = "SELECT receipt_id, store_name, order_date, order_state,sum(order_count) as CNT, store_image, store_latitude, store_longitude, store_phone FROM orders INNER JOIN stores ON orders.store_id = stores.store_id WHERE phone =? AND (order_state ='PREPARING' OR order_state ='ACCEPT') GROUP BY receipt_id;";
         public static final String TOTAL_PRICE_OF_ORDER_BY_RECEIPT_ID = "SELECT IFNULL(sum(menu_defaultprice*order_count),0) from orders where receipt_id=?";
         public static final String TOTAL_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(menu_defaultprice*order_count),0) from orders where store_id=? AND order_date between ? AND DATE_ADD(?,INTERVAL 1 DAY)";
@@ -194,6 +197,7 @@ public class SQL {
         public static final String INSERT_COUPON_HISTORY = "INSERT INTO couponhistories VALUES(default, ?, ?, default, ?, ?, ?, ?)";
         public static final String TOTAL_DISCOUNT_PRICE_OF_ORDERS_BETWEEN_DATE = "select ifnull(sum(discount_price),0) from couponhistories where store_id=? and use_date between ? and DATE_ADD(?,INTERVAL 1 DAY)";
         public static final String FIND_PRICE_INFO_BY_RECEIPT_ID = "select discount_price, total_price from couponhistories where receipt_id=?";
+        public static final String GET_COUPON_DISCOUNT_BY_RECEIPT_ID = "select discount_price from couponhistories where receipt_id=?";
         public static final String CALCULATE_COUPON_PRICE = "select ifnull(sum(discount_price),0) \n" +
                 "from couponhistories \n" +
                 "where store_id=?\n" +
