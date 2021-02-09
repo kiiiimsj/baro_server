@@ -73,6 +73,7 @@ public class OrderDao {
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
                     orderListVo.setStore_image(resultSet.getString("store_image"));
                     orderListVo.setStore_id(resultSet.getInt("store_id"));
+                    orderListVo.setDiscount_rate(resultSet.getInt("discount_rate"));
                     return orderListVo;
                 }
                 , phone,startPoint,startPoint+20);
