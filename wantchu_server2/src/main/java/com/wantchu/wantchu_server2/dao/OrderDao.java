@@ -11,6 +11,7 @@ import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -371,8 +372,12 @@ public class OrderDao {
         return rate.get(0);
     }
     public int getCoupon_Discount_by_receipt_id(String receipt_id) {
-        int coupon_discount = jdbcTemplate.queryForObject(SQL.CouponHistory.GET_COUPON_DISCOUNT_BY_RECEIPT_ID, Integer.class, receipt_id);
-        return coupon_discount;
+        try {
+            int coupon_discount = jdbcTemplate.queryForObject(SQL.CouponHistory.GET_COUPON_DISCOUNT_BY_RECEIPT_ID, Integer.class, receipt_id);
+            return coupon_discount;
+        } catch(EmptyResultDataAccessException e) {
+            return 0;
+        }
     }
 
 
