@@ -59,6 +59,7 @@ public class SQL {
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores"
                 +" ORDER BY is_open='N'";
+        public static final String GET_DISCOUNT_RATE = "SELECT discount_rate FROM stores WHERE store_id= ?";
     }
 
     public static class Member {

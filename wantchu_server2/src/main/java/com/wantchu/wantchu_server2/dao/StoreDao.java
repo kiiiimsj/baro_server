@@ -202,4 +202,9 @@ public class StoreDao {
             return list;
         }
     }
+
+    public int getStoreDiscount(int store_id) {
+        int discount_rate = jdbcTemplate.queryForObject(SQL.Store.GET_DISCOUNT_RATE,Integer.class,store_id);
+        return discount_rate;
+    }
 }

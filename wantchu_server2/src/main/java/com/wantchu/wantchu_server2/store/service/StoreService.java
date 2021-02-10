@@ -220,4 +220,13 @@ public class StoreService {
         }
         return jsonObject;
     }
+
+    public JSONObject getStoreDiscount(int store_id) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        int discount_rate = storeDao.getStoreDiscount(store_id);
+        jsonObject.put("result", true);
+        jsonObject.put("message", "가게 할인률 출력");
+        jsonObject.put("discount_rate", discount_rate);
+        return jsonObject;
+    }
 }
