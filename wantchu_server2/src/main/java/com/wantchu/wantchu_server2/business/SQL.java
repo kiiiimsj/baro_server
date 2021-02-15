@@ -249,7 +249,7 @@ public class SQL {
         public static final String DELETE_NEW_STORE = "DELETE FROM new_stores WHERE store_id = ?";
         public static final String PRINT_NEW_STORE = "select new_store_id, store_id, store_name from new_stores ns natural join stores order by new_store_id; ";
 
-        public static final String INSERT_ALERT = "INSERT INTO alert VALUES (NULL,?,?,CURRENT_TIME)" ;
+        public static final String INSERT_ALERT = "INSERT INTO alert VALUES (NULL,?,?,CURRENT_TIME)";
         public static final String DELETE_ALERT = "DELETE FROM alert WHERE alert_id = ?";
         public static final String PRINT_ALERT = "SELECT alert_id,alert_title FROM alert";
 
@@ -285,10 +285,11 @@ public class SQL {
         public static final String PRINT_EXTRA_BY_MENU = "SELECT id,extra_maxcount,extra_name,extra_price FROM extrasbymenus NATURAL JOIN extras WHERE menu_id = ?";
 
         public static final String SELECT_LAST_INSERT_ID = "SELECT LAST_INSERT_ID() AS extra_id";
-        public static final String INSERT_REQUIRED_EXTRAS =  "INSERT INTO requiredextras VALUES(?,?)";
+        public static final String INSERT_REQUIRED_EXTRAS = "INSERT INTO requiredextras VALUES(?,?)";
         public static final String PRINT_REQUIRED_EXTRAS = "SELECT extra_id,extra_group,store_id,extra_name,extra_price FROM requiredextras NATURAL JOIN extras WHERE store_id = ?";
         public static final String DELETE_REQUIRED_EXTRAS = "DELETE FROM requiredextras where extra_id = ?";
 
-        public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,store_id,representative_name FROM orders natural join stores WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC \n";
+        public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,orders.store_id,representative_name FROM orders INNER join stores ON orders.store_id = stores.store_id\n" +
+                " WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC ,order_date desc";
     }
 }
