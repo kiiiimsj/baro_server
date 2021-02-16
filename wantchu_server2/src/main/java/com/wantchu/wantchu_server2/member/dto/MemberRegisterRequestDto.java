@@ -13,11 +13,13 @@ public class MemberRegisterRequestDto {
     private String email;
     private String nick;
     private String pass;
+    private String marketing;
 
-    public MemberRegisterRequestDto(String phone, String email, String nick, String pass) {
+    public MemberRegisterRequestDto(String phone, String email, String nick, String pass,String marketing) {
         this.phone = phone;
         this.email = email;
         this.nick = nick;
         this.pass = pass;
+        this.marketing = marketing;
     }
 }

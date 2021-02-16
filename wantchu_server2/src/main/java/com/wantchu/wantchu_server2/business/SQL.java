@@ -67,7 +67,7 @@ public class SQL {
         public static final String IS_VALID_ACCOUNT = "SELECT * FROM members WHERE phone=? AND pass=sha2(?, 256)";
         public static final String CHECK_PHONE = "SELECT * FROM members WHERE phone = ?";
         public static final String CHECK_EMAIL = "SELECT * FROM members WHERE email = ?";
-        public static final String REGISTER = "INSERT INTO members VALUES(?,?,?,sha2(?, 256),DEFAULT, DEFAULT)";
+        public static final String REGISTER = "INSERT INTO members VALUES(?,?,?,sha2(?, 256),DEFAULT, DEFAULT,?)";
         public static final String UPDATE_PASS = "UPDATE members SET pass=sha2(?, 256) WHERE phone=?";
         public static final String UPDATE_EMAIL = "UPDATE members SET email=? WHERE phone=?";
         public static final String UPDATE_DEVICE_TOKEN = "UPDATE members SET device_token = ? WHERE phone = ?";
