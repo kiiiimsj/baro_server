@@ -79,6 +79,11 @@ public class MemberDao {
             preparedStatement.setString(2, registerRequestDto.getEmail());
             preparedStatement.setString(3, registerRequestDto.getNick());
             preparedStatement.setString(4, registerRequestDto.getPass());
+            if (new Boolean(registerRequestDto.getMarketing())) {
+                preparedStatement.setString(5, "Y");
+            }else{
+                preparedStatement.setString(5, "N");
+            }
             return preparedStatement;
         });
     }
