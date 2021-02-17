@@ -84,10 +84,10 @@ public class SQL {
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
         public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
         public static final String UPDATE_STATUS_COMPLETE="UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
-        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(sum(menu_defaultprice*order_count*(1-discount_rate)),0) AS default_total_price FROM orders\n" +
+        public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(floor(sum(menu_defaultprice*order_count*(100-discount_rate)/100)),0) AS default_total_price FROM orders\n" +
                 "where store_id=? AND order_state='DONE' AND order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS A\n" +
-                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,ifnull(SUM(extra_price*extra_count*(1-discount_rate)),0) AS extra_total_price\n" +
+                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,IFNULL(floor(SUM(extra_price*extra_count*(100-discount_rate) / 100)),0) AS extra_total_price\n" +
                 "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS B\n" +
