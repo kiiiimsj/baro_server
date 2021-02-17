@@ -291,5 +291,6 @@ public class SQL {
 
         public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,orders.store_id,representative_name FROM orders INNER join stores ON orders.store_id = stores.store_id\n" +
                 " WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC ,order_date desc";
+        public static final String PRINT_MARKETING_LIST = "SELECT device_token from members where marketing = 'Y'";
     }
 }

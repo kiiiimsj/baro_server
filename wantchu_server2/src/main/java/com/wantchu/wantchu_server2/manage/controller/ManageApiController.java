@@ -290,6 +290,10 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.findOrderListByPhoneForManage(phone);
         WriteToServer.send(response, jsonObject);
     }
-
+    @PostMapping("/SendMarketing.do")
+    public void printMarketingInfo(@RequestBody @NotNull MarketingDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.printMarketingInfo(request);
+        WriteToServer.send(response, jsonObject);
+    }
 
 }

@@ -3,6 +3,7 @@ package com.wantchu.wantchu_server2.manage.service;
 import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.ManageDao;
+import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.exception.NotFoundRequiredExtrasException;
 import com.wantchu.wantchu_server2.vo.*;
@@ -618,6 +619,28 @@ public class ManageService {
                 jsonArray.add(jTemp);
             }
             jsonObject.put("requiredExtras", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject printMarketingInfo(MarketingDto request) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<PrintMarketingInfoVo> list = manageDao.printMarketingInfo();
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 marketingInfoList 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintMarketingInfoVo data : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            FcmUtil fcmUtil = new FcmUtil();
+            fcmUtil.send_FCM_Marketing(list,request.getTitle(),request.getContent(),jsonObject);
+
+            jsonObject.put("marketingInfos", jsonArray);
         } catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
