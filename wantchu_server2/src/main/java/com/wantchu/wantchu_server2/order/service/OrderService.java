@@ -312,6 +312,8 @@ public class OrderService {
                 objectOfOrder.put("order_state", orderVo.getOrder_state());
                 int extraOrderSum = orderDao.findExtraOrderTotalPrice(receipt_id);
                 int menuDefaultPriceSum = orderDao.findOrderTotalPrice(receipt_id);
+                int discount_rate = orderDao.getDiscount_rate_by_receipt_id(receipt_id);
+                objectOfOrder.put("discount_rate", discount_rate);
                 objectOfOrder.put("total_price", extraOrderSum + menuDefaultPriceSum);
                 try {
                     CouponHistoryVo historyVo = orderDao.findOrderPriceInfoByReceiptId(receipt_id);
