@@ -519,4 +519,19 @@ public class ManageDao {
             return list;
         }
     }
+
+    public List<PrintMarketingInfoVo> printMarketingInfo() throws NotFoundMarketingInfoListException {
+        List<PrintMarketingInfoVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_MARKETING_LIST,
+                (resultSet, i) -> {
+                    PrintMarketingInfoVo vo = new PrintMarketingInfoVo(resultSet.getString("device_token"));
+                    return vo;
+                });
+        if(list.size() == 0) {
+            throw new NotFoundMarketingInfoListException();
+        }
+        else{
+            return list;
+        }
+    }
 }
