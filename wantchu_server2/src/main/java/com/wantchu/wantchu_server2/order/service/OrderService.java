@@ -277,7 +277,7 @@ public class OrderService {
                 int extraSum = orderDao.findExtraOrderTotalPrice(info.getReceipt_id());
                 int orderSum = orderDao.findOrderTotalPrice(info.getReceipt_id());
                 int discount_rate = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
-                int coupon_discount = orderDao.getDiscount_rate_by_receipt_id(info.getReceipt_id());
+                int coupon_discount = orderDao.getCoupon_Discount_by_receipt_id(info.getReceipt_id());
                 jTemp.put("total_price", extraSum + orderSum);
                 jTemp.put("discount_rate", discount_rate);
                 jTemp.put("coupon_discount", coupon_discount);
