@@ -87,7 +87,7 @@ public class SQL {
         public static final String FIND_STORE_STATISTICS_DEFAULT="SELECT * FROM (SELECT DATE(order_date) AS dater1 ,IFNULL(floor(sum(menu_defaultprice*order_count*(100-discount_rate)/100)),0) AS default_total_price FROM orders\n" +
                 "where store_id=? AND order_state='DONE' AND order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS A\n" +
-                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,IFNULL(floor(SUM(extra_price*extra_count*(100-discount_rate) / 100)),0) AS extra_total_price\n" +
+                "LEFT OUTER JOIN (SELECT DATE(order_date) AS dater2 ,IFNULL(floor(SUM(extra_price*extra_count*order_count*(100-discount_rate) / 100)),0) AS extra_total_price\n" +
                 "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 "where store_id=? AND order_state='DONE' and order_date BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)\n" +
                 "GROUP BY DATE(order_date)) AS B\n" +
@@ -166,14 +166,14 @@ public class SQL {
         public static final String CALCULATE_DEFAULT_PRICE = "select ifnull(sum(menu_defaultprice*order_count),0) \n" +
                 "from orders\n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)";
-        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT A.ds_total_prices + B.ds_extra_prices FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate),0) AS ds_total_prices FROM orders\n" +
-                "   where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
-                "    GROUP BY menu_name) AS A\n" +
-                "    natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*discount_rate),0) AS ds_extra_prices\n" +
-                "    FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
-                "    where store_id= ? AND order_state='DONE' and order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
-                "    GROUP BY menu_name) AS B ";
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY) AND order_state = 'DONE'";
+        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT A.ds_total_prices + B.ds_extra_prices FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate /100),0) AS ds_total_prices FROM orders\n" +
+                "where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                " GROUP BY menu_name) AS A\n" +
+                "natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*order_count*discount_rate /100),0) AS ds_extra_prices\n" +
+                " FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                " where store_id= ? AND order_state='DONE' and order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                " GROUP BY menu_name) AS B ";
         public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
 
@@ -184,7 +184,7 @@ public class SQL {
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders WHERE order_id=?";
         public static final String CALCULATE_EXTRA_PRICE = "select ifnull(sum(extra_price*extra_count*order_count), 0) as extra_price from extraorders natural join orders \n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)";
+                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY) AND order_state = 'DONE' ";
     }
 
     public static class Coupon {
