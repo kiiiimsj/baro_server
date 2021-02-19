@@ -292,5 +292,20 @@ public class SQL {
         public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,orders.store_id,representative_name FROM orders INNER join stores ON orders.store_id = stores.store_id\n" +
                 " WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC ,order_date desc";
         public static final String PRINT_MARKETING_LIST = "SELECT device_token from members where marketing = 'Y'";
+
+        public static final String GET_PAYBACK_AMOUNT = "SELECT A.store_id,store_name,A.menu_payback+B.extra_payback as payBackSum FROM (SELECT store_name,orders.store_id ,IFNULL(floor(sum(case \n" +
+                "  when orders.discount_rate - ? >= 0 then menu_defaultprice * order_count * ? /100\n" +
+                "  ELSE menu_defaultprice * order_count * orders.discount_rate /100\n" +
+                "  END)),0) AS menu_payback FROM orders\n" +
+                " INNER JOIN stores ON orders.store_id = stores.store_id \n"+
+                "  Where order_state='DONE' AND order_date BETWEEN LAST_DAY( ? - INTERVAL 1 month) + interval 1 DAY AND LAST_DAY( ? )) AS A\n" +
+                "LEFT OUTER JOIN (SELECT store_id, IFNULL(floor(SUM(case \n" +
+                "  when discount_rate - ? >= 0 then extra_price*extra_count*order_count* ? / 100\n" +
+                "  ELSE extra_price*extra_count*order_count*discount_rate/100\n" +
+                "  END)),0) AS extra_payback\n" +
+                "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                "where order_state='DONE' and order_date BETWEEN LAST_DAY( ? - INTERVAL 1 month) + interval 1 DAY AND LAST_DAY( ? )) AS B\n" +
+                "ON A.store_id=B.store_id\n" +
+                "GROUP BY A.store_id";
     }
 }

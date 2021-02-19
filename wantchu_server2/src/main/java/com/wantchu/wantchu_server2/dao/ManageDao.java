@@ -534,4 +534,18 @@ public class ManageDao {
             return list;
         }
     }
+
+    public List<PayBackListVo> payBackMoney(String date,int discount_rate) throws PayBackMoneyListNotFoundException {
+        List<PayBackListVo> list = jdbcTemplate.query(
+                SQL.Manage.GET_PAYBACK_AMOUNT,
+                (resultset, i) -> {
+                    PayBackListVo vo = new PayBackListVo(resultset.getInt("store_id"),resultset.getString("store_name"),resultset.getInt("payBackSum"));
+                    return vo;
+                },discount_rate,discount_rate,date,date,discount_rate,discount_rate,date,date);
+        if (list.size() == 0) {
+            throw new PayBackMoneyListNotFoundException();
+        }else{
+            return list;
+        }
+    }
 }
