@@ -295,5 +295,11 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.printMarketingInfo(request);
         WriteToServer.send(response, jsonObject);
     }
-
+    //달별 정산 정보 가져오기
+    @GetMapping("/PayBackMoney.do")
+    public void PayBackMoney(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String date = request.getParameter("date");
+        org.json.simple.JSONObject jsonObject = manageService.payBackMoney(date);
+        WriteToServer.send(response, jsonObject);
+    }
 }

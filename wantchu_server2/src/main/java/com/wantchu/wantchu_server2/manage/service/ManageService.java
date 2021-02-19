@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class ManageService {
     private final ManageDao manageDao;
-
+    private static final int DISCOUNT_RATE = 10;
     //시작
 
     @SuppressWarnings("unchecked")
@@ -641,6 +641,25 @@ public class ManageService {
             fcmUtil.send_FCM_Marketing(list,request.getTitle(),request.getContent(),jsonObject);
 
             jsonObject.put("marketingInfos", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject payBackMoney(String date) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<PayBackListVo> payBackSumList = manageDao.payBackMoney(date,DISCOUNT_RATE);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 정산액 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PayBackListVo data : payBackSumList) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("payBackMoneyList", jsonArray);
         } catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
