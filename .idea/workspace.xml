@@ -25,7 +25,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="" />
+    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/WEB-INF/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/WEB-INF/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/business/DateConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/business/DateConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/vo/CouponVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/vo/CouponVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wantchu_server2/target/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/target/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,6 +73,17 @@
     <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 8.5.57" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.57" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -228,6 +246,7 @@
       <workItem from="1611915212270" duration="12000" />
       <workItem from="1612608054609" duration="531000" />
       <workItem from="1613566303549" duration="139000" />
+      <workItem from="1614078339439" duration="311000" />
     </task>
     <servers />
   </component>

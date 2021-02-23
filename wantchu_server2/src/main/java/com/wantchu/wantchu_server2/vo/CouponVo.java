@@ -29,7 +29,7 @@ public class CouponVo {
         map.put("coupon_condition", coupon_condition);
         map.put("coupon_discount", coupon_discount);
         map.put("coupon_type", coupon_type);
-        map.put("coupon_enddate", DateConverter.convertDateWithTime(coupon_enddate));
+        map.put("coupon_enddate", DateConverter.convertDateWithoutTime(coupon_enddate));
         return map;
     }
 }
