@@ -1,5 +1,7 @@
 package com.wantchu.wantchu_server2.websocket;
 
+import lombok.Synchronized;
+
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,19 +48,21 @@ public class WebSocketSessionManager {
     }
 
     public static void sendMessage(String message) {
-        Set<String> keySet = sessions.keySet();
-        Iterator<String> iterator = keySet.iterator();
-        String key = null;
-        while(iterator.hasNext()) {
-            key = iterator.next();
-            ArrayList<Session> sessionArrayList = sessions.get(key);
-            Iterator<Session> sessionIterator = sessionArrayList.iterator();
-            while(sessionIterator.hasNext()) {
-                Session session = sessionIterator.next();
-                try {
-                    session.getBasicRemote().sendText(message);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        synchronized (sessions) {
+            Set<String> keySet = sessions.keySet();
+            Iterator<String> iterator = keySet.iterator();
+            String key = null;
+            while (iterator.hasNext()) {
+                key = iterator.next();
+                ArrayList<Session> sessionArrayList = sessions.get(key);
+                Iterator<Session> sessionIterator = sessionArrayList.iterator();
+                while (sessionIterator.hasNext()) {
+                    Session session = sessionIterator.next();
+                    try {
+                        session.getBasicRemote().sendText(message);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
