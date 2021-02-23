@@ -1,5 +1,7 @@
 package com.wantchu.wantchu_server2.websocket;
 
+import lombok.Synchronized;
+
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class WebSocketSessionManager {
         }
     }
 
-    public static void sendMessageToOnePerson(String user, String message) {
+   synchronized public static void sendMessageToOnePerson(String user, String message) {
         System.out.println("sendMessageToOnePerson. user : " + user + ", message : " + message);
         try {
             ArrayList<Session> sessionArrayList = sessions.get(user);

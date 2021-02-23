@@ -3,7 +3,6 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="unnamed" />
-      <artifact name="unnamed" />
     </artifacts-to-build>
   </component>
   <component name="BranchesTreeState">
@@ -25,14 +24,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war/wantchu_server2_war.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/WEB-INF/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/out/artifacts/wantchu_server2_war_exploded/WEB-INF/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/business/DateConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/business/DateConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/vo/CouponVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/src/main/java/com/wantchu/wantchu_server2/vo/CouponVo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wantchu_server2/target/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" beforeDir="false" afterPath="$PROJECT_DIR$/wantchu_server2/target/classes/com/wantchu/wantchu_server2/vo/CouponVo.class" afterDir="false" />
-    </list>
+    <list default="true" id="bf37efce-c851-4ffe-859d-117c3731370b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,7 +58,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/wantchu_server2" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.18847656" />
     <property name="project.structure.side.proportion" value="0.2638398" />
@@ -246,7 +238,7 @@
       <workItem from="1611915212270" duration="12000" />
       <workItem from="1612608054609" duration="531000" />
       <workItem from="1613566303549" duration="139000" />
-      <workItem from="1614078339439" duration="311000" />
+      <workItem from="1614078339439" duration="459000" />
     </task>
     <servers />
   </component>
@@ -278,11 +270,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="496" y="50" key="#com.intellij.j2ee.appServerIntegrations.ApplicationServersConfigurable/0.0.1536.824@0.0.1536.824" timestamp="1609395020826" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1612608588250">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1614078795507">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612608588250" />
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1609396880479" />
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1614078795507" />
     <state width="1024" height="137" key="GridCell.Tab.0.bottom" timestamp="1611322300985">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
