@@ -302,4 +302,14 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.payBackMoney(date);
         WriteToServer.send(response, jsonObject);
     }
+    @GetMapping("/PictureTest.do")
+    public void PictureTest(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.pictureTest();
+        WriteToServer.send(response, jsonObject);
+    }
+//    @PostMapping("/PictureTest.do")
+//    public void PictureTest(@RequestBody @NotNull MarketingDto request, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = manageService.pictureTest(request);
+//        WriteToServer.send(response, jsonObject);
+//    }
 }

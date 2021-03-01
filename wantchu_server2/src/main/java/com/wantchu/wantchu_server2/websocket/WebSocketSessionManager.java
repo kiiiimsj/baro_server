@@ -82,7 +82,7 @@ public class WebSocketSessionManager {
         }
     }
 
-    public static void sendMessageToOnePerson(String user) {
+    synchronized public static void sendMessageToOnePerson(String user) {
         try {
             ArrayList<Session> sessionArrayList = sessions.get(user);
             Iterator<Session> sessionIterator = sessionArrayList.iterator();
