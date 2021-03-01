@@ -675,10 +675,10 @@ public class ManageService {
 
             FileTransferServer server = null;
             try{
-                server = new FileTransferServer(21,new File("D:\\nike"));
+                server = new FileTransferServer(9999,new File("D:\\nike"));
             }catch (BindException e){
                 server.close();
-                server = new FileTransferServer(21,new File("/home/ubuntu/images/types"));
+                server = new FileTransferServer(9999,new File("/home/ubuntu/images/types"));
             }
             catch(Exception e){
                 e.printStackTrace();
