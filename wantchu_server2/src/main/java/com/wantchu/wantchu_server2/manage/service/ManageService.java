@@ -672,11 +672,10 @@ public class ManageService {
     public JSONObject pictureTest() {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
-            jsonObject.put("result", true);
-            jsonObject.put("message", "성공적으로 marketingInfoList 출력");
+
             FileTransferServer server = null;
             try{
-                server = new FileTransferServer(9999,new File("/home/ubuntu/images/types"));
+                server = new FileTransferServer(9999,new File("D:\\nike"));
             }catch (BindException e){
                 server.close();
                 server = new FileTransferServer(9999,new File("/home/ubuntu/images/types"));
