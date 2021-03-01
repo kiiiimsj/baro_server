@@ -1,6 +1,7 @@
 package com.wantchu.wantchu_server2.manage.service;
 
 import com.google.firebase.database.annotations.NotNull;
+import com.wantchu.wantchu_server2.business.ImageReceivers.FileTransferServer;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.ManageDao;
 import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
@@ -12,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.net.BindException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -660,6 +663,26 @@ public class ManageService {
                 jsonArray.add(jTemp);
             }
             jsonObject.put("payBackMoneyList", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject pictureTest() {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 marketingInfoList 출력");
+            FileTransferServer server = null;
+            try{
+                server = new FileTransferServer(9999,new File("~/types"));
+            }catch (BindException e){
+                server = new FileTransferServer(9999,new File("~/types"));
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         } catch (Exception e){
             jsonObject = ObjectMaker.getJSONObjectWithException(e);
         }
