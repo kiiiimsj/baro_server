@@ -22,7 +22,7 @@ public class ObjectMaker {
         org.json.simple.JSONObject jsonObject = new org.json.simple.JSONObject();
         jsonObject.put("result", false);
 //        jsonObject.put("message", exception.getMessage());
-        jsonObject.put("message", exception.getStackTrace());
+        jsonObject.put("message", exception.getStackTrace().toString());
         return jsonObject;
     }
 }
