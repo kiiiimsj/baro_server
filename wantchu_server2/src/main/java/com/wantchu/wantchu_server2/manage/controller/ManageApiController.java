@@ -4,7 +4,10 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.WriteToServer;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.service.ManageService;
+import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
+import com.wantchu.wantchu_server2.vo.OwnerVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -106,7 +109,11 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.alertPrint();
         WriteToServer.send(response, jsonObject);
     }
-
+    @PostMapping("/FxOwnerRegister.do")
+    public void FxOwnerRegister(@RequestBody @NotNull FxOwnerRegisterRequestDto requestDto, @org.jetbrains.annotations.NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.register(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
     //store 추가
     @PostMapping("/StoreInsert.do")
     public void storeInsert(@RequestBody @NotNull StoreInsertDto request, @NotNull HttpServletResponse response) {
