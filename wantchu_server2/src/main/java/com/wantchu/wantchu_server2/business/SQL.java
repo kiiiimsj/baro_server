@@ -78,6 +78,7 @@ public class SQL {
         public static final String UPDATE_PASS = "UPDATE owners SET pass=PASSWORD(?) WHERE phone=?";
         public static final String CHECK_PHONE = "SELECT * FROM owners WHERE phone = ?";
         public static final String CHECK_EMAIL = "SELECT * FROM owners WHERE email=?";
+        public static final String CHECK_ID = "SELECT * FROM owners WHERE id=?";
         public static final String UPDATE_EMAIL = "UPDATE owners SET email=? WHERE phone=?";
         public static final String REGISTER = "INSERT INTO owners VALUES(?,?,?,?,null)";
         public static final String CHECK_STORE_ID = "SELECT store_name FROM stores WHERE store_id=?";
