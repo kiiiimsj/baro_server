@@ -275,20 +275,6 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.extraByMenuPrint(menu_id);
         WriteToServer.send(response, jsonObject);
     }
-    //가게별 필수옵션 그룹 출력
-    @GetMapping("/RequiredExtrasPrint.do")
-    public void requiredExtrasPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        int store_id = Integer.parseInt(request.getParameter("store_id"));
-        org.json.simple.JSONObject jsonObject = manageService.requiredExtrasPrint(store_id);
-        WriteToServer.send(response, jsonObject);
-    }
-    //가게별 필수옵션 그룹 삭제
-    @GetMapping("/RequiredExtrasDelete.do")
-    public void requiredExtrasDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        int extra_id = Integer.parseInt(request.getParameter("extra_id"));
-        org.json.simple.JSONObject jsonObject = manageService.requiredExtrasDelete(extra_id);
-        WriteToServer.send(response, jsonObject);
-    }
 
     //해당 번호의 주문 정보 가져오기
     @GetMapping("/FindOrderListByPhoneForManage.do")

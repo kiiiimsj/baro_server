@@ -117,7 +117,9 @@ public class SQL {
         public static final String UPDATE_EXTRA_NAME = "UPDATE extras SET extra_name=? WHERE extra_id=?";
         public static final String INSERT_EXTRA_REQUIRED = "INSERT INTO extras VALUES(DEFAULT, ?, ?, ?, ?, 'Y')";
         public static final String INSERT_EXTRA_NOT_REQUIRED = "INSERT INTO extras VALUES(DEFAULT, ?, ?, ?, ?, 'N')";
-        public static final String FIND_LIST_BY_MENU_ID = "select em.extra_id, e.extra_price, e.extra_name, r.extra_group, em.extra_maxcount FROM extrasbymenus em NATURAL JOIN extras e NATURAL JOIN menus m left outer join requiredextras r using(extra_id) WHERE menu_id=? order by extra_group DESC, extra_price ASC";
+        public static final String FIND_LIST_BY_MENU_ID =
+                "select em.extra_id, e.extra_price, e.extra_name, e.extra_group, em.extra_maxcount FROM extrasbymenus em NATURAL JOIN " +
+                "extras e NATURAL JOIN menus m  WHERE menu_id=? order by extra_group DESC, extra_price ASC";
     }
 
     public static class RequiredExtra {
@@ -279,7 +281,7 @@ public class SQL {
 
         public static final String FIND_OWNER_BY_PHONE = "SELECT id FROM owners WHERE phone = ?";
 
-        public static final String INSERT_EXTRAS = "INSERT INTO extras VALUES(DEFAULT,?,?,?)";
+        public static final String INSERT_EXTRAS = "INSERT INTO extras VALUES(DEFAULT,?,?,?,?)";
         public static final String DELETE_EXTRAS = "DELETE FROM extras WHERE extra_id=?";
         public static final String PRINT_EXTRAS = "SELECT extra_id,extra_price,extra_name FROM extras WHERE store_id = ?";
 
@@ -287,10 +289,6 @@ public class SQL {
         public static final String DELETE_EXTRA_BY_MENU = "DELETE FROM extrasbymenus WHERE id=?";
         public static final String PRINT_EXTRA_BY_MENU = "SELECT id,extra_maxcount,extra_name,extra_price FROM extrasbymenus NATURAL JOIN extras WHERE menu_id = ?";
 
-        public static final String SELECT_LAST_INSERT_ID = "SELECT LAST_INSERT_ID() AS extra_id";
-        public static final String INSERT_REQUIRED_EXTRAS = "INSERT INTO requiredextras VALUES(?,?)";
-        public static final String PRINT_REQUIRED_EXTRAS = "SELECT extra_id,extra_group,store_id,extra_name,extra_price FROM requiredextras NATURAL JOIN extras WHERE store_id = ?";
-        public static final String DELETE_REQUIRED_EXTRAS = "DELETE FROM requiredextras where extra_id = ?";
 
         public static final String FIND_ORDER_LIST_BY_PHONE_FOR_MANAGE = "SELECT order_date,receipt_id,order_state,store_name,orders.store_id,representative_name FROM orders INNER join stores ON orders.store_id = stores.store_id\n" +
                 " WHERE phone = ? AND not order_state='CANCEL' GROUP BY receipt_id ORDER BY order_state DESC ,order_date desc";
