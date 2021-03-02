@@ -573,6 +573,17 @@ public class ManageDao {
             return true;
         }
     }
+    public boolean isIdInUse(String id) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_ID,
+                (resultSet, i) -> new OwnerVo()
+                , id);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     public void onwerRegister(FxOwnerRegisterRequestDto requestDto) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.FX_OWNER_REGISTER);
@@ -583,4 +594,6 @@ public class ManageDao {
             return preparedStatement;
         });
     }
+
+
 }

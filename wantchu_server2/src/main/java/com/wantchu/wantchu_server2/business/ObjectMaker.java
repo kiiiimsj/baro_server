@@ -21,8 +21,8 @@ public class ObjectMaker {
     public static org.json.simple.JSONObject getJSONObjectWithException(Exception exception) {
         org.json.simple.JSONObject jsonObject = new org.json.simple.JSONObject();
         jsonObject.put("result", false);
-//        jsonObject.put("message", exception.getMessage());
-        jsonObject.put("message", exception.toString());
+        jsonObject.put("message", exception.getMessage());
+//        jsonObject.put("message", exception.toString());
         return jsonObject;
     }
 }
