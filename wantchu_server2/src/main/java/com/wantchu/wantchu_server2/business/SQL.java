@@ -256,7 +256,7 @@ public class SQL {
 
         public static final String FX_OWNER_REGISTER = "INSERT INTO owners VALUES(?,?,?,sha2(?, 256))";
 
-        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,default,?,?,?)";
+        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,0,?,?,?,?,?,?,?,?,?,?,?,default,?,?,?)";
         public static final String DELETE_STORES = "DELETE FROM stores WHERE store_id=?";
         public static final String PRINT_STORES = "SELECT store_id,type_code,store_name FROM stores WHERE store_name LIKE";
 
