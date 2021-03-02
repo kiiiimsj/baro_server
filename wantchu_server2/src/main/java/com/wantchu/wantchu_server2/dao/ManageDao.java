@@ -4,7 +4,10 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.exception.*;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.*;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -547,5 +550,37 @@ public class ManageDao {
         }else{
             return list;
         }
+    }
+    public boolean isEmailInUse(String email) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_EMAIL,
+                (resultSet, i) -> new OwnerVo()
+                , email);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean isPhoneInUse(String phone) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_PHONE,
+                (resultSet, i) -> new OwnerVo()
+                , phone);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public void onwerRegister(FxOwnerRegisterRequestDto requestDto) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.FX_OWNER_REGISTER);
+            preparedStatement.setString(1, requestDto.getId());
+            preparedStatement.setString(2, requestDto.getPhone());
+            preparedStatement.setString(3, requestDto.getEmail());
+            preparedStatement.setString(4, requestDto.getPass());
+            return preparedStatement;
+        });
     }
 }

@@ -7,6 +7,9 @@ import com.wantchu.wantchu_server2.dao.ManageDao;
 import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.exception.NotFoundRequiredExtrasException;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
+import com.wantchu.wantchu_server2.owner.exception.OwnerEmailInUseException;
+import com.wantchu.wantchu_server2.owner.exception.OwnerPhoneInUseException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -688,4 +691,31 @@ public class ManageService {
         }
         return jsonObject;
     }
+
+    public JSONObject register(FxOwnerRegisterRequestDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            if(!manageDao.isEmailInUse(requestDto.getEmail())) {
+                if(!manageDao.isPhoneInUse(requestDto.getPhone())) {
+                    manageDao.onwerRegister(requestDto);
+                    jsonObject.put("result", true);
+                    jsonObject.put("message", "점주 가입에 성공했습니다. 가게를 등록해주세요.");
+                }
+                else {
+                    throw new OwnerPhoneInUseException();
+                }
+            }
+            else {
+                throw new OwnerEmailInUseException();
+            }
+        } catch(OwnerEmailInUseException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("errno", e.getErrno());
+        } catch(OwnerPhoneInUseException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("errno", e.getErrno());
+        }
+        return jsonObject;
+    }
+
 }
