@@ -574,7 +574,7 @@ public class ManageDao {
 
     public void updateTypeImage(String typeCode) {
         jdbcTemplate.update(connection -> {
-            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_STORE_IMAGE);
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_TYPE_IMAGE);
             preparedStatement.setString(1,typeCode.toLowerCase()+".png");
             preparedStatement.setString(2, typeCode);
             return preparedStatement;
