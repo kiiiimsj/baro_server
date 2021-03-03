@@ -34,8 +34,7 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertType(requestDto);
-            String typeCode = manageDao.getLastInsertTypeCode();
-            manageDao.updateTypeImage(typeCode);
+            manageDao.updateTypeImage(requestDto.getType_code());
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 type등록이 완료되었습니다.");
         }
