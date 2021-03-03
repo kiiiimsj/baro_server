@@ -553,4 +553,17 @@ public class ManageDao {
     }
 
 
+    public int getLastInsertId() {
+        int store_id = jdbcTemplate.queryForObject(SQL.Manage.SELECT_LAST_INSERT_STORE_ID,Integer.class);
+        return store_id;
+    }
+
+    public void updateStoreImage(int store_id) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_STORE_IMAGE);
+            preparedStatement.setString(1,store_id+"png");
+            preparedStatement.setInt(2, store_id);
+            return preparedStatement;
+        });
+    }
 }
