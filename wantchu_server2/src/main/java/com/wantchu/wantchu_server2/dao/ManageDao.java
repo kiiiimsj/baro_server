@@ -28,7 +28,7 @@ public class ManageDao {
     public void insertType(@NotNull TypeInsertDto requestDto) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_TYPE);
-            preparedStatement.setString(1, requestDto.getType_code());
+            preparedStatement.setString(1, requestDto.getType_code().toUpperCase());
             preparedStatement.setString(2, requestDto.getType_name());
 //            preparedStatement.setString(3, requestDto.getType_image());
             return preparedStatement;
@@ -567,10 +567,6 @@ public class ManageDao {
         });
     }
 
-    public String getLastInsertTypeCode() {
-        String typeCode = jdbcTemplate.queryForObject(SQL.Manage.GET_LAST_INSERT_TYPECODE,String.class);
-        return typeCode;
-    }
 
     public void updateTypeImage(String typeCode) {
         jdbcTemplate.update(connection -> {

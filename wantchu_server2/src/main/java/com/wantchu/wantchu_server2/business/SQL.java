@@ -244,7 +244,6 @@ public class SQL {
         public static final String DELETE_TYPE = "DELETE FROM types WHERE type_code=?";
         public static final String PRINT_TYPE = "SELECT type_code, type_name FROM types";
         public static final String UPDATE_TYPE_IMAGE = "UPDATE types SET type_image = ? WHERE type_code = ?";
-        public static final String GET_LAST_INSERT_TYPECODE = "SELECT LAST_INSERT_ID() AS type_code";
 
         public static final String INSERT_ULTRA = "INSERT INTO ultra_stores values(NULL,?, ?)";
         public static final String DELETE_ULTRA = "DELETE FROM ultra_stores WHERE store_id = ?";
