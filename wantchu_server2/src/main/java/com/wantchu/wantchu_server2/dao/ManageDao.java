@@ -30,7 +30,7 @@ public class ManageDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_TYPE);
             preparedStatement.setString(1, requestDto.getType_code());
             preparedStatement.setString(2, requestDto.getType_name());
-            preparedStatement.setString(3, requestDto.getType_image());
+//            preparedStatement.setString(3, requestDto.getType_image());
             return preparedStatement;
         });
     }
@@ -561,8 +561,22 @@ public class ManageDao {
     public void updateStoreImage(int store_id) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_STORE_IMAGE);
-            preparedStatement.setString(1,store_id+"png");
+            preparedStatement.setString(1,store_id+".png");
             preparedStatement.setInt(2, store_id);
+            return preparedStatement;
+        });
+    }
+
+    public String getLastInsertTypeCode() {
+        String typeCode = jdbcTemplate.queryForObject(SQL.Manage.GET_LAST_INSERT_TYPECODE,String.class);
+        return typeCode;
+    }
+
+    public void updateTypeImage(String typeCode) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_STORE_IMAGE);
+            preparedStatement.setString(1,typeCode.toLowerCase()+".png");
+            preparedStatement.setString(2, typeCode);
             return preparedStatement;
         });
     }
