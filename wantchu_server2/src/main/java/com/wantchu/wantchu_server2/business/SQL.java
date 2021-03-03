@@ -258,7 +258,8 @@ public class SQL {
 
         public static final String FX_OWNER_REGISTER = "INSERT INTO owners VALUES(?,?,?,sha2(?, 256))";
 
-        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,0,?,?,?,?,?,?,?,?,?,?,?,default,?,?,?)";
+        public static final String INSERT_STORES = "INSERT INTO stores VALUES(NULL,0,?,?,?,?,?,?,?,?,?,?,'default.png',default,?,?,?)";
+        public static final String UPDATE_STORE_IMAGE = "UPDATE stores SET store_image = ? WHERE store_id = ?";
         public static final String DELETE_STORES = "DELETE FROM stores WHERE store_id=?";
         public static final String PRINT_STORES = "SELECT store_id,type_code,store_name FROM stores WHERE store_name LIKE";
 
@@ -308,5 +309,7 @@ public class SQL {
                 "where order_state='DONE' and order_date BETWEEN LAST_DAY( ? - INTERVAL 1 month) + interval 1 DAY AND LAST_DAY( ? )) AS B\n" +
                 "ON A.store_id=B.store_id\n" +
                 "GROUP BY A.store_id";
+
+        public static final String SELECT_LAST_INSERT_STORE_ID = "SELECT LAST_INSERT_ID() AS store_id";
     }
 }

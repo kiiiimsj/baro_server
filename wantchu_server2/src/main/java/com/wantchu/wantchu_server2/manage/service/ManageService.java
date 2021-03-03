@@ -231,6 +231,8 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertStore(requestDto);
+            int store_id = manageDao.getLastInsertId();
+            manageDao.updateStoreImage(store_id);
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 store등록이 완료되었습니다.");
         }
