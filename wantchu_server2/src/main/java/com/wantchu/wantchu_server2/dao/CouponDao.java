@@ -104,7 +104,6 @@ public class CouponDao {
             preparedStatement.setInt(4, coupon_id);
             return preparedStatement;
         });
-        System.out.println("awef" + result);
         if(result == 0) {
             throw new CouponNotInsertException();
         }
