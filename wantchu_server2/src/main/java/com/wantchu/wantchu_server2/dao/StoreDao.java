@@ -96,6 +96,7 @@ public class StoreDao {
                             .is_open(resultSet.getString("is_open"))
                             .store_image(resultSet.getString("store_image") == null ? "default.png" : resultSet.getString("store_image"))
                             .distance(resultSet.getDouble("distance"))
+                            .discount_rate(resultSet.getInt("discount_rate"))
                             .build();
                     return storeInfoVo;
                 }
