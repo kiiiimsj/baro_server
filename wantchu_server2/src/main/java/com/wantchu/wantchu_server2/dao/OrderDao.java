@@ -3,6 +3,7 @@ package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
+import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateAndPhoneDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
@@ -291,6 +292,17 @@ public class OrderDao {
                 SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS,
                 (resultSet, i) -> resultSet.getString("receipt_id")
                 , reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date());
+        if (list.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return list;
+        }
+    }
+    public List<String> findReceiptIdsOfDoneOrdersByDateAndPhone(OrderCompleteBetweenDateAndPhoneDto reqeustDto) throws OrderNotFoundException {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS_BY_DATE_AND_PHONE,
+                (resultSet, i) -> resultSet.getString("receipt_id")
+                , "%"+reqeustDto.getPhone()+"%", reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date());
         if (list.size() == 0) {
             throw new OrderNotFoundException();
         } else {
