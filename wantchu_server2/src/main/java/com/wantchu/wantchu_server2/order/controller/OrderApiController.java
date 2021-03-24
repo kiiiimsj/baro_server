@@ -107,6 +107,11 @@ public class OrderApiController {
         org.json.simple.JSONObject jsonObject = orderService.findDoneOrdersByDate(reqeustDto);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("/OrderCompleteListByDateAndPhone.do")
+    public void findDoneOrdersByDateAndPhone(@RequestBody OrderCompleteBetweenDateAndPhoneDto reqeustDto, HttpServletResponse response){
+        org.json.simple.JSONObject jsonObject = orderService.findDoneOrdersByDateAndPhone(reqeustDto);
+        WriteToServer.send(response, jsonObject);
+    }
 
     @GetMapping("/OrderProgressingDetail.do")
     public void showOrderProgressingDetails(@NotNull HttpServletRequest request,@NotNull HttpServletResponse response){
