@@ -41,7 +41,7 @@ public class ImageController {
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
@@ -61,7 +61,7 @@ public class ImageController {
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
@@ -81,7 +81,7 @@ public class ImageController {
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
@@ -101,7 +101,7 @@ public class ImageController {
         }
         catch(Exception e){
             e.printStackTrace();
-            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png/"));
+            image = ImageIO.read(new URL("http://3.35.180.57:8080/images/default.png"));
             baos = new ByteArrayOutputStream();
             ImageIO.write(image, "png", baos);
         }
