@@ -171,7 +171,7 @@ public class SQL {
                 "from orders\n" +
                 "where store_id=?\n" +
                 "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY) AND order_state = 'DONE'";
-        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT A.ds_total_prices + B.ds_extra_prices FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate /100),0) AS ds_total_prices FROM orders\n" +
+        public static final String CALCULATE_DISCOUNT_PRICE = "SELECT floor(sum(A.ds_total_prices) + sum(B.ds_extra_prices)) FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate /100),0) AS ds_total_prices FROM orders\n" +
                 "where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
                 " GROUP BY menu_name) AS A\n" +
                 "natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*order_count*discount_rate /100),0) AS ds_extra_prices\n" +
