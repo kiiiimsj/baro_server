@@ -431,6 +431,8 @@ public class OwnerDao {
             return sumOfDiscount;
         }catch (EmptyResultDataAccessException e){
             return 0;
+        } catch (NullPointerException e){
+            return 0;
         }
 
     }
