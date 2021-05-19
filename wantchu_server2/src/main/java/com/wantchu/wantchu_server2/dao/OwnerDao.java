@@ -424,17 +424,27 @@ public class OwnerDao {
                 SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class, store_id);
         return sumOfCoupon;
     }
-    public int findCalculateDiscount(int store_id) {
+    public int findCalculateDiscountMenu(int store_id) {
         try {
             Integer sumOfDiscount = jdbcTemplate.queryForObject(
-                    SQL.Order.CALCULATE_DISCOUNT_PRICE, Integer.class, store_id, store_id);
+                    SQL.Order.CALCULATE_DISCOUNT_PRICE_MENU, Integer.class, store_id);
             return sumOfDiscount;
         }catch (EmptyResultDataAccessException e){
             return 0;
         } catch (NullPointerException e){
             return 0;
         }
-
+    }
+    public int findCalculateDiscountExtra(int store_id) {
+        try {
+            Integer sumOfDiscount = jdbcTemplate.queryForObject(
+                    SQL.Order.CALCULATE_DISCOUNT_PRICE_EXTRA, Integer.class, store_id);
+            return sumOfDiscount;
+        }catch (EmptyResultDataAccessException e){
+            return 0;
+        } catch (NullPointerException e){
+            return 0;
+        }
     }
 
     public void setStoreOpenOrClosed(String is_open, int store_id) {
