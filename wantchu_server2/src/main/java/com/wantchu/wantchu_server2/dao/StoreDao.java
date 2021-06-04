@@ -145,8 +145,13 @@ public class StoreDao {
     }
 
     public String isStoreOpen(int store_id) {
-        String is_open = jdbcTemplate.queryForObject(
-                SQL.Store.IS_STORE_OPEN, String.class, store_id);
+        String is_open;
+        try {
+            is_open = jdbcTemplate.queryForObject(
+                    SQL.Store.IS_STORE_OPEN, String.class, store_id);
+        } catch (Exception e) {
+            is_open = "E";
+        }
         return is_open;
     }
 
@@ -205,7 +210,12 @@ public class StoreDao {
     }
 
     public int getStoreDiscount(int store_id) {
-        int discount_rate = jdbcTemplate.queryForObject(SQL.Store.GET_DISCOUNT_RATE,Integer.class,store_id);
+        int discount_rate;
+        try {
+            discount_rate = jdbcTemplate.queryForObject(SQL.Store.GET_DISCOUNT_RATE, Integer.class, store_id);
+        } catch (Exception e) {
+            discount_rate = 0;
+        }
         return discount_rate;
     }
 }

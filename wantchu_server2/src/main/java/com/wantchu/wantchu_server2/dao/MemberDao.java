@@ -77,7 +77,7 @@ public class MemberDao {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Member.REGISTER);
             preparedStatement.setString(1, registerRequestDto.getPhone());
             preparedStatement.setString(2, registerRequestDto.getEmail());
-            preparedStatement.setString(3, registerRequestDto.getNick());
+            preparedStatement.setString(3, "unknown");
             preparedStatement.setString(4, registerRequestDto.getPass());
             if (new Boolean(registerRequestDto.getMarketing())) {
                 preparedStatement.setString(5, "Y");

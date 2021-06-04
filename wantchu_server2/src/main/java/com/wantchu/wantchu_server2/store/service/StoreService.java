@@ -177,6 +177,9 @@ public class StoreService {
         } else if(is_open.equals("N")) {
             jsonObject.put("result", false);
             jsonObject.put("message", "해당 매장이 영업 중이 아닙니다.");
+        } else {
+            jsonObject.put("result", false);
+            jsonObject.put("message", "해당 매장이 존재하지 않습니다.");
         }
         return jsonObject;
     }
