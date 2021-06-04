@@ -22,20 +22,20 @@ public class SQL {
     }
 
     public static class Store {
-        public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=? And is_service = 'Y' ";
+        public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=? ";
         //public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ? Limit ?,? ";
         public static final String FIND_INFO_BY_TYPE_CODE = "SELECT store_id, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
-                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE type_code=? And is_service = 'Y'"
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores WHERE type_code=?"
                 +" ORDER BY is_open='N',DISTANCE Limit ?,?";
         public static final String FIND_INFO_BY_KEYWORD = "SELECT store_id, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
-                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open,discount_rate FROM stores WHERE is_service = 'Y' AND store_name LIKE ";
+                "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open,discount_rate FROM stores WHERE store_name LIKE ";
                 /*+" ORDER BY DISTANCE";*/
         public static final String FIND_ALL_STORE_LOCATION = "SELECT store_id, store_name, store_latitude, store_longitude , " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 " +
-                "AS DISTANCE FROM stores WHERE is_service = 'Y'" +
+                "AS DISTANCE FROM stores " +
                 "HAVING DISTANCE <= 1500 " +
                 "ORDER BY distance ";
         public static final String STORE_SEARCH_BY_ULTRA = "SELECT store_id, store_name,\n" +
@@ -44,9 +44,9 @@ public class SQL {
         public static final String STORE_SEARCH_BY_NEW = "SELECT store_id, store_name,\n" +
                 "(6371*acos(cos(RADIANS( ? ))*cos(RADIANS(store_latitude))*cos(RADIANS(store_longitude)\n" +
                 "-RADIANS( ? ))+sin(RADIANS( ? ))*sin(radians(store_latitude))))*1000 AS distance , store_location, store_info, store_large_image, is_open FROM new_stores NATURAL JOIN stores    " ;
-        public static final String FIND_ALL_STORE_LOCATION2 = "SELECT store_id, store_name, store_latitude, store_longitude,(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) -radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE FROM stores WHERE is_service = 'Y' ORDER BY distance";
-        public static final String FIND_STORE_ID_BY_NAME = "SELECT store_id FROM stores WHERE store_name=? And is_service = 'Y'";
-        public static final String IS_STORE_OPEN = "SELECT is_open FROM stores WHERE store_id = ? And is_service = 'Y'";
+        public static final String FIND_ALL_STORE_LOCATION2 = "SELECT store_id, store_name, store_latitude, store_longitude,(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) -radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE FROM stores ORDER BY distance";
+        public static final String FIND_STORE_ID_BY_NAME = "SELECT store_id FROM stores WHERE store_name=?";
+        public static final String IS_STORE_OPEN = "SELECT is_open FROM stores WHERE store_id = ?";
         public static final String UPDATE_STORE_NAME = "UPDATE stores SET store_name=? WHERE store_id=?";
         public static final String UPDATE_STORE_LAT_LNG = "UPDATE stores SET store_latitude=?, store_longitude=? WHERE store_id=?";
         public static final String UPDATE_STORE_TIME = "UPDATE stores SET store_opentime=?, store_closetime=? WHERE store_id=?";
@@ -58,8 +58,8 @@ public class SQL {
         public static final String FIND_All = "SELECT store_id,discount_rate, store_name, " +
                 "(6371*acos(cos(radians( ? ))*cos(radians(store_latitude))*cos(radians(store_longitude) " +
                 "-radians( ? ))+sin(radians( ? ))*sin(radians(store_latitude))))*1000 AS DISTANCE , store_location, store_info, store_image, is_open FROM stores"
-                +"WHERE is_service = 'Y' ORDER BY is_open='N'";
-        public static final String GET_DISCOUNT_RATE = "SELECT discount_rate FROM stores WHERE store_id= ? And is_service = 'Y'";
+                +" ORDER BY is_open='N'";
+        public static final String GET_DISCOUNT_RATE = "SELECT discount_rate FROM stores WHERE store_id= ?";
     }
 
     public static class Member {
@@ -81,7 +81,7 @@ public class SQL {
         public static final String CHECK_ID = "SELECT * FROM owners WHERE id=?";
         public static final String UPDATE_EMAIL = "UPDATE owners SET email=? WHERE phone=?";
         public static final String REGISTER = "INSERT INTO owners VALUES(?,?,?,?,null)";
-        public static final String CHECK_STORE_ID = "SELECT store_name FROM stores WHERE store_id=? And is_service = 'Y'";
+        public static final String CHECK_STORE_ID = "SELECT store_name FROM stores WHERE store_id=?";
         public static final String UPDATE_STORE_ID = "UPDATE owners SET store_id=? WHERE phone=?";
         public static final String UPDATE_STATUS_FIRST = "UPDATE orders SET order_state='ACCEPT' WHERE receipt_id=?";
         public static final String UPDATE_STATUS_COMPLETE="UPDATE orders SET order_state='DONE' WHERE receipt_id=?";
@@ -234,7 +234,7 @@ public class SQL {
                 "\t-radians(?))+sin(radians(?))*sin(radians(store_latitude))))*1000\n" +
                 "\n" +
                 "\tAS distance, store_name, store_info, store_location, store_image, is_open FROM stores\n" +
-                " NATURAL JOIN favorites WHERE phone=? And is_service = 'Y' ORDER BY is_open='N' AND distance";
+                " NATURAL JOIN favorites WHERE phone=? ORDER BY is_open='N' AND distance";
         public static final String INSERT_FAVORITE = "INSERT INTO favorites VALUES(?,?)";
         public static final String DELETE_FAVORITE = "DELETE FROM favorites WHERE phone=? AND store_id=?";
         public static final String CHECK_FAVORITE = "SELECT * FROM favorites WHERE phone=? AND store_id=?";
