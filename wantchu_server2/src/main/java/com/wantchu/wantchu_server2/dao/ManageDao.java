@@ -4,7 +4,10 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.exception.*;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.*;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +28,9 @@ public class ManageDao {
     public void insertType(@NotNull TypeInsertDto requestDto) {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.INSERT_TYPE);
-            preparedStatement.setString(1, requestDto.getType_code());
+            preparedStatement.setString(1, requestDto.getType_code().toUpperCase());
             preparedStatement.setString(2, requestDto.getType_name());
-            preparedStatement.setString(3, requestDto.getType_image());
+//            preparedStatement.setString(3, requestDto.getType_image());
             return preparedStatement;
         });
     }
@@ -184,10 +187,10 @@ public class ManageDao {
             preparedStatement.setString(8,requestDto.getStore_dayoff());
             preparedStatement.setString(9,requestDto.getStore_location());
             preparedStatement.setString(10,requestDto.getStore_info());
-            preparedStatement.setString(11,requestDto.getStore_image());
-            preparedStatement.setString(12,requestDto.getOwner_id());
-            preparedStatement.setString(13,requestDto.getRepresentative_name());
-            preparedStatement.setString(14,requestDto.getBusiness_number());
+//            preparedStatement.setString(11,requestDto.getStore_image());
+            preparedStatement.setString(11,requestDto.getOwner_id());
+            preparedStatement.setString(12,requestDto.getRepresentative_name());
+            preparedStatement.setString(13,requestDto.getBusiness_number());
             return  preparedStatement;
         });
     }
@@ -383,6 +386,12 @@ public class ManageDao {
             preparedStatement.setInt(1,requestDto.getExtra_price());
             preparedStatement.setString(2,requestDto.getExtra_name());
             preparedStatement.setInt(3,requestDto.getStore_id());
+            if (new Boolean(requestDto.getIs_required())){
+                preparedStatement.setString(4,requestDto.getRequired_group_name());
+            }else{
+                preparedStatement.setString(4,null);
+            }
+
             return  preparedStatement;
         });
     }
@@ -452,55 +461,6 @@ public class ManageDao {
             return list;
         }
     }
-    public int getLastInsertRequiredExtra() throws NotFoundRecentInsertException {
-        List<Integer> ids = jdbcTemplate.query(
-                SQL.Manage.SELECT_LAST_INSERT_ID,
-                (resultSet, i) -> {
-                    int id = resultSet.getInt("extra_id");
-                    return id;
-                });
-        if(ids.size() == 0 || ids.get(0) == 0) { // 리스트에 아무것도없거나 마지막으로 삽입한 id가 0 일때 (없었을때)
-            throw new NotFoundRecentInsertException();
-        }else{
-            return ids.get(0);
-        }
-    }
-    public void insertRequiredExtra(ExtraInsertDto dto,int extra_id){
-        jdbcTemplate.update( con -> {
-            PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.INSERT_REQUIRED_EXTRAS);
-            preparedStatement.setInt(1,extra_id);
-            preparedStatement.setString(2,dto.getRequired_group_name());
-            return  preparedStatement;
-        });
-    }
-
-    public List<PrintRequiredExtrasVo> requiredExtrasPrint(int store_id) throws NotFoundRequiredExtrasException {
-        List<PrintRequiredExtrasVo> list = jdbcTemplate.query(
-                SQL.Manage.PRINT_REQUIRED_EXTRAS,
-                (resultSet, i) -> {
-                    PrintRequiredExtrasVo vo = new PrintRequiredExtrasVo(resultSet.getInt("extra_id"),resultSet.getString("extra_group"),resultSet.getInt("store_id"),
-                            resultSet.getString("extra_name"),resultSet.getInt("extra_price"));
-                    return vo;
-                },store_id);
-        if(list.size() == 0) {
-            throw new NotFoundRequiredExtrasException();
-        }
-        else{
-            return list;
-        }
-    }
-
-    public void requiredExtrasDelete(int extra_id) throws DeleteRequiredExtrasException {
-        try {
-            jdbcTemplate.update(con -> {
-                PreparedStatement preparedStatement = con.prepareStatement(SQL.Manage.DELETE_REQUIRED_EXTRAS);
-                preparedStatement.setInt(1, extra_id);
-                return preparedStatement;
-            });
-        }catch (Exception e) {
-            throw new DeleteRequiredExtrasException();
-        }
-    }
 
     public List<FindOrderListByPhoneForManageVo> findOrderList(String phone) throws NotFoundManageOrderListException {
         List<FindOrderListByPhoneForManageVo> list = jdbcTemplate.query(
@@ -518,5 +478,102 @@ public class ManageDao {
         else{
             return list;
         }
+    }
+
+    public List<PrintMarketingInfoVo> printMarketingInfo() throws NotFoundMarketingInfoListException {
+        List<PrintMarketingInfoVo> list = jdbcTemplate.query(
+                SQL.Manage.PRINT_MARKETING_LIST,
+                (resultSet, i) -> {
+                    PrintMarketingInfoVo vo = new PrintMarketingInfoVo(resultSet.getString("device_token"));
+                    return vo;
+                });
+        if(list.size() == 0) {
+            throw new NotFoundMarketingInfoListException();
+        }
+        else{
+            return list;
+        }
+    }
+
+    public List<PayBackListVo> payBackMoney(String date,int discount_rate) throws PayBackMoneyListNotFoundException {
+        List<PayBackListVo> list = jdbcTemplate.query(
+                SQL.Manage.GET_PAYBACK_AMOUNT,
+                (resultset, i) -> {
+                    PayBackListVo vo = new PayBackListVo(resultset.getInt("store_id"),resultset.getString("store_name"),resultset.getInt("payBackSum"));
+                    return vo;
+                },discount_rate,discount_rate,date,date,discount_rate,discount_rate,date,date);
+        if (list.size() == 0) {
+            throw new PayBackMoneyListNotFoundException();
+        }else{
+            return list;
+        }
+    }
+    public boolean isEmailInUse(String email) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_EMAIL,
+                (resultSet, i) -> new OwnerVo()
+                , email);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean isPhoneInUse(String phone) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_PHONE,
+                (resultSet, i) -> new OwnerVo()
+                , phone);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public boolean isIdInUse(String id) {
+        List<OwnerVo> list = jdbcTemplate.query(
+                SQL.Owner.CHECK_ID,
+                (resultSet, i) -> new OwnerVo()
+                , id);
+        if(list.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public void onwerRegister(FxOwnerRegisterRequestDto requestDto) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.FX_OWNER_REGISTER);
+            preparedStatement.setString(1, requestDto.getId());
+            preparedStatement.setString(2, requestDto.getPhone());
+            preparedStatement.setString(3, requestDto.getEmail());
+            preparedStatement.setString(4, requestDto.getPass());
+            return preparedStatement;
+        });
+    }
+
+
+    public int getLastInsertId() {
+        int store_id = jdbcTemplate.queryForObject(SQL.Manage.SELECT_LAST_INSERT_STORE_ID,Integer.class);
+        return store_id;
+    }
+
+    public void updateStoreImage(int store_id) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_STORE_IMAGE);
+            preparedStatement.setString(1,store_id+".png");
+            preparedStatement.setInt(2, store_id);
+            return preparedStatement;
+        });
+    }
+
+
+    public void updateTypeImage(String typeCode) {
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL.Manage.UPDATE_TYPE_IMAGE);
+            preparedStatement.setString(1,typeCode.toLowerCase()+".png");
+            preparedStatement.setString(2, typeCode);
+            return preparedStatement;
+        });
     }
 }

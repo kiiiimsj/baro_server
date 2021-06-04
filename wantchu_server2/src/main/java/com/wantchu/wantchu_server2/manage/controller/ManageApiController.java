@@ -4,7 +4,10 @@ import com.google.firebase.database.annotations.NotNull;
 import com.wantchu.wantchu_server2.business.WriteToServer;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.service.ManageService;
+import com.wantchu.wantchu_server2.member.dto.MemberRegisterRequestDto;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
 import com.wantchu.wantchu_server2.vo.FavoriteVo;
+import com.wantchu.wantchu_server2.vo.OwnerVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -106,7 +109,11 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.alertPrint();
         WriteToServer.send(response, jsonObject);
     }
-
+    @PostMapping("/FxOwnerRegister.do")
+    public void FxOwnerRegister(@RequestBody @NotNull FxOwnerRegisterRequestDto requestDto, @org.jetbrains.annotations.NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.register(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
     //store 추가
     @PostMapping("/StoreInsert.do")
     public void storeInsert(@RequestBody @NotNull StoreInsertDto request, @NotNull HttpServletResponse response) {
@@ -268,20 +275,6 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.extraByMenuPrint(menu_id);
         WriteToServer.send(response, jsonObject);
     }
-    //가게별 필수옵션 그룹 출력
-    @GetMapping("/RequiredExtrasPrint.do")
-    public void requiredExtrasPrint(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        int store_id = Integer.parseInt(request.getParameter("store_id"));
-        org.json.simple.JSONObject jsonObject = manageService.requiredExtrasPrint(store_id);
-        WriteToServer.send(response, jsonObject);
-    }
-    //가게별 필수옵션 그룹 삭제
-    @GetMapping("/RequiredExtrasDelete.do")
-    public void requiredExtrasDelete(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
-        int extra_id = Integer.parseInt(request.getParameter("extra_id"));
-        org.json.simple.JSONObject jsonObject = manageService.requiredExtrasDelete(extra_id);
-        WriteToServer.send(response, jsonObject);
-    }
 
     //해당 번호의 주문 정보 가져오기
     @GetMapping("/FindOrderListByPhoneForManage.do")
@@ -290,6 +283,26 @@ public class ManageApiController {
         org.json.simple.JSONObject jsonObject = manageService.findOrderListByPhoneForManage(phone);
         WriteToServer.send(response, jsonObject);
     }
-
-
+    @PostMapping("/SendMarketing.do")
+    public void printMarketingInfo(@RequestBody @NotNull MarketingDto request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.printMarketingInfo(request);
+        WriteToServer.send(response, jsonObject);
+    }
+    //달별 정산 정보 가져오기
+    @GetMapping("/PayBackMoney.do")
+    public void PayBackMoney(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        String date = request.getParameter("date");
+        org.json.simple.JSONObject jsonObject = manageService.payBackMoney(date);
+        WriteToServer.send(response, jsonObject);
+    }
+    @GetMapping("/PictureTest.do")
+    public void PictureTest(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = manageService.pictureTest();
+        WriteToServer.send(response, jsonObject);
+    }
+//    @PostMapping("/PictureTest.do")
+//    public void PictureTest(@RequestBody @NotNull MarketingDto request, @NotNull HttpServletResponse response) {
+//        org.json.simple.JSONObject jsonObject = manageService.pictureTest(request);
+//        WriteToServer.send(response, jsonObject);
+//    }
 }

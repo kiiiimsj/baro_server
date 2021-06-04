@@ -23,6 +23,8 @@ public class OrderListVo {
     private String store_longitude;
     private int store_id;
     private String store_phone;
+    private int discount_rate;
+    private int coupon_discount;
 
     public OrderListVo(String receipt_id, String store_name, LocalDateTime order_date) {
         this.receipt_id = receipt_id;
@@ -42,6 +44,8 @@ public class OrderListVo {
         map.put("store_longitude", store_longitude);
         map.put("store_id", store_id);
         map.put("store_phone", store_phone);
+        map.put("discount_rate", discount_rate);
+        map.put("coupon_discount", coupon_discount);
         return map;
     }
 
@@ -57,6 +61,8 @@ public class OrderListVo {
         map.put("store_longitude", store_longitude);
         map.put("store_id", store_id);
         map.put("store_phone", store_phone);
+        map.put("discount_rate", discount_rate);
+        map.put("coupon_discount", coupon_discount);
         return map;
     }
 }

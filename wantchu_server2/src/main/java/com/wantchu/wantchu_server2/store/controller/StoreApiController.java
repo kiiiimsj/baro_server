@@ -75,4 +75,10 @@ public class StoreApiController {
         org.json.simple.JSONObject jsonObject = storeService.storeFindAll(requestDto);
         WriteToServer.send(response, jsonObject);
     }
+    @GetMapping("/GetStoreDiscount.do")
+    public void getStoreDiscount(HttpServletRequest request, HttpServletResponse response) {
+        int store_id = Integer.parseInt(request.getParameter("store_id"));
+        org.json.simple.JSONObject jsonObject = storeService.getStoreDiscount(store_id);
+        WriteToServer.send(response, jsonObject);
+    }
 }

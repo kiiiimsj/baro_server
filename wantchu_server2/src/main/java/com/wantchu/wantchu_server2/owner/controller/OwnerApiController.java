@@ -102,5 +102,10 @@ public class OwnerApiController {
         org.json.simple.JSONObject jsonObject = ownerService.getCalculate(store_id);
         WriteToServer.send(response, jsonObject);
     }
+    @PostMapping("/SetStoreDiscount.do")
+    public void setStoreDiscount(@RequestBody OwnerSetStoreDiscountDto requestDto, HttpServletResponse response) {
+        org.json.simple.JSONObject jsonObject = ownerService.setStoreDiscount(requestDto);
+        WriteToServer.send(response, jsonObject);
+    }
 
 }

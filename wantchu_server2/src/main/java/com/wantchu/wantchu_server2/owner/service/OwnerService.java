@@ -12,6 +12,7 @@ import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -431,7 +432,9 @@ public class OwnerService {
         int sumOfDefault = ownerDao.findCalculateDefault(store_id);
         int sumOfExtra = ownerDao.findCalculateExtra(store_id);
         int sumOfCoupon = ownerDao.findCalculateCoupon(store_id);
-        int sumOfDiscounts = ownerDao.findCalculateDiscount(store_id);
+        int menuDiscount = ownerDao.findCalculateDiscountMenu(store_id);
+        int extraDiscount = ownerDao.findCalculateDiscountExtra(store_id);
+        int sumOfDiscounts = menuDiscount+extraDiscount;
         jsonObject.put("message", "이전 월요일까지의 정산 처리 완료");
         jsonObject.put("result", true);
         jsonObject.put("menu_total_price", sumOfDefault + sumOfExtra);
@@ -440,4 +443,11 @@ public class OwnerService {
         return jsonObject;
     }
 
+    public JSONObject setStoreDiscount(OwnerSetStoreDiscountDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        ownerDao.setStoreDiscount(requestDto);
+        jsonObject.put("message", "할인율 변경 완료");
+        jsonObject.put("result", true);
+        return jsonObject;
+    }
 }

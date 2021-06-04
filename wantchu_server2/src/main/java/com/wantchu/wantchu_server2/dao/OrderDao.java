@@ -3,6 +3,7 @@ package com.wantchu.wantchu_server2.dao;
 
 import com.wantchu.wantchu_server2.business.SQL;
 import com.wantchu.wantchu_server2.coupon.exception.CouponHistoryNotFoundException;
+import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateAndPhoneDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompleteBetweenDateReqeustDto;
 import com.wantchu.wantchu_server2.order.dto.OrderCompletePhoneDto;
 import com.wantchu.wantchu_server2.order.exception.OrderNoPreparingException;
@@ -11,6 +12,7 @@ import com.wantchu.wantchu_server2.order.exception.OrderNotFoundException;
 import com.wantchu.wantchu_server2.store.exception.StoreIdNotFoundException;
 import com.wantchu.wantchu_server2.vo.*;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -33,15 +35,15 @@ public class OrderDao {
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL.Order.INSERT_ORDER, new String[] {"order_id"});
             preparedStatement.setString(1, orderVo.getPhone());
-            preparedStatement.setInt(2, orderVo.getDiscount_rate());
-            preparedStatement.setInt(3, orderVo.getStore_id());
-            preparedStatement.setInt(4, orderVo.getMenu_id());
-            preparedStatement.setString(5, orderVo.getMenu_name());
-            preparedStatement.setInt(6, orderVo.getMenu_defaultprice());
-            preparedStatement.setInt(7, orderVo.getOrder_count());
-            preparedStatement.setString(8, orderVo.getReceipt_id());
-            preparedStatement.setString(9, orderVo.getOrder_state());
-            preparedStatement.setString(10, orderVo.getRequests());
+            preparedStatement.setInt(2, orderVo.getStore_id());
+            preparedStatement.setInt(3, orderVo.getMenu_id());
+            preparedStatement.setString(4, orderVo.getMenu_name());
+            preparedStatement.setInt(5, orderVo.getMenu_defaultprice());
+            preparedStatement.setInt(6, orderVo.getOrder_count());
+            preparedStatement.setString(7, orderVo.getReceipt_id());
+            preparedStatement.setString(8, orderVo.getOrder_state());
+            preparedStatement.setString(9, orderVo.getRequests());
+            preparedStatement.setInt(10, orderVo.getDiscount_rate());
             return preparedStatement;
         }, keyHolder);
         Number keyValue = keyHolder.getKey();
@@ -73,6 +75,8 @@ public class OrderDao {
                     orderListVo.setOrder_state(resultSet.getString("order_state"));
                     orderListVo.setStore_image(resultSet.getString("store_image"));
                     orderListVo.setStore_id(resultSet.getInt("store_id"));
+                    orderListVo.setDiscount_rate(resultSet.getInt("discount_rate"));
+                    orderListVo.setCoupon_discount(resultSet.getInt("coupon_discount"));
                     return orderListVo;
                 }
                 , phone,startPoint,startPoint+20);
@@ -294,6 +298,17 @@ public class OrderDao {
             return list;
         }
     }
+    public List<String> findReceiptIdsOfDoneOrdersByDateAndPhone(OrderCompleteBetweenDateAndPhoneDto reqeustDto) throws OrderNotFoundException {
+        List<String> list = jdbcTemplate.query(
+                SQL.Order.FIND_RECEIPT_IDS_OF_DONE_ORDERS_BY_DATE_AND_PHONE,
+                (resultSet, i) -> resultSet.getString("receipt_id")
+                , "%"+reqeustDto.getPhone()+"%", reqeustDto.getStore_id(), reqeustDto.getStart_date(), reqeustDto.getEnd_date());
+        if (list.size() == 0) {
+            throw new OrderNotFoundException();
+        } else {
+            return list;
+        }
+    }
     public List<String> findReceiptIdsOfDoneOrCancelByPhone(OrderCompletePhoneDto requestDto) throws OrderNotFoundException{
         List<String> list = jdbcTemplate.query(
                 SQL.Order.FIND_RECEIPT_IDS_OF_DONE_OR_CANCEL_BY_PHONE_ORDERS,
@@ -335,14 +350,18 @@ public class OrderDao {
         }
     }
     public String getRequests(String receipt_id){
-        List<String> list = jdbcTemplate.query(
-                SQL.Order.FIND_ORDER_REQUESTS,
-                (resultSet, i) -> {
-                    String requests = resultSet.getString("requests");
-                    return requests;
-                }
-                ,receipt_id);
-        return list.get(0);
+        try {
+            List<String> list = jdbcTemplate.query(
+                    SQL.Order.FIND_ORDER_REQUESTS,
+                    (resultSet, i) -> {
+                        String requests = resultSet.getString("requests");
+                        return requests;
+                    }
+                    , receipt_id);
+            return list.get(0);
+        }catch (IndexOutOfBoundsException e) {
+            return "";
+        }
     }
 
     public String orderStateCheck(String receipt_id) throws OrderNotFoundException{
@@ -363,5 +382,13 @@ public class OrderDao {
 
                 },receipt_id);
         return rate.get(0);
+    }
+    public int getCoupon_Discount_by_receipt_id(String receipt_id) {
+        try {
+            int coupon_discount = jdbcTemplate.queryForObject(SQL.CouponHistory.GET_COUPON_DISCOUNT_BY_RECEIPT_ID, Integer.class, receipt_id);
+            return coupon_discount;
+        } catch(EmptyResultDataAccessException e) {
+            return 0;
+        }
     }
 }

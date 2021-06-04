@@ -96,6 +96,7 @@ public class StoreDao {
                             .is_open(resultSet.getString("is_open"))
                             .store_image(resultSet.getString("store_image") == null ? "default.png" : resultSet.getString("store_image"))
                             .distance(resultSet.getDouble("distance"))
+                            .discount_rate(resultSet.getInt("discount_rate"))
                             .build();
                     return storeInfoVo;
                 }
@@ -201,5 +202,10 @@ public class StoreDao {
         } else {
             return list;
         }
+    }
+
+    public int getStoreDiscount(int store_id) {
+        int discount_rate = jdbcTemplate.queryForObject(SQL.Store.GET_DISCOUNT_RATE,Integer.class,store_id);
+        return discount_rate;
     }
 }

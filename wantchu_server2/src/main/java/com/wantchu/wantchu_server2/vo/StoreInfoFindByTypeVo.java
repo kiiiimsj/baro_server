@@ -19,9 +19,11 @@ public class StoreInfoFindByTypeVo {
     private String store_image;
     private String is_open;
     private double distance;
+    private int discount_rate;
 
     @Builder
-    public StoreInfoFindByTypeVo(int store_id, String store_name, String store_info, double distance, String store_location, String store_image, String is_open) {
+    public StoreInfoFindByTypeVo(int store_id, String store_name, String store_info, double distance,
+                                 String store_location, String store_image, String is_open,int discount_rate) {
         this.store_id = store_id;
         this.store_name = store_name;
         this.store_info = store_info;
@@ -29,6 +31,7 @@ public class StoreInfoFindByTypeVo {
         this.store_image = store_image;
         this.is_open = is_open;
         this.distance = distance;
+        this.discount_rate = discount_rate;
     }
 
     public HashMap<String, Object> convertMap() {
@@ -40,6 +43,7 @@ public class StoreInfoFindByTypeVo {
         map.put("store_location", store_location);
         map.put("is_open", is_open);
         map.put("store_image", store_image);
+        map.put("discount_rate", discount_rate);
         return map;
     }
 }

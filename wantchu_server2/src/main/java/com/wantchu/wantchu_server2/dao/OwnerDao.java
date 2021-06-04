@@ -424,15 +424,27 @@ public class OwnerDao {
                 SQL.CouponHistory.CALCULATE_COUPON_PRICE, Integer.class, store_id);
         return sumOfCoupon;
     }
-    public int findCalculateDiscount(int store_id) {
+    public int findCalculateDiscountMenu(int store_id) {
         try {
             Integer sumOfDiscount = jdbcTemplate.queryForObject(
-                    SQL.Order.CALCULATE_DISCOUNT_PRICE, Integer.class, store_id, store_id);
+                    SQL.Order.CALCULATE_DISCOUNT_PRICE_MENU, Integer.class, store_id);
             return sumOfDiscount;
         }catch (EmptyResultDataAccessException e){
             return 0;
+        } catch (NullPointerException e){
+            return 0;
         }
-
+    }
+    public int findCalculateDiscountExtra(int store_id) {
+        try {
+            Integer sumOfDiscount = jdbcTemplate.queryForObject(
+                    SQL.Order.CALCULATE_DISCOUNT_PRICE_EXTRA, Integer.class, store_id);
+            return sumOfDiscount;
+        }catch (EmptyResultDataAccessException e){
+            return 0;
+        } catch (NullPointerException e){
+            return 0;
+        }
     }
 
     public void setStoreOpenOrClosed(String is_open, int store_id) {
@@ -548,4 +560,12 @@ public class OwnerDao {
     }
 
 
+    public void setStoreDiscount(OwnerSetStoreDiscountDto requestDto) {
+        jdbcTemplate.update(connection -> {
+           PreparedStatement preparedStatement = connection.prepareStatement(SQL.Owner.UPDATE_STORE_DISCOUNT_RATE);
+           preparedStatement.setInt(2, requestDto.getStore_id());
+           preparedStatement.setInt(1, requestDto.getDiscount_rate());
+           return preparedStatement;
+        });
+    }
 }

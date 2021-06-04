@@ -1,16 +1,24 @@
 package com.wantchu.wantchu_server2.manage.service;
 
 import com.google.firebase.database.annotations.NotNull;
+import com.wantchu.wantchu_server2.business.ImageReceivers.FileTransferServer;
 import com.wantchu.wantchu_server2.business.ObjectMaker;
 import com.wantchu.wantchu_server2.dao.ManageDao;
+import com.wantchu.wantchu_server2.fcmtest.FcmUtil;
 import com.wantchu.wantchu_server2.manage.dto.*;
 import com.wantchu.wantchu_server2.manage.exception.NotFoundRequiredExtrasException;
+import com.wantchu.wantchu_server2.owner.dto.OwnerRegisterRequestDto;
+import com.wantchu.wantchu_server2.owner.exception.OwnerEmailInUseException;
+import com.wantchu.wantchu_server2.owner.exception.OwnerIdInUseException;
+import com.wantchu.wantchu_server2.owner.exception.OwnerPhoneInUseException;
 import com.wantchu.wantchu_server2.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.net.BindException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,7 +26,7 @@ import java.util.List;
 @Service
 public class ManageService {
     private final ManageDao manageDao;
-
+    private static final int DISCOUNT_RATE = 10;
     //시작
 
     @SuppressWarnings("unchecked")
@@ -26,6 +34,7 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertType(requestDto);
+            manageDao.updateTypeImage(requestDto.getType_code());
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 type등록이 완료되었습니다.");
         }
@@ -223,6 +232,8 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertStore(requestDto);
+            int store_id = manageDao.getLastInsertId();
+            manageDao.updateStoreImage(store_id);
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 store등록이 완료되었습니다.");
         }
@@ -481,10 +492,6 @@ public class ManageService {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try{
             manageDao.insertExtra(requestDto);
-            if (new Boolean(requestDto.getIs_required())){
-                int id = manageDao.getLastInsertRequiredExtra();
-                manageDao.insertRequiredExtra(requestDto,id);
-            }
             jsonObject.put("result", true);
             jsonObject.put("message", "정상적으로 extra 등록이 완료되었습니다.");
         }
@@ -573,38 +580,6 @@ public class ManageService {
         return jsonObject;
     }
 
-    public JSONObject requiredExtrasPrint(int store_id) {
-        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        try {
-            List<PrintRequiredExtrasVo> list = manageDao.requiredExtrasPrint(store_id);
-            jsonObject.put("result", true);
-            jsonObject.put("message", "성공적으로 RequiredExtra list 출력");
-            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
-            for(PrintRequiredExtrasVo data : list) {
-                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
-                jTemp.putAll(data.convertMap());
-                jsonArray.add(jTemp);
-            }
-            jsonObject.put("requiredExtras", jsonArray);
-        } catch (Exception e){
-            jsonObject = ObjectMaker.getJSONObjectWithException(e);
-        }
-        return jsonObject;
-    }
-
-    public JSONObject requiredExtrasDelete(int extra_id) {
-        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
-        try{
-            manageDao.requiredExtrasDelete(extra_id);
-            jsonObject.put("result", true);
-            jsonObject.put("message", "해당 extraByMenus 를 정상적으로 제거하였습니다.");
-        }
-        catch (Exception e){
-            jsonObject = ObjectMaker.getJSONObjectWithException(e);
-        }
-        return jsonObject;
-    }
-
     public JSONObject findOrderListByPhoneForManage(String phone) {
         org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
         try {
@@ -623,4 +598,99 @@ public class ManageService {
         }
         return jsonObject;
     }
+
+    public JSONObject printMarketingInfo(MarketingDto request) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<PrintMarketingInfoVo> list = manageDao.printMarketingInfo();
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 marketingInfoList 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PrintMarketingInfoVo data : list) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            FcmUtil fcmUtil = new FcmUtil();
+            fcmUtil.send_FCM_Marketing(list,request.getTitle(),request.getContent(),jsonObject);
+
+            jsonObject.put("marketingInfos", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject payBackMoney(String date) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            List<PayBackListVo> payBackSumList = manageDao.payBackMoney(date,DISCOUNT_RATE);
+            jsonObject.put("result", true);
+            jsonObject.put("message", "성공적으로 정산액 출력");
+            org.json.simple.JSONArray jsonArray = ObjectMaker.getSimpleJSONArray();
+            for(PayBackListVo data : payBackSumList) {
+                org.json.simple.JSONObject jTemp = ObjectMaker.getSimpleJSONObject();
+                jTemp.putAll(data.convertMap());
+                jsonArray.add(jTemp);
+            }
+            jsonObject.put("payBackMoneyList", jsonArray);
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject pictureTest() {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+
+            FileTransferServer server = null;
+            try{
+                server = new FileTransferServer(9999,new File("D:\\nike"));
+            }catch (BindException e){
+                server.close();
+                server = new FileTransferServer(9999,new File("/home/ubuntu/images/types"));
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        } catch (Exception e){
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+        }
+        return jsonObject;
+    }
+
+    public JSONObject register(FxOwnerRegisterRequestDto requestDto) {
+        org.json.simple.JSONObject jsonObject = ObjectMaker.getSimpleJSONObject();
+        try {
+            if(!manageDao.isEmailInUse(requestDto.getEmail())) {
+                if(!manageDao.isPhoneInUse(requestDto.getPhone())) {
+                    if(!manageDao.isIdInUse(requestDto.getId())){
+                        manageDao.onwerRegister(requestDto);
+                        jsonObject.put("result", true);
+                        jsonObject.put("message", "점주 가입에 성공했습니다. 가게를 등록해주세요.");
+                    }else{
+                        throw new OwnerIdInUseException();
+                    }
+                }
+                else {
+                    throw new OwnerPhoneInUseException();
+                }
+            }
+            else {
+                throw new OwnerEmailInUseException();
+            }
+        }catch(OwnerIdInUseException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("errno", e.getErrno());
+        } catch(OwnerEmailInUseException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("errno", e.getErrno());
+        } catch(OwnerPhoneInUseException e) {
+            jsonObject = ObjectMaker.getJSONObjectWithException(e);
+            jsonObject.put("errno", e.getErrno());
+        }
+        return jsonObject;
+    }
+
 }
