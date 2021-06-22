@@ -170,13 +170,13 @@ public class SQL {
         public static final String CALCULATE_DEFAULT_PRICE = "select ifnull(sum(menu_defaultprice*order_count),0) \n" +
                 "from orders\n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY) AND order_state = 'DONE'";
+                "AND order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW() AND order_state = 'DONE'";
         public static final String CALCULATE_DISCOUNT_PRICE = "SELECT floor(sum(A.ds_total_prices) + sum(B.ds_extra_prices)) FROM (SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate /100),0) AS ds_total_prices FROM orders\n" +
-                "where store_id= ? AND order_state='DONE' AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                "where store_id= ? AND order_state='DONE' AND order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
                 " GROUP BY menu_name) AS A\n" +
                 "natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*order_count*discount_rate /100),0) AS ds_extra_prices\n" +
                 " FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
-                " where store_id= ? AND order_state='DONE' and order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY)\n" +
+                " where store_id= ? AND order_state='DONE' and order_datebetween (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
                 " GROUP BY menu_name) AS B ";
         public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
@@ -188,7 +188,7 @@ public class SQL {
         public static final String FIND_DETAILS_BY_ORDER_ID = "SELECT extra_price, extra_name, extra_count FROM extraorders WHERE order_id=?";
         public static final String CALCULATE_EXTRA_PRICE = "select ifnull(sum(extra_price*extra_count*order_count), 0) as extra_price from extraorders natural join orders \n" +
                 "where store_id=?\n" +
-                "AND order_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) AND DATE_ADD(NOW(),INTERVAL 7 DAY) AND order_state = 'DONE' ";
+                "AND order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW() AND order_state = 'DONE' ";
     }
 
     public static class Coupon {
@@ -206,7 +206,7 @@ public class SQL {
         public static final String CALCULATE_COUPON_PRICE = "select ifnull(sum(discount_price),0) \n" +
                 "from couponhistories \n" +
                 "where store_id=?\n" +
-                "and use_date between (select DATE_FORMAT(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), '%Y-%m-%d')) and DATE_ADD(NOW(), INTERVAL 7 DAY)";
+                "and use_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()";
     }
 
     public static class CouponsByMembers {
