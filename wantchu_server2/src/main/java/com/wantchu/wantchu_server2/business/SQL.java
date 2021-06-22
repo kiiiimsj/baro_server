@@ -176,7 +176,7 @@ public class SQL {
                 " GROUP BY menu_name) AS A\n" +
                 "natural JOIN (SELECT ifnull(SUM(extra_price*extra_count*order_count*discount_rate /100),0) AS ds_extra_prices\n" +
                 " FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
-                " where store_id= ? AND order_state='DONE' and order_datebetween (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
+                " where store_id= ? AND order_state='DONE' and order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
                 " GROUP BY menu_name) AS B ";
         public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
