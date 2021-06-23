@@ -432,11 +432,12 @@ public class OwnerService {
         int sumOfDefault = ownerDao.findCalculateDefault(store_id);
         int sumOfExtra = ownerDao.findCalculateExtra(store_id);
         int sumOfCoupon = ownerDao.findCalculateCoupon(store_id);
-        int sumOfDiscounts = ownerDao.findCalculateDiscount(store_id);
+        int sumOfDefaultDiscounts = ownerDao.findCalculateDefaultDiscount(store_id);
+        int sumOfExtraDiscounts = ownerDao.findCalculateExtraDiscount(store_id);
         jsonObject.put("message", "이전 월요일까지의 정산 처리 완료");
         jsonObject.put("result", true);
         jsonObject.put("menu_total_price", sumOfDefault + sumOfExtra);
-        jsonObject.put("discount_total_price", sumOfDiscounts);
+        jsonObject.put("discount_total_price", sumOfDefaultDiscounts+sumOfExtraDiscounts);
         jsonObject.put("coupon_price", sumOfCoupon);
         return jsonObject;
     }

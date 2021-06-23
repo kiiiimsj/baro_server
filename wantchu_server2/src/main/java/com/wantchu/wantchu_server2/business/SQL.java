@@ -178,6 +178,12 @@ public class SQL {
                 " FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
                 " where store_id= ? AND order_state='DONE' and order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
                 " GROUP BY menu_name) AS B ";
+        public static final String CALCULATE_DISCOUNT_DEFAULT_PRICE = "SELECT IFNULL(sum(menu_defaultprice*order_count* discount_rate /100),0) AS ds_total_prices FROM orders\n" +
+                "where store_id= ? AND order_state='DONE' AND order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()";
+        public static final String CALCULATE_DISCOUNT_EXTRA_PRICE = "SELECT ifnull(SUM(extra_price*extra_count*order_count*discount_rate /100),0) AS ds_extra_prices \n" +
+                "FROM orders INNER JOIN extraorders ON orders.order_id = extraorders.order_id\n" +
+                "where store_id= ? AND order_state='DONE' and order_date between (SELECT LAST_DAY(NOW() - INTERVAL 1 month) + interval 1 DAY  FROM DUAL) AND NOW()\n" +
+                "GROUP BY menu_name";
         public static final String GET_DISCOUNT_RATE_BY_RECEIPT_ID = "SELECT discount_rate FROM orders WHERE receipt_id = ? GROUP BY discount_rate ";
     }
 
