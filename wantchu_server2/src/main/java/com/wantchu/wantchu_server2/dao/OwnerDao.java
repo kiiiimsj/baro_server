@@ -436,6 +436,30 @@ public class OwnerDao {
         }
 
     }
+    public int findCalculateDefaultDiscount(int store_id) {
+        try {
+            Integer defaultDiscount = jdbcTemplate.queryForObject(
+                    SQL.Order.CALCULATE_DISCOUNT_DEFAULT_PRICE, Integer.class, store_id);
+            return defaultDiscount;
+        }catch (EmptyResultDataAccessException e){
+            return 0;
+        } catch (NullPointerException e){
+            return 0;
+        }
+
+    }
+    public int findCalculateExtraDiscount(int store_id) {
+        try {
+            Integer sumOfExtraDiscounts= jdbcTemplate.queryForObject(
+                    SQL.Order.CALCULATE_DISCOUNT_EXTRA_PRICE, Integer.class, store_id);
+            return sumOfExtraDiscounts;
+        }catch (EmptyResultDataAccessException e){
+            return 0;
+        } catch (NullPointerException e){
+            return 0;
+        }
+
+    }
 
     public void setStoreOpenOrClosed(String is_open, int store_id) {
         jdbcTemplate.update(connection -> {
