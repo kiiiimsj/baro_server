@@ -27,8 +27,8 @@ public class BillingApiController {
 
     private final OrderService orderService;
 
-    private static final String REST_APPLICATION_ID = "5f28e2c002f57e0033305758";
-    private static final String PRIVATE_KEY = "c4evZrLhyvi9OTilV9H4dvK2DJY6jhrCYfzzJEI6ZBE=";
+    private static final String REST_APPLICATION_ID = "5fa1191418e1ae00274f48f3";
+    private static final String PRIVATE_KEY = "BXMefhLcIaj38dJnghkUT3FrpnrdrZn5HUYNJKMsRkE=";
 
     @SuppressWarnings("unchecked")
     @PostMapping("/BillingGetUserToken.do")
