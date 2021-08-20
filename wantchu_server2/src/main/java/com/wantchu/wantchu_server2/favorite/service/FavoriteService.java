@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 @Service
 public class FavoriteService {
-
+//
     private final FavoriteDao favoriteDao;
 
     @SuppressWarnings("unchecked")
