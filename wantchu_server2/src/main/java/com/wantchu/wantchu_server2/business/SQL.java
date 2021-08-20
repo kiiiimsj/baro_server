@@ -21,6 +21,7 @@ public class SQL {
         public static final String FIND_EVENT_ADVERTISING = "SELECT event_id, event_image FROM events WHERE is_advertising='Y'";
     }
 
+    //
     public static class Store {
         public static final String FIND_BY_STORE_ID = "SELECT * FROM stores WHERE store_id=? and is_service='Y'";
         //public static final String STORE_SEARCH = "SELECT * FROM stores WHERE store_name LIKE ? Limit ?,? ";
