@@ -1,4 +1,4 @@
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class InstructorDao {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     String sql;
-    MariaDBCon dbc = new MariaDBCon();
+    DBCon dbc = new DBCon();
     DBCon oracleBc = new DBCon();
 
     

@@ -3,7 +3,7 @@
     Created on : 2021. 9. 30., 오후 10:30:43
     Author     : 이승재
 --%>
-<%@page import="apachetest.maven.sql_webpage.*"%>
+<%@page import="com.wantchu.db.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>

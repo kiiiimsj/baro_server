@@ -1,4 +1,4 @@
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 public class SectionBean {
     String courseId;

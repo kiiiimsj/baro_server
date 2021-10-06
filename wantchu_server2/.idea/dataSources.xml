@@ -7,5 +7,13 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://wantchu-server.cszxzzjyxxdv.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="@dalma.dongguk.ac.kr" uuid="c8a012d1-b855-4bb0-ac7d-23c1e07d9082">
+      <driver-ref>oracle.19</driver-ref>
+      <synchronize>true</synchronize>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+      <jdbc-url>jdbc:oracle:thin:@dalma.dongguk.ac.kr:1521:stud1 [cmdwo2323 on CMDWO2323]</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

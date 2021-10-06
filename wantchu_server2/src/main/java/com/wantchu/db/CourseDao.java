@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +24,7 @@ public class CourseDao {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
     String sql;
-    MariaDBCon dbc = new MariaDBCon();
+    DBCon dbc = new DBCon();
 
     
    public List makeListAllCourse(String sql) {

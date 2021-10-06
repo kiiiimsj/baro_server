@@ -6,5 +6,11 @@
       <secret-storage>forget</secret-storage>
       <schema-mapping />
     </data-source>
+    <data-source name="@dalma.dongguk.ac.kr" uuid="c8a012d1-b855-4bb0-ac7d-23c1e07d9082">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="ORACLE" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>cmdwo2323</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

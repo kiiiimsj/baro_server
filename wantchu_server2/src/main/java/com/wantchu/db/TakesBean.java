@@ -1,5 +1,5 @@
 
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 /**
  *

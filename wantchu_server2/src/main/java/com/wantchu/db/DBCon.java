@@ -1,4 +1,4 @@
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 import java.sql.*;
 import java.util.logging.Level;

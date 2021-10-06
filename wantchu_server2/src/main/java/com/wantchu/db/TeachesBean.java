@@ -1,4 +1,4 @@
-package com.wantchu.db.*;
+package com.wantchu.db;
 
 /**
  * @프로그램 : StudentBean.java
