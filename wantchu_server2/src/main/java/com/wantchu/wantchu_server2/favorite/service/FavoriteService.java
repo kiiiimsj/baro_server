@@ -41,7 +41,7 @@ public class FavoriteService {
             jsonObject.put("favorite", jsonArray);
         } catch(FavoriteInfoNotFoundException exception) {
             jsonObject = ObjectMaker.getJSONObjectWithException(exception);
-        }//
+        }
         return jsonObject;
     }
 
