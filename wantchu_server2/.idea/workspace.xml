@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0b70172a-a429-4e31-a7ae-3ab31345aa1a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/CourseBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/CourseDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/CourseTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/DBCon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/DepartmentBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/DepartmentDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/DepartmentTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/InstructorBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/InstructorDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/InstructorTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/MariaDBCon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/SectionBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/SectionDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/SectionTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/StudentBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/StudentDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/StudentTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TakesBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TakesDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TakesTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TeachesBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TeachesDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wantchu/db/TeachesTitleBean.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql101.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql102.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql103.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql104.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql201.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql202.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql203.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql204.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql301.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql302.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql303.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql400.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql401.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql402.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql403.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql404.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql405.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql406.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql407.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql408.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql409.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql410.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql411.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql412.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql413.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql414.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql415.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql416.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql417.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql418.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql419.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql420.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql421.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql422.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql423.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql424.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql425.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql426.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql427.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql428.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql429.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql430.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql431.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql432.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql433.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql434.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql435.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql436.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql437.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql438.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql439.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql440.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql441.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql442.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/sql443.jsp" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

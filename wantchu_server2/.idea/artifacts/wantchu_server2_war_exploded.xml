@@ -1,6 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="wantchu_server2:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/wantchu_server2_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/target/wantchu_server2</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>wantchu_server2</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -91,7 +98,9 @@
           <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
         </element>
       </element>
-      <element id="library" level="project" name="mysql-connector-java-5.1.49-bin" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/wantchu_server2/META-INF/MANIFEST.MF" />
+      </element>
       <element id="javaee-facet-resources" facet="wantchu_server2/web/Web" />
     </root>
   </artifact>
